@@ -30,7 +30,7 @@ function clearOut() {
                 var uid = url.split(/[^\d]/g); // 获得url中的数字部分（QQ号码）
                 if (uid[uid.length - 1] == t) {
                     var check = $j(ele[j]).parents(".f-single").attr("id");
-                    if (check !== undefined && check.indexOf(t) > -1) {
+                    if (check.indexOf(t) > -1) {
                         $j(ele[j]).parents(".f-single").remove();
                     } // 移除说说整体
                     if ($j(ele[j]).parents(".txt-box")[0] !== undefined) {
@@ -45,11 +45,11 @@ function clearOut() {
 
     // 文本匹配移除
     for (var k = 0; k < content.length; k++) {
-        var items = $j(".f-single");
+        var items = $j(".f-info, .f-ct-txtimg, .f-user-info");
         $j(items).each(function() {
-            var text = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text();
+            var text = $j(this).text();
             if (text.indexOf(content[k]) > -1) {
-                $j(this).remove(); // 不为评论内容时移除整体
+                $j(this).parents(".f-single").remove(); // 不为评论内容时移除整体
             }
         })
         var cmItems = $j(".comments-item");
@@ -65,38 +65,33 @@ function clearOut() {
     if (multi.length !== 0) {
         $j(multi).each(function(i) {
             var arr = multi[i].split("+");
-            var ck,ctCk;
+            var ck;
             $j(arr).each(function(e) {
-                var ele = $j(".f-single");
+                var ele = $j(".f-info, .f-ct-txtimg, .f-user-info");
                 $j(ele).each(function() {
-                    var matchText = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text();
+                    var matchText = $j(this).text();
+                    if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[e]) === -1) {
+                        ck = 0;
+                        return false;
+                    } else if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[e]) !== -1) {
+                        ck = $j(this).parents(".f-single");
+                    }
+                }); // 不为评论内容时移除整体
+                var ctEle = $j(".comments-item");
+                $j(ctEle).each(function() {
+                    var matchText = $j(this).text();
                     if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[e]) === -1) {
                         ck = 0;
                         return false;
                     } else if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[e]) !== -1) {
                         ck = $j(this);
                     }
-                }); // 不为评论内容时
-                if (ck !== undefined && ck !== 0) {
-                    $j(ck).remove()
-                };
-                var ctEle = $j(".comments-item");
-                $j(ctEle).each(function() {
-                    var matchText = $j(this).text();
-                    if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[e]) === -1) {
-                        ctCk = 0;
-                        return false;
-                    } else if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[e]) !== -1) {
-                        ctCk = $j(this);
-                    }
-                }); // 为评论内容时
+                }); // 为评论内容时移除评论内容
             })
-            if (ctCk !== undefined && ctCk !== 0) {
-                $j(ctCk).remove()
+            if (ck !== undefined && ck !== 0) {
+                    $j(ck).remove()
             };
         })
     };
 }
-$j(document).ready(function() {
-    setInterval(clearOut, 1000)
-})
+setInterval(clearOut, 1000)
