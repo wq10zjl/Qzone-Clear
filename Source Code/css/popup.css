@@ -123,25 +123,24 @@ i {
   display: none;
   right: -8px;
   top: -8px;
-  width: 13px;
-  height: 13px;
+  width: 17px;
+  height: 17px;
   color: #fff;
   background: #f00;
   font-weight: bold;
   text-align: center;
-  line-height: 10px;
-  font-size: 18px;
+  line-height: 13px;
+  font-size: 22px;
   cursor: pointer;
   border-radius: 50%;
-  opacity: .9;
-  border: 2px solid #f00
+  opacity: .7;
+  font-family: "Microsoft Yahei";
 }
 i:hover span {
   display: block;
 }
 .close:hover {
   opacity: 1;
-  -webkit-transform: scale(1.2);
 }
 .clearout {
   display: none;

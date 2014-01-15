@@ -65,9 +65,11 @@ function clearOut() {
     if (multi.length !== 0) {
         $j(multi).each(function(i) {
             var arr = multi[i].split("+");
-            var ck;
+            console.log(arr)
+            var ele = $j(".f-single");
+            var ctEle = $j(".comments-item");
+            var ck, ctCheck;
             $j(arr).each(function(e) {
-                var ele = $j(".f-single");
                 $j(ele).each(function() {
                     var matchText = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text();
                     if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[e]) === -1) {
@@ -77,11 +79,6 @@ function clearOut() {
                         ck = $j(this);
                     }
                 }); // 不为评论内容时
-                if (ck !== undefined && ck !== 0) {
-                    $j(ck).remove()
-                };
-                var ctEle = $j(".comments-item");
-                var ctCheck;
                 $j(ctEle).each(function() {
                     var matchText = $j(this).text();
                     if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[e]) === -1) {
@@ -91,10 +88,14 @@ function clearOut() {
                         ctCheck = $j(this);
                     }
                 }); // 为评论内容时
-                if (ctCheck !== undefined && ctCheck !== 0) {
-                    $j(ctCheck).remove()
-                };
-            })
+            });
+            if (ck !== undefined && ck !== 0) {
+                $j(ck).remove()
+            };
+            if (ctCheck !== undefined && ctCheck !== 0) {
+                $j(ctCheck).remove()
+            };
+            console.log(ck)
         })
     };
 }

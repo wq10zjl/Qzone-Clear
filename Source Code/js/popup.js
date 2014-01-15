@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         var b = [];
         $(".list i").each(function(i) {
-            var text = $(this).text().split("x")[0].split(" ").join(""); // 过滤空格，获取输入值
+            var text = $(this).text().split("×")[0].split(" ").join(""); // 过滤空格，获取输入值
             b.push(text);
         });
         chrome.storage.local.set({
@@ -26,9 +26,9 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
         if (isNaN(parseInt(a,10))) {
-            $(".list #content").append("<i>" + a + "<span class='close'>x</span></i>");
+            $(".list #content").append("<i>" + a + "<span class='close'>×</span></i>");
         } else {
-            $(".list #uid").append("<i>" + a + "<span class='close'>x</span></i>");
+            $(".list #uid").append("<i>" + a + "<span class='close'>×</span></i>");
         }
         $("input").val("");
         refresh();
@@ -38,9 +38,9 @@ document.addEventListener('DOMContentLoaded', function() {
         var b = result.hidePart;
         for (i = 0; i < b.length; i++) {
             if (isNaN(parseInt(b[i],10))) {
-                $(".list #content").append("<i>" + b[i] + "<span class='close'>x</span></i>");
+                $(".list #content").append("<i>" + b[i] + "<span class='close'>×</span></i>");
             } else {
-                $(".list #uid").append("<i>" + b[i] + "<span class='close'>x</span></i>");
+                $(".list #uid").append("<i>" + b[i] + "<span class='close'>×</span></i>");
             }
         }
         refresh();
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     $("input").keydown(function(e) {　
         if (e.keyCode == 13) {
-            var check = $(".list i").text().split("x");
+            var check = $(".list i").text().split("×");
             for (var i = 0; i < check.length; i++) {
                 if ($("input").val() === "" || $("input").val().split(" ").join("") === "") {
                     alert("请输入内容！");
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     $(".submit").click(function() {
-        var check = $(".list i").text().split("x");
+        var check = $(".list i").text().split("×");
         for (var i = 0; i < check.length; i++) {
             if ($("input").val() === "" || $("input").val().split(" ").join("") === "") {
                 alert("请输入内容！");
