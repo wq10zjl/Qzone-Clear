@@ -118,6 +118,9 @@ i {
   overflow: visible;
   cursor: default;
 }
+i:hover {
+  background: #C9FDAC;
+}
 .close {
   position: absolute;
   display: none;
@@ -135,17 +138,20 @@ i {
   border-radius: 50%;
   opacity: .7;
   font-family: "Microsoft Yahei";
+  -webkit-transform: rotate(0);
 }
-i:hover span {
+i:hover .close {
   display: block;
 }
 .close:hover {
   opacity: 1;
+  -webkit-transform: rotate(360deg);
+  -webkit-transition: all .3s;
 }
 .clearout {
   display: none;
 }
-.clearout, .clearout:hover {
+.clearout {
   width: 370px;
   margin: 0;
   font-size: 18px;
@@ -154,8 +160,12 @@ i:hover span {
   background-color: #ed9c28;
   border-color: #d58512;
 }
+.clearout:hover {
+  background-color: #d58512;
+  border-color: #d58512;
+}
 .clearout:active {
-  background-color: #ed9c28;
+  background-color: #d58512;
   border-color: #d58512;
 }
 h4 {

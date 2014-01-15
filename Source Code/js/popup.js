@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     function refresh() {
         $("span").click(function() {
-            $(this).parents("i").remove();
-            refresh(); // 回调函数，刷新hidePart
+            $(this).parents("i").fadeOut(500,function() {
+                $(this).remove();
+                refresh(); // 回调函数，刷新hidePart
+            })
         });
         if ($(".list i").length !== 0) {
             $(".clearout, h4").show();
@@ -25,10 +27,12 @@ document.addEventListener('DOMContentLoaded', function() {
             alert("输入内容太长了！");
             return false;
         }
+        var i = "<i style='display:none'>" + a + "<span class='close'>×</span></i>";
+        console.log(typeof i)
         if (isNaN(parseInt(a,10))) {
-            $(".list #content").append("<i>" + a + "<span class='close'>×</span></i>");
+            $(i).appendTo(".list #content").fadeIn(500);
         } else {
-            $(".list #uid").append("<i>" + a + "<span class='close'>×</span></i>");
+            $(i).appendTo(".list #uid").fadeIn(500);
         }
         $("input").val("");
         refresh();
@@ -46,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
         refresh();
     }) // 获取hidePart，并在extension中显示
 
-    $("input").keydown(function(e) {　
+    $("input").keydown(function(e) {
         if (e.keyCode == 13) {
             var check = $(".list i").text().split("×");
             for (var i = 0; i < check.length; i++) {
