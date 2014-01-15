@@ -65,7 +65,6 @@ function clearOut() {
     if (multi.length !== 0) {
         $j(multi).each(function(i) {
             var arr = multi[i].split("+");
-            console.log(arr)
             var ele = $j(".f-single");
             var ctEle = $j(".comments-item");
             var ck, ctCheck;
@@ -95,7 +94,6 @@ function clearOut() {
             if (ctCheck !== undefined && ctCheck !== 0) {
                 $j(ctCheck).remove()
             };
-            console.log(ck)
         })
     };
 }

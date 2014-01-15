@@ -5,6 +5,7 @@
 2. [主要功能](#features)
 3. [安装](#install)
 4. [使用方法](#use)
+5. [近期更新](#update)
 
 <a name="intro"></a>
 ## 一、简介 ##
@@ -28,7 +29,7 @@
 
 <a name="install"></a>
 ## 三、安装 ##
-初版尚未提交 Chrome Webstore，请在 **Chrome 浏览器设置--扩展程序下拖入 [Qzone Clear.crx](https://github.com/idiotWu/Qzone-Clear/blob/master/Qzone%20Clear.crx) 文件** 进行安装。
+初版尚未提交 Chrome Webstore，请在 **Chrome 浏览器设置--扩展程序下拖入 [Qzone Clear.crx](https://github.com/idiotWu/Qzone-Clear/blob/master/Qzone%20Clear.crx?raw=true) 文件** 进行安装。
 
 <a name="use"></a>
 ## 四、使用方法 ##

@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         var b = [];
         $(".list i").each(function(i) {
-            var text = $(this).text().split("×")[0].split(" ").join(""); // 过滤空格，获取输入值
+            var text = $(this).text().split("×")[0]; // 过滤空格，获取输入值
             b.push(text);
         });
         chrome.storage.local.set({
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function addEle() {
-        var a = $("input").val();
+        var a = $("input").val().split(" ").join("");
         if (a.length>20) {
             alert("输入内容太长了！");
             return false;
