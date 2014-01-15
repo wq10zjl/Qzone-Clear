@@ -85,10 +85,4 @@ document.addEventListener('DOMContentLoaded', function() {
             }); // 清空hidePart
         }
     });
-    $("input").focus(function() {
-        $("#tips").fadeIn()
-    })
-    $("input").blur(function() {
-        $("#tips").fadeOut()
-    })
 });
