@@ -95,7 +95,6 @@ function clearOut() {
                 }); // 为评论内容时
             } // 多关键字都相同时
             $j(arr).each(function(e) {
-                console.log(multi[i],allSame)
                 if (allSame === 1) return false;
                 $j(ele).each(function() {
                     var matchText = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text();
