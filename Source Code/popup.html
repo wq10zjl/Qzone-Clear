@@ -10,13 +10,24 @@
 </head>
 
 <body>
-    <input type="text" placeholder="输入好友QQ号码、备注名称或关键词">
-    <div id="tips">
-        <p>多关键字请用<span> + </span>隔开</p>
-        <p>如<span> “家里+冷”</span></p>
-        <p>当说说 / 评论内容<span> 同时含有“家里”和“冷”时</span>，说说 / 评论将被移除。</p>
+    <div class="panel">
+        <div class="inner">
+            <button class="backup">备份当前数据</button>
+            <button class="restore">恢复历史数据</button>
+        </div>
+        <div class="toggle">
+            <span>备份 / 还原</span>
+        </div>
     </div>
-    <button class="submit">添加</button>
+    <div class="wrapper">
+        <input type="text" placeholder="输入好友QQ号码、备注名称或关键词">
+        <button class="submit">添加</button>
+        <div id="tips">
+            <p>多关键字请用<span> + </span>隔开</p>
+            <p>如<span> “家里+冷”</span></p>
+            <p>当说说 / 评论内容<span> 同时含有“家里”和“冷”时</span>，说说 / 评论将被移除。</p>
+        </div>
+    </div>
     <div class="list">
         <section id="uid">
             <h4><span style="top: 2px;">QQ<b>号码：</b></span></h4>
