@@ -66,33 +66,36 @@ function clearOut() {
 
     // 多关键字匹配
     if (multi.length !== 0) {
+        var ele = $j(".f-single");
+        var ctEle = $j(".comments-item");
+        var ck, ctCheck;
+        var allSame = 0;
         $j(multi).each(function(i) {
             var arr = multi[i].split("+");
-            var ele = $j(".f-single");
-            var ctEle = $j(".comments-item");
-            var ck, ctCheck, allSame;
             $j(arr).each(function(i) {
                 if (arr[0] === arr[i]) allSame = 1;
+                else allSame = 0;
             })
             if (allSame === 1) {
-                    $j(ele).each(function() {
-                        var content = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text().split("");
-                        var a = 0;
-                        for (var i = 0; i < content.length; i++) {
-                            if(content[i] === arr[0]) a++;
-                        };
-                        if (a >= arr.length) $j(this).remove();
-                    });
-                    $j(ctEle).each(function() {
-                        var content = $j(this).text().split("");
-                        var a = 0;
-                        for (var i = 0; i < content.length; i++) {
-                            if(content[i] === arr[0]) a++;
-                        };
-                        if (a >= arr.length) $j(this).remove();
-                    }); // 为评论内容时
-                } // 多关键字都相同时
+                $j(ele).each(function() {
+                    var content = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text().split("");
+                    var a = 0;
+                    for (var m = 0; m < content.length; m++) {
+                        if (content[m] === arr[0]) a++;
+                    };
+                    if (a >= arr.length) $j(this).remove();
+                });
+                $j(ctEle).each(function() {
+                    var content = $j(this).text().split("");
+                    var a = 0;
+                    for (var n = 0; n < content.length; n++) {
+                        if (content[n] === arr[0]) a++;
+                    };
+                    if (a >= arr.length) $j(this).remove();
+                }); // 为评论内容时
+            } // 多关键字都相同时
             $j(arr).each(function(e) {
+                console.log(multi[i],allSame)
                 if (allSame === 1) return false;
                 $j(ele).each(function() {
                     var matchText = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text();
