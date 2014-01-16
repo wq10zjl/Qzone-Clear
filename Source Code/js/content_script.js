@@ -14,23 +14,26 @@ function clearOut() {
     if (localStorage.getItem("hidePart") !== null) {
         var target = localStorage.getItem("hidePart").split(",");
     }
-    // uid 匹配移除
+    if (target === "") return false;
     for (var i = 0; i < target.length; i++) {
-        var temp = target[i].match(/[^\d]/g);
-        if (temp !== null) {
-            content.push(temp.join(""))
-        } // 获得hidePart中文本部分
         if (target[i].indexOf("+") > -1) {
-            multi.push(target[i]);
-        } // 获取多关键字部分
-        var t = target[i];
+            multi.push(target[i]); // 获取hidePart中多关键字部分
+        } else {
+            var num = target[i].split(/[^\d]/g).join(""); // 获取数字部分
+            var temp = target[i].match(/[^\d]/g);
+            if (temp !== null) {
+                content.push(temp.join(""))
+            } // 获得单关键字部分
+        }
+
+        // uid 匹配移除
         for (var j = 0; j < ele.length; j++) {
             if ($j(ele[j]).attr("href") !== undefined) {
                 var url = $j(ele[j]).attr("href"); // 获得好友空间url
-                var uid = url.split(/[^\d]/g); // 获得url中的数字部分（QQ号码）
-                if (uid[uid.length - 1] == t) {
+                var uid = url.split(/[^\d]/g).join(""); // 获得url中的数字部分（QQ号码）
+                if (uid === num) {
                     var check = $j(ele[j]).parents(".f-single").attr("id");
-                    if (check !== undefined && check.indexOf(t) > -1) {
+                    if (check !== undefined && check.indexOf(num) > -1) {
                         $j(ele[j]).parents(".f-single").remove();
                     } // 移除说说整体
                     if ($j(ele[j]).parents(".txt-box")[0] !== undefined) {
@@ -67,8 +70,30 @@ function clearOut() {
             var arr = multi[i].split("+");
             var ele = $j(".f-single");
             var ctEle = $j(".comments-item");
-            var ck, ctCheck;
+            var ck, ctCheck, allSame;
+            $j(arr).each(function(i) {
+                if (arr[0] === arr[i]) allSame = 1;
+            })
+            if (allSame === 1) {
+                    $j(ele).each(function() {
+                        var content = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text().split("");
+                        var a = 0;
+                        for (var i = 0; i < content.length; i++) {
+                            if(content[i] === arr[0]) a++;
+                        };
+                        if (a >= arr.length) $j(this).remove();
+                    });
+                    $j(ctEle).each(function() {
+                        var content = $j(this).text().split("");
+                        var a = 0;
+                        for (var i = 0; i < content.length; i++) {
+                            if(content[i] === arr[0]) a++;
+                        };
+                        if (a >= arr.length) $j(this).remove();
+                    }); // 为评论内容时
+                } // 多关键字都相同时
             $j(arr).each(function(e) {
+                if (allSame === 1) return false;
                 $j(ele).each(function() {
                     var matchText = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text();
                     if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[e]) === -1) {

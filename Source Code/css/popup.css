@@ -25,7 +25,6 @@
     background-clip:padding-box;
     background-color:rgba(0,0,0,.2);
     min-height:28px;
-    padding-top:100
 }
 ::-webkit-scrollbar-thumb:hover {
     -webkit-box-shadow:inset 1px 1px 1px rgba(0,0,0,.25);
@@ -56,6 +55,10 @@ body {
   background: #F9F9F9;
   font-family:arial, sans-serif;
   -webkit-font-smoothing:antialiased;
+}
+.wrapper {
+  position: relative;
+  margin: 5px 0;
 }
 input {
   display: inline-block;
@@ -117,6 +120,7 @@ i {
   font-style: normal;
   overflow: visible;
   cursor: default;
+  z-index: 0;
 }
 i:hover {
   background: #C9FDAC;
@@ -195,7 +199,7 @@ h4 span {
   display: none;
   position: absolute;
   width: 330px;
-  top: 70px;
+  top: 40px;
   padding: 0 20px;
   background: #000;
   color: #f3f3f3;
@@ -221,8 +225,79 @@ h4 span {
 #tips p {
   margin: 10px 0;
   padding: 0;
+  cursor: default;
 }
 #tips span {
   font-weight: bold;
   color: #ff0;
+}
+.highlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #ff5;
+  z-index: -1;
+}
+.panel {
+  position: absolute;
+  margin-bottom: 5px;
+  width: 430px;
+  left: 0;
+  top: 0;
+  box-shadow: inset 0 -9px 5px rgba(15, 15, 15, 0.47);
+  z-index: 1;
+}
+.inner {
+  display: none;
+  background: rgba(66, 66, 66, 0.86);
+  padding: 20px 0;
+}
+.backup {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.backup:hover, .backup:active {
+  color: #fff;
+  background-color: #47a447;
+  border-color: #398439;
+}
+.restore {
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+.restore:hover, .restore:active {
+  color: #fff;
+  background-color: #d2322d;
+  border-color: #ac2925;
+}
+.inner button {
+  font-size: 16px;
+  margin-left: 36px;
+  letter-spacing: 5px;
+}
+.toggle {
+  margin-top: -3px;
+  border-top: 5px solid #8f8f8f;
+  -webkit-transition: all .2s;
+}
+.toggle:hover {
+  margin-top: 0;
+}
+.toggle span {
+  position: absolute;
+  right: 0;
+  padding: 0 3px 3px 8px;
+  color: #fff;
+  background: #8f8f8f;
+  cursor: pointer;
+  border-radius: 0 0 0 20px;
+  font-size: 12px;
+}
+.toggle.active {
+  margin-top: 0;
 }
