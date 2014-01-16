@@ -31,7 +31,7 @@
 
 <a name="install"></a>
 ## 三、安装 ##
-初版尚未提交 Chrome Webstore，请在 **Chrome 浏览器设置--扩展程序下拖入 [Qzone Clear.crx](https://github.com/idiotWu/Qzone-Clear/blob/master/Qzone%20Clear%20v0.1.2.crx?raw=true) 文件** 进行安装。
+初版尚未提交 Chrome Webstore，请在 **Chrome 浏览器设置--扩展程序下拖入 [Qzone Clear.crx](https://github.com/idiotWu/Qzone-Clear/blob/master/Qzone%20Clear.crx?raw=true) 文件** 进行安装。
 
 <a name="use"></a>
 ## 四、使用方法 ##

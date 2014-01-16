@@ -142,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var restore = confirm("当前备份数据：\n\n备份时间："+localStorage.getItem("time")+"\n\n备份的数据：" + localStorage.getItem("backup")+"\n\n是否恢复？此操作不可撤销！");
         if (restore === true) {
             localStorage.setItem("hidePart",a);
+            $(".list i").remove();
             winOn();
             alert("恢复数据成功！");
         }
