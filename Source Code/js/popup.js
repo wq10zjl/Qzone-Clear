@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     function refresh() {
-        $("span").click(function() {
+        $(".close").click(function() {
             $(this).parents("i").fadeOut(500, function() {
                 $(this).remove();
                 refresh(); // 回调函数，刷新hidePart
