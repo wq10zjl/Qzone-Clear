@@ -67,7 +67,7 @@ function clearOut() {
                 }); // 不为评论内容时移除整体
             }
         })
-        var cmItems = $j(".comments-item");
+        var cmItems = $j("[data-type='commentroot']");
         $j(cmItems).each(function() {
             var text = $j(this).text();
             if (text.indexOf(content[k]) > -1) {
@@ -81,7 +81,7 @@ function clearOut() {
     // 多关键字匹配
     if (multi.length !== 0) {
         var ele = $j(".f-single");
-        var ctEle = $j(".comments-item");
+        var ctEle = $j("[data-type='commentroot']");
         var ck, ctCheck;
         var allSame = 0;
         $j(multi).each(function(i) {
