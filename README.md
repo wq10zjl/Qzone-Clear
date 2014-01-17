@@ -37,6 +37,9 @@
 ## 四、使用方法 ##
 在 QQ 空间点击地址栏的![](http://i.imgur.com/7MjLc9I.png)图标，输入想要屏蔽的用户/关键字即可。
 
+**使用插件时有可能会出现「网络出了点小问题，立即修复」，<span style="font-size:1.5em;font-weight:bold;color:#f00">慎点！</span>，点击后 DOM 结构将被改变，插件将失效。只有清除浏览数据后才能恢复！**
+[](http://i.imgur.com/KKa8fxL.jpg)
+
 <a name="update"></a>
 ## 五、近期更新 ##
 #### v0.1.3 ####
