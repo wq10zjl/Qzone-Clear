@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     "backup": data,
                     "time": Date()
                 })
-                var info = "<div class='title'>数据备份成功！</div><table><tr><td>备份时间：</td><td>" + localStorage.getItem("time") + "</td></tr><tr><td>备份数据：</td><td>" + localStorage.getItem("backup")+"</td></tr></table>";
+                var info = "<div class='title'>数据备份成功！</div><table><tr><td>备份时间：</td><td>" + localStorage.getItem("time") + "</td></tr><tr><td>备份数据：</td><td>" + localStorage.getItem("backup") + "</td></tr></table>";
                 $(".text").html(info);
                 $(".backinfo").fadeIn(1000).delay(1500).fadeOut(500);
             }
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     "backup": data,
                     "time": Date()
                 })
-                var info = "<div class='title'>数据备份成功！</div><table><tr><td>备份时间：</td><td>" + localStorage.getItem("time") + "</td></tr><tr><td>备份数据：</td><td>" + localStorage.getItem("backup")+"</td></tr></table>";
+                var info = "<div class='title'>数据备份成功！</div><table><tr><td>备份时间：</td><td>" + localStorage.getItem("time") + "</td></tr><tr><td>备份数据：</td><td>" + localStorage.getItem("backup") + "</td></tr></table>";
                 $(".text").html(info);
                 $(".backinfo").fadeIn(1000).delay(1500).fadeOut(500);
             }

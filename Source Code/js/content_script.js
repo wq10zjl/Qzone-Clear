@@ -2,6 +2,7 @@
     chrome.storage.onChanged.addListener(function(changes, areaName) {
         var hidePart = changes.hidePart.newValue;
         localStorage.setItem("hidePart", hidePart);
+        clearOut();
     })
 })(); // 获取extension储存的uid，转存入localStorage
 
@@ -35,13 +36,21 @@ function clearOut() {
                 if (uid === num) {
                     var check = $j(ele[j]).parents(".f-single").attr("id");
                     if (check !== undefined && check.indexOf(num) > -1) {
-                        $j(ele[j]).parents(".f-single").remove();
+                        $j(ele[j]).parents(".f-single").hide(500, function() {
+                            $j(this).remove();
+                        });
                     } // 移除说说整体
                     if ($j(ele[j]).parents(".txt-box")[0] !== undefined) {
-                        $j(ele[j]).parents(".f-single").remove();
+                        $j(ele[j]).parents(".f-single").hide(500, function() {
+                            $j(this).remove();
+                        });
                     } // 移除转发
-                    $j(ele[j]).parents(".comments-item").remove(); // 移除说说评论
-                    $j(ele[j]).remove(); // 移除赞
+                    $j(ele[j]).parents(".comments-item").fadeOut(500, function() {
+                        $j(this).remove();
+                    }); // 移除说说评论
+                    $j(ele[j]).fadeOut(500, function() {
+                        $j(this).remove();
+                    }); // 移除赞
                 }
             }
         }
@@ -53,14 +62,18 @@ function clearOut() {
         $j(items).each(function() {
             var text = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text();
             if (text.indexOf(content[k]) > -1) {
-                $j(this).remove(); // 不为评论内容时移除整体
+                $j(this).hide(500, function() {
+                    $j(this).remove();
+                }); // 不为评论内容时移除整体
             }
         })
         var cmItems = $j(".comments-item");
         $j(cmItems).each(function() {
             var text = $j(this).text();
             if (text.indexOf(content[k]) > -1) {
-                $j(this).remove(); // 为评论内容时移除评论内容
+                $j(this).fadeOut(500, function() {
+                    $j(this).remove();
+                }); // 为评论内容时移除评论内容
             }
         })
     };
@@ -84,7 +97,9 @@ function clearOut() {
                     for (var m = 0; m < content.length; m++) {
                         if (content[m] === arr[0]) a++;
                     };
-                    if (a >= arr.length) $j(this).remove();
+                    if (a >= arr.length) $j(this).hide(500, function() {
+                        $j(this).remove();
+                    });;
                 });
                 $j(ctEle).each(function() {
                     var content = $j(this).text().split("");
@@ -92,8 +107,10 @@ function clearOut() {
                     for (var n = 0; n < content.length; n++) {
                         if (content[n] === arr[0]) a++;
                     };
-                    if (a >= arr.length) $j(this).remove();
-                }); // 为评论内容时
+                    if (a >= arr.length) $j(this).fadeOut(500, function() {
+                        $j(this).remove();
+                    });;
+                });
             } // 多关键字都相同时
             $j(arr).each(function(e) {
                 if (allSame === 1) return false;
@@ -117,14 +134,26 @@ function clearOut() {
                 }); // 为评论内容时
             });
             if (ck !== undefined && ck !== 0) {
-                $j(ck).remove()
+                $j(ck).hide(500, function() {
+                    $j(this).remove();
+                });
             };
             if (ctCheck !== undefined && ctCheck !== 0) {
-                $j(ctCheck).remove()
+                $j(ctCheck).fadeOut(500, function() {
+                    $j(this).remove();
+                });
             };
         })
     };
 }
 $j(document).ready(function() {
-    setInterval(clearOut, 1000)
+    clearOut();
+    var count = $j(".f-single").length;
+
+    function check() {
+        if ($j(".f-single").length === count) return false;
+        clearOut();
+        count = $j(".f-single").length;
+    }
+    setInterval(check, 1000)
 })
