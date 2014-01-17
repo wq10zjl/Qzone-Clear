@@ -96,24 +96,20 @@ function clearOut() {
                     var a = 0;
                     for (var m = 0; m < content.length; m++) {
                         if (content[m] === arr[0]) a++;
-                    }
-                    if (a >= arr.length) {
-                        $j(this).hide(500, function() {
-                            $j(this).remove();
-                        });
-                    }
+                    };
+                    if (a >= arr.length) $j(this).hide(500, function() {
+                        $j(this).remove();
+                    });;
                 });
                 $j(ctEle).each(function() {
                     var content = $j(this).text().split("");
                     var a = 0;
                     for (var n = 0; n < content.length; n++) {
                         if (content[n] === arr[0]) a++;
-                    }
-                    if (a >= arr.length) {
-                        $j(this).fadeOut(500, function() {
-                            $j(this).remove();
-                        });
-                    }
+                    };
+                    if (a >= arr.length) $j(this).fadeOut(500, function() {
+                        $j(this).remove();
+                    });;
                 });
             } // 多关键字都相同时
             $j(arr).each(function(e) {
@@ -150,16 +146,14 @@ function clearOut() {
         })
     };
 }
-clearOut();
+$j(document).ready(function() {
+    clearOut();
+    var count = $j(".f-single").length;
 
-var page = -1;
-console.log(page)
-
-function check() {
-    var tempPage = $j("ul[data-page]:last").data("page")
-    if (tempPage > page) {
+    function check() {
+        if ($j(".f-single").length === count) return false;
         clearOut();
-        page = $j("ul[data-page]:last").data("page");
+        count = $j(".f-single").length;
     }
-}
-setInterval(check, 1000)
+    setInterval(check, 1000)
+})
