@@ -96,20 +96,24 @@ function clearOut() {
                     var a = 0;
                     for (var m = 0; m < content.length; m++) {
                         if (content[m] === arr[0]) a++;
-                    };
-                    if (a >= arr.length) $j(this).hide(500, function() {
-                        $j(this).remove();
-                    });;
+                    }
+                    if (a >= arr.length) {
+                        $j(this).hide(500, function() {
+                            $j(this).remove();
+                        });
+                    }
                 });
                 $j(ctEle).each(function() {
                     var content = $j(this).text().split("");
                     var a = 0;
                     for (var n = 0; n < content.length; n++) {
                         if (content[n] === arr[0]) a++;
-                    };
-                    if (a >= arr.length) $j(this).fadeOut(500, function() {
-                        $j(this).remove();
-                    });;
+                    }
+                    if (a >= arr.length) {
+                        $j(this).fadeOut(500, function() {
+                            $j(this).remove();
+                        });
+                    }
                 });
             } // 多关键字都相同时
             $j(arr).each(function(e) {
@@ -146,14 +150,25 @@ function clearOut() {
         })
     };
 }
-$j(document).ready(function() {
-    clearOut();
-    var count = $j(".f-single").length;
-
-    function check() {
-        if ($j(".f-single").length === count) return false;
-        clearOut();
-        count = $j(".f-single").length;
-    }
-    setInterval(check, 1000)
+clearOut();
+$j("#tab_menu_list a").click(function() {
+    var a = 0;
+    var b = setInterval(function() {
+        a = $j(".f-single").length
+        if (a !== 0) {
+            clearInterval(b);
+            clearOut();
+        };
+    }, 1000);
 })
+
+var page = -1;
+
+function check() {
+    var tempPage = $j("ul[data-page]:last").data("page");
+    if (tempPage > page) {
+        // clearOut();
+        page = $j("ul[data-page]:last").data("page");
+    }
+}
+setInterval(check, 1000)
