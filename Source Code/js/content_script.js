@@ -11,6 +11,7 @@ function clearOut() {
     var content = [];
     var multi = [];
     var ele = $j(".q_namecard,.f-like .item");
+    if (localStorage.getItem("hidePart") === "undefined") return false;
     if (localStorage.getItem("hidePart") !== null) {
         var target = localStorage.getItem("hidePart").split(",");
     }

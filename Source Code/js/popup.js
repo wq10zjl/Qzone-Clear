@@ -16,10 +16,15 @@ document.addEventListener('DOMContentLoaded', function() {
             var text = $(this).text().split("×")[0]; // 过滤空格，获取输入值
             b.push(text);
         });
-        chrome.storage.local.set({
-            "hidePart": b
-        }); // 获取hidePart，存入chrome.storage
-        localStorage.setItem("hidePart", b); // localStorage建立副本
+        if (b[0] === undefined) {
+            localStorage.removeItem("hidePart");
+            chrome.storage.local.remove("hidePart")
+        } else {
+            chrome.storage.local.set({
+                "hidePart": b
+            }); // 获取hidePart，存入chrome.storage
+            localStorage.setItem("hidePart", b); // localStorage建立副本
+        }
     }
 
     function addEle(e) {
@@ -56,6 +61,12 @@ document.addEventListener('DOMContentLoaded', function() {
     } // 显示新元素
 
     function winOn() {
+        chrome.storage.sync.get("backup", function(data) {
+            localStorage.setItem("backupCloud", data.backup)
+        })
+        chrome.storage.sync.get("time", function(data) {
+            localStorage.setItem("timeCloud", data.time)
+        })
         if (localStorage.getItem("hidePart") === null) return false;
         var items = localStorage.getItem("hidePart").split(",");
         for (i = 0; i < items.length; i++) {
@@ -88,9 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
             $(this).hide();
             $("h4").hide();
             localStorage.removeItem("hidePart");
-            chrome.storage.local.set({
-                "hidePart": ""
-            });
+            chrome.storage.local.remove("hidePart")
         }
     });
     $("input").focus(function() {
@@ -117,10 +126,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 localStorage.setItem("backup", data);
                 localStorage.setItem("time", Date());
-                alert("备份成功！\n\n备份时间：" + localStorage.getItem("time") + "\n\n备份的数据：" + localStorage.getItem("backup"));
+                chrome.storage.sync.set({
+                    "backup": data,
+                    "time": Date()
+                })
+                var info = "<div class='title'>数据备份成功！</div><table><tr><td>备份时间：</td><td>" + localStorage.getItem("time") + "</td></tr><tr><td>备份数据：</td><td>" + localStorage.getItem("backup")+"</td></tr></table>";
+                $(".text").html(info);
+                $(".backinfo").fadeIn(1000).delay(1500).fadeOut(500);
             }
         } else {
-            var cover = confirm("已存在备份数据：\n\n备份时间："+localStorage.getItem("time")+"\n\n备份的数据：" + localStorage.getItem("backup")+"\n\n是否覆盖？此操作不可撤销！");
+            var cover = confirm("已存在备份数据：\n\n备份时间：" + localStorage.getItem("time") + "\n\n备份的数据：" + localStorage.getItem("backup") + "\n\n是否覆盖？此操作不可撤销！");
             if (cover === true) {
                 if (data === null || data === "null") {
                     alert("备份失败，请检查数据是否为空！");
@@ -128,23 +143,43 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 localStorage.setItem("backup", data);
                 localStorage.setItem("time", Date());
-                alert("新建备份成功！\n\n备份时间：" + localStorage.getItem("time") + "\n\n备份的数据：" + localStorage.getItem("backup"));
+                chrome.storage.sync.set({
+                    "backup": data,
+                    "time": Date()
+                })
+                var info = "<div class='title'>数据备份成功！</div><table><tr><td>备份时间：</td><td>" + localStorage.getItem("time") + "</td></tr><tr><td>备份数据：</td><td>" + localStorage.getItem("backup")+"</td></tr></table>";
+                $(".text").html(info);
+                $(".backinfo").fadeIn(1000).delay(1500).fadeOut(500);
             }
         }
     }); // 备份数据
     $(".restore").click(function() {
         var a = localStorage.getItem("backup");
+        var b = localStorage.getItem("backupCloud");
         var data = localStorage.getItem("hidePart");
-        if (a === null) {
-            alert("没有发现备份数据，操作将取消！");
+        if (a === null && b === "undefined") {
+            alert("本地和云端都没有发现备份数据，操作将取消！");
             return false;
-        }
-        var restore = confirm("当前备份数据：\n\n备份时间："+localStorage.getItem("time")+"\n\n备份的数据：" + localStorage.getItem("backup")+"\n\n是否恢复？此操作不可撤销！");
-        if (restore === true) {
-            localStorage.setItem("hidePart",a);
-            $(".list i").remove();
-            winOn();
-            alert("恢复数据成功！");
+        } else if (a !== null && b === "undefined") {
+            var restoreLocal = confirm("当前备份数据：\n\n备份位置：本 地\n\n备份时间：" + localStorage.getItem("time") + "\n\n备份的数据：" + a + "\n\n是否恢复？此操作不可撤销！");
+            if (restoreLocal === true) {
+                localStorage.setItem("hidePart", a);
+                $(".list i").remove();
+                winOn();
+                var info = "<div class='title'>本地恢复成功！</div>";
+                $(".text").html(info);
+                $(".backinfo").fadeIn(1000).delay(500).fadeOut(1000);
+            }
+        } else if ((a === null && b !== "undefined") || (a !== null && b !== "undefined")) {
+            var restoreCloud = confirm("当前备份数据：\n\n备份位置：云 端\n\n备份时间：" + localStorage.getItem("timeCloud") + "\n\n备份的数据：" + b + "\n\n是否恢复？此操作不可撤销！");
+            if (restoreCloud === true) {
+                localStorage.setItem("hidePart", b);
+                $(".list i").remove();
+                winOn();
+                var info = "<div class='title'>云端恢复成功！</div>";
+                $(".text").html(info);
+                $(".backinfo").fadeIn(1000).delay(500).fadeOut(1000);
+            };
         }
     }); // 恢复数据
 });
