@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 var info = "<div class='title'>数据备份成功！</div><table><tr><td>备份时间：</td><td>" + localStorage.getItem("time") + "</td></tr><tr><td>备份数据：</td><td>" + localStorage.getItem("backup") + "</td></tr></table>";
                 $(".text").html(info);
-                $(".backinfo").fadeIn(1000).delay(1500).fadeOut(500);
+                $(".backinfo").fadeIn(1000).delay(1500).fadeOut(1000);
             }
         } else {
             var cover = confirm("已存在备份数据：\n\n备份时间：" + localStorage.getItem("time") + "\n\n备份的数据：" + localStorage.getItem("backup") + "\n\n是否覆盖？此操作不可撤销！");
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 var info = "<div class='title'>数据备份成功！</div><table><tr><td>备份时间：</td><td>" + localStorage.getItem("time") + "</td></tr><tr><td>备份数据：</td><td>" + localStorage.getItem("backup") + "</td></tr></table>";
                 $(".text").html(info);
-                $(".backinfo").fadeIn(1000).delay(1500).fadeOut(500);
+                $(".backinfo").fadeIn(1000).delay(1500).fadeOut(1000);
             }
         }
     }); // 备份数据
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 winOn();
                 var info = "<div class='title'>本地恢复成功！</div>";
                 $(".text").html(info);
-                $(".backinfo").fadeIn(1000).delay(500).fadeOut(1000);
+                $(".backinfo").fadeIn(1000).delay(1000).fadeOut(1000);
             }
         } else if ((a === null && b !== "undefined") || (a !== null && b !== "undefined")) {
             var restoreCloud = confirm("当前备份数据：\n\n备份位置：云 端\n\n备份时间：" + localStorage.getItem("timeCloud") + "\n\n备份的数据：" + b + "\n\n是否恢复？此操作不可撤销！");
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 winOn();
                 var info = "<div class='title'>云端恢复成功！</div>";
                 $(".text").html(info);
-                $(".backinfo").fadeIn(1000).delay(500).fadeOut(1000);
+                $(".backinfo").fadeIn(1000).delay(1000).fadeOut(1000);
             };
         }
     }); // 恢复数据

@@ -151,7 +151,18 @@ function clearOut() {
     };
 }
 clearOut();
-$j("#tab_menu_list a").click(function() {
+
+var page = -1;
+function check() {
+    var tempPage = $j("ul[data-page]:last").data("page"); // 获取瀑布流加载的页码
+    if (tempPage > page) {
+        clearOut();
+        page = $j("ul[data-page]:last").data("page");
+    }
+}
+setInterval(check, 1000);
+$j(".icon-refresh, #tab_menu_list a").click(function() {
+    page = -1;
     var a = 0;
     var b = setInterval(function() {
         a = $j(".f-single").length
@@ -160,15 +171,4 @@ $j("#tab_menu_list a").click(function() {
             clearOut();
         };
     }, 1000);
-})
-
-var page = -1;
-
-function check() {
-    var tempPage = $j("ul[data-page]:last").data("page"); // 获取瀑布流加载的页码
-    if (tempPage > page) {
-        clearOut();
-        page = $j("ul[data-page]:last").data("page");
-    }
-}
-setInterval(check, 1000)
+}) // 刷新
