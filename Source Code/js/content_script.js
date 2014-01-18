@@ -45,9 +45,16 @@ function clearOut() {
                             $j(this).remove();
                         });
                     } // 移除转发
-                    $j(ele[j]).parents(".comments-item").fadeOut(500, function() {
-                        $j(this).remove();
-                    }); // 移除说说评论
+                    var isComment = $j(ele[j]).parents("[data-type='replyroot']")[0];
+                    if (isComment !== undefined) {
+                        $j(isComment).fadeOut(500, function() {
+                            $j(this).remove(); // 移除说说评论
+                        });
+                    } else {
+                        $j(ele[j]).parents("[data-type='commentroot']").fadeOut(500, function() {
+                            $j(this).remove(); // 移除说说评论回复
+                        });
+                    }
                     $j(ele[j]).fadeOut(500, function() {
                         $j(this).remove();
                     }); // 移除赞
@@ -57,32 +64,36 @@ function clearOut() {
     }
 
     // 文本匹配移除
-    for (var k = 0; k < content.length; k++) {
+    if (content.length !== 0 || multi.length !== 0) {
         var items = $j(".f-single");
-        $j(items).each(function() {
-            var text = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text();
-            if (text.indexOf(content[k]) > -1) {
-                $j(this).hide(500, function() {
-                    $j(this).remove();
-                }); // 不为评论内容时移除整体
-            }
-        })
-        var cmItems = $j("[data-type='commentroot']");
-        $j(cmItems).each(function() {
-            var text = $j(this).text();
-            if (text.indexOf(content[k]) > -1) {
-                $j(this).fadeOut(500, function() {
-                    $j(this).remove();
-                }); // 为评论内容时移除评论内容
-            }
-        })
-    };
-
+        var ctItems = $j("[data-type='commentroot']");
+        var rpItems = $j("[data-type='replyroot']");
+    }
+        for (var k = 0; k < content.length; k++) {
+            $j(items).each(function() {
+                var text = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text();
+                if (text.indexOf(content[k]) > -1) {
+                    $j(this).hide(500, function() {
+                        $j(this).remove();
+                    });
+                }
+            }) // 不为评论内容时移除整体
+            $j(rpItems).each(function() {
+                var text = $j(this).text();
+                if (text.indexOf(content[k]) > -1) $j(this).remove(); // 为评论内容时移除评论内容
+            })
+            $j(ctItems).each(function() {
+                var text = $j(this).text();
+                if (text.indexOf(content[k]) > -1) {
+                    $j(this).fadeOut(500, function() {
+                        $j(this).remove();
+                    }); // 为评论内容时移除评论内容
+                }
+            })
+        }
     // 多关键字匹配
     if (multi.length !== 0) {
-        var ele = $j(".f-single");
-        var ctEle = $j("[data-type='commentroot']");
-        var ck, ctCheck;
+        var ck, ctCheck, rpCheck;
         var allSame = 0;
         $j(multi).each(function(i) {
             var arr = multi[i].split("+");
@@ -91,7 +102,7 @@ function clearOut() {
                 else allSame = 0;
             })
             if (allSame === 1) {
-                $j(ele).each(function() {
+                $j(items).each(function() {
                     var content = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text().split("");
                     var a = 0;
                     for (var m = 0; m < content.length; m++) {
@@ -102,8 +113,16 @@ function clearOut() {
                             $j(this).remove();
                         });
                     }
-                });
-                $j(ctEle).each(function() {
+                }); // 移除说说主体
+                $j(rpItems).each(function() {
+                    var content = $j(this).text().split("");
+                    var a = 0;
+                    for (var n = 0; n < content.length; n++) {
+                        if (content[n] === arr[0]) a++;
+                    }
+                    if (a >= arr.length) $j(this).remove();
+                }); // 移除评论回复
+                $j(ctItems).each(function() {
                     var content = $j(this).text().split("");
                     var a = 0;
                     for (var n = 0; n < content.length; n++) {
@@ -114,45 +133,58 @@ function clearOut() {
                             $j(this).remove();
                         });
                     }
-                });
+                }); // 移除评论
             } // 多关键字都相同时
-            $j(arr).each(function(e) {
-                if (allSame === 1) return false;
-                $j(ele).each(function() {
+            else {
+                $j(items).each(function() {
                     var matchText = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text();
-                    if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[e]) === -1) {
-                        ck = 0;
-                        return false;
-                    } else if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[e]) !== -1) {
-                        ck = $j(this);
+                    for (var i = 0; i < arr.length; i++) {
+                        if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[i]) === -1) {
+                            ck = 0;
+                        } else if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[i]) !== -1) {
+                            ck = $j(this);
+                        }
+                    };
+                    if (ck !== undefined && ck !== 0) {
+                        $j(ck).hide(500, function() {
+                            $j(this).remove();
+                        });
                     }
-                }); // 不为评论内容时
-                $j(ctEle).each(function() {
+                }); // 不为评论内容时，移除说说主体
+                $j(rpItems).each(function() {
                     var matchText = $j(this).text();
-                    if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[e]) === -1) {
-                        ctCheck = 0;
-                        return false;
-                    } else if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[e]) !== -1) {
-                        ctCheck = $j(this);
+                    for (var i = 0; i < arr.length; i++) {
+                        if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[i]) === -1) {
+                            rpCheck = 0;
+                        } else if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[i]) !== -1) {
+                            rpCheck = $j(this);
+                        }
+                    };
+                    if (rpCheck !== undefined && rpCheck !== 0) $j(rpCheck).remove();
+                }); // 为评论回复时，移除回复
+                $j(ctItems).each(function() {
+                    var matchText = $j(this).text();
+                    for (var i = 0; i < arr.length; i++) {
+                        if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[i]) === -1) {
+                            ctCheck = 0;
+                        } else if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[i]) !== -1) {
+                            ctCheck = $j(this);
+                        }
+                    };
+                    if (ctCheck !== undefined && ctCheck !== 0) {
+                        $j(ctCheck).fadeOut(500, function() {
+                            $j(this).remove();
+                        });
                     }
-                }); // 为评论内容时
-            });
-            if (ck !== undefined && ck !== 0) {
-                $j(ck).hide(500, function() {
-                    $j(this).remove();
-                });
-            };
-            if (ctCheck !== undefined && ctCheck !== 0) {
-                $j(ctCheck).fadeOut(500, function() {
-                    $j(this).remove();
-                });
-            };
+                }); // 为评论内容时，移除评论
+            }
         })
     };
 }
 clearOut();
 
 var page = -1;
+
 function check() {
     var tempPage = $j("ul[data-page]:last").data("page"); // 获取瀑布流加载的页码
     if (tempPage > page) {
@@ -160,7 +192,7 @@ function check() {
         page = $j("ul[data-page]:last").data("page");
     }
 }
-setInterval(check, 1000);
+setInterval(check, 1000); // 监听瀑布流新内容载入
 $j(".icon-refresh, #tab_menu_list a").click(function() {
     page = -1;
     var a = 0;
