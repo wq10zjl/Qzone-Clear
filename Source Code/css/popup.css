@@ -193,7 +193,7 @@ h4 span {
   letter-spacing: .3em;
   text-shadow: 0 1px 0 #d3d3d3;
 }
-#content, #uid h4 b, h2, input, button {
+#content, #uid h4 b, h2, input, button,.backinfo {
   font-family: "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 }
 #tips {
@@ -307,13 +307,14 @@ h4 span {
   display: none;
   width: 325px;
   left: 50%;
-  top: 100px;
-  padding: 20px;
+  top: 17%;
+  padding: 20px 20px 10px;
   margin-left: -180px;
   background: rgba(17, 17, 17, 0.78);
   color: #eee;
   border-radius: 10px;
   box-shadow: 0 0 3px #000;
+  z-index: 1;
 }
 .ok {
   float: left;
@@ -323,11 +324,9 @@ h4 span {
 }
 .title {
   float: left;
-  padding-left: 5px;
   font-size: 2em;
   color: rgba(205, 255, 0, 0.83);
-  line-height: 44px;
-  letter-spacing: .2em;
+  line-height: 49px;
   letter-spacing: 5px;
 }
 table {
@@ -341,8 +340,12 @@ tr td:first-child {
 tr:first-child td {
   border-bottom: 1px solid #8a8a8a;
 }
-
 td {
   padding: 15px 5px;
   vertical-align: top;
+}
+.backinfo p {
+  float: left;
+  margin-top: -5px;
+  color: #f60;
 }

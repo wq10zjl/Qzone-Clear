@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     "backup": data,
                     "time": Date()
                 })
-                var info = "<div class='title'>数据备份成功！</div><table><tr><td>备份时间：</td><td>" + localStorage.getItem("time") + "</td></tr><tr><td>备份数据：</td><td>" + localStorage.getItem("backup") + "</td></tr></table>";
+                var info = "<div class='title'>数据备份成功！</div><table><tr><td>备份时间：</td><td>" + localStorage.getItem("time") + "</td></tr><tr><td>备份数据：</td><td>" + localStorage.getItem("backup") + "</td></tr></table><p>当 Chrome 登录有账户时，数据会进行同步</p>";
                 $(".text").html(info);
                 $(".backinfo").fadeIn(1000).delay(1500).fadeOut(1000);
             }
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     "backup": data,
                     "time": Date()
                 })
-                var info = "<div class='title'>数据备份成功！</div><table><tr><td>备份时间：</td><td>" + localStorage.getItem("time") + "</td></tr><tr><td>备份数据：</td><td>" + localStorage.getItem("backup") + "</td></tr></table>";
+                var info = "<div class='title'>数据备份成功！</div><table><tr><td>备份时间：</td><td>" + localStorage.getItem("time") + "</td></tr><tr><td>备份数据：</td><td>" + localStorage.getItem("backup") + "</td></tr></table><p>当 Chrome 登录有账户时，数据会进行同步</p>";
                 $(".text").html(info);
                 $(".backinfo").fadeIn(1000).delay(1500).fadeOut(1000);
             }
