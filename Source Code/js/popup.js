@@ -47,11 +47,17 @@ document.addEventListener('DOMContentLoaded', function() {
         var checkNum = b.match(/[^\d]/g);
         if (checkNum !== null) {
             $(addon).appendTo(".list #content").fadeIn(500);
+            $(".list").animate({
+                scrollTop: $("#uid").height() + $("#content").height() - 110
+            }, "slow"); // 滚动到当前高度
             $(".highlight").delay(500).fadeOut(2000, function() {
                 $(this).remove();
-            });
+            }); // 高亮叠加
         } else {
             $(addon).appendTo(".list #uid").fadeIn(500);
+            $(".list").animate({
+                scrollTop: $("#uid").height() - 110
+            }, "slow");
             $(".highlight").delay(500).fadeOut(2000, function() {
                 $(this).remove();
             });
@@ -103,10 +109,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     $("input").focus(function() {
-        $("#tips").fadeIn();
+        $("#tips").show();
+        $("#tips").animate({
+            top: 40,
+            opacity: 1
+        })
     });
     $("input").blur(function() {
-        $("#tips").fadeOut();
+        $("#tips").fadeOut(500, function() {
+            $(this).css({
+                top: 60,
+                opacity: 0
+            })
+        })
     });
     $(".toggle span").click(function() {
         var text = $(this).text();

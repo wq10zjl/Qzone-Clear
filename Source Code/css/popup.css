@@ -144,7 +144,6 @@ i:hover {
   border-radius: 50%;
   opacity: .7;
   font-family: "Microsoft Yahei";
-  -webkit-transform: rotate(0);
 }
 i:hover .close {
   display: block;
@@ -201,7 +200,8 @@ h4 span {
   display: none;
   position: absolute;
   width: 330px;
-  top: 40px;
+  top: 60px;
+  opacity: 0;
   padding: 0 20px;
   background: rgba(17, 17, 17, 0.86);
   color: #f3f3f3;
@@ -239,7 +239,7 @@ h4 span {
   display: block;
   width: 100%;
   height: 100%;
-  background: #ff5;
+  background: #ffc5cf;
   z-index: -1;
 }
 .panel {
