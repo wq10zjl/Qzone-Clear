@@ -69,28 +69,28 @@ function clearOut() {
         var ctItems = $j("[data-type='commentroot']");
         var rpItems = $j("[data-type='replyroot']");
     }
-        for (var k = 0; k < content.length; k++) {
-            $j(items).each(function() {
-                var text = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text();
-                if (text.indexOf(content[k]) > -1) {
-                    $j(this).hide(500, function() {
-                        $j(this).remove();
-                    });
-                }
-            }) // 不为评论内容时移除整体
-            $j(rpItems).each(function() {
-                var text = $j(this).text();
-                if (text.indexOf(content[k]) > -1) $j(this).remove(); // 为评论回复时移除评论回复
-            })
-            $j(ctItems).each(function() {
-                var text = $j(this).text();
-                if (text.indexOf(content[k]) > -1) {
-                    $j(this).hide(500, function() {
-                        $j(this).remove();
-                    }); // 为评论内容时移除评论内容
-                }
-            })
-        }
+    for (var k = 0; k < content.length; k++) {
+        $j(items).each(function() {
+            var text = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text();
+            if (text.indexOf(content[k]) > -1) {
+                $j(this).hide(500, function() {
+                    $j(this).remove();
+                });
+            }
+        }) // 不为评论内容时移除整体
+        $j(rpItems).each(function() {
+            var text = $j(this).text();
+            if (text.indexOf(content[k]) > -1) $j(this).remove(); // 为评论回复时移除评论回复
+        })
+        $j(ctItems).each(function() {
+            var text = $j(this).text();
+            if (text.indexOf(content[k]) > -1) {
+                $j(this).hide(500, function() {
+                    $j(this).remove();
+                }); // 为评论内容时移除评论内容
+            }
+        })
+    }
     // 多关键字匹配
     if (multi.length !== 0) {
         var allSame = 0;
@@ -98,10 +98,13 @@ function clearOut() {
             var arr = multi[i].split("+");
             $j(arr).each(function(i) {
                 if (arr[0] === arr[i]) allSame = 1;
-                else allSame = 0;
+                else {
+                    allSame = 0;
+                    return false;
+                }
             })
             if (allSame === 1) {
-                var regex = new RegExp(arr[0],"g");
+                var regex = new RegExp(arr[0], "g");
                 $j(items).each(function() {
                     var content = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text().match(regex);
                     if (content !== null && content.length >= arr.length) {
@@ -128,10 +131,11 @@ function clearOut() {
                     var matchText = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text();
                     for (var i = 0; i < arr.length; i++) {
                         if (matchText.indexOf(arr[i]) === -1) {
-                            matchText = "";
+                            matchText = false;
+                            break;
                         }
                     };
-                    if (matchText !== "") {
+                    if (matchText !== false) {
                         $j(this).hide(500, function() {
                             $j(this).remove();
                         });
@@ -141,19 +145,21 @@ function clearOut() {
                     var matchText = $j(this).text();
                     for (var i = 0; i < arr.length; i++) {
                         if (matchText.indexOf(arr[i]) === -1) {
-                            matchText = "";
+                            matchText = false;
+                            break;
                         }
                     };
-                    if (matchText !== "") $j(this).remove();
+                    if (matchText !== false) $j(this).remove();
                 }); // 为评论回复时，移除回复
                 $j(ctItems).each(function() {
                     var matchText = $j(this).text();
                     for (var i = 0; i < arr.length; i++) {
                         if (matchText.indexOf(arr[i]) === -1) {
-                            matchText = "";
+                            matchText = false;
+                            break;
                         }
                     };
-                    if (matchText !== "") {
+                    if (matchText !== false) {
                         $j(this).hide(500, function() {
                             $j(this).remove();
                         });
@@ -166,7 +172,6 @@ function clearOut() {
 clearOut();
 
 var page = -1;
-
 function check() {
     var tempPage = $j("ul[data-page]:last").data("page"); // 获取瀑布流加载的页码
     if (tempPage > page) {
