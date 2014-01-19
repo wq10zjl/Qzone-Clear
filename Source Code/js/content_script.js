@@ -80,7 +80,7 @@ function clearOut() {
             }) // 不为评论内容时移除整体
             $j(rpItems).each(function() {
                 var text = $j(this).text();
-                if (text.indexOf(content[k]) > -1) $j(this).remove(); // 为评论内容时移除评论内容
+                if (text.indexOf(content[k]) > -1) $j(this).remove(); // 为评论回复时移除评论回复
             })
             $j(ctItems).each(function() {
                 var text = $j(this).text();
@@ -101,33 +101,22 @@ function clearOut() {
                 else allSame = 0;
             })
             if (allSame === 1) {
+                var regex = new RegExp(arr[0],"g");
                 $j(items).each(function() {
-                    var content = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text().split("");
-                    var a = 0;
-                    for (var m = 0; m < content.length; m++) {
-                        if (content[m] === arr[0]) a++;
-                    }
-                    if (a >= arr.length) {
+                    var content = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text().match(regex);
+                    if (content !== null && content.length >= arr.length) {
                         $j(this).hide(500, function() {
                             $j(this).remove();
                         });
                     }
                 }); // 移除说说主体
                 $j(rpItems).each(function() {
-                    var content = $j(this).text().split("");
-                    var a = 0;
-                    for (var n = 0; n < content.length; n++) {
-                        if (content[n] === arr[0]) a++;
-                    }
-                    if (a >= arr.length) $j(this).remove();
+                    var content = $j(this).text().match(regex);
+                    if (content !== null && content.length >= arr.length) $j(this).remove();
                 }); // 移除评论回复
                 $j(ctItems).each(function() {
-                    var content = $j(this).text().split("");
-                    var a = 0;
-                    for (var n = 0; n < content.length; n++) {
-                        if (content[n] === arr[0]) a++;
-                    }
-                    if (a >= arr.length) {
+                    var content = $j(this).text().match(regex);
+                    if (content !== null && content.length >= arr.length) {
                         $j(this).hide(500, function() {
                             $j(this).remove();
                         });
