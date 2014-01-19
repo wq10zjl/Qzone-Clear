@@ -3,7 +3,7 @@
 	"minimum_chrome_version": "20",
 	"name": "Qzone Clear",
 	"homepage_url": "https://github.com/idiotWu/Qzone-Clear",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"description": "Qzone 屏蔽好友动态加强版：输入好友QQ号即可屏蔽 *其动态* 及 *其在其它好友动态下的评论*。Made by Dolphin.",
 	"icons": {
 		"128": "icon/icon_128.png"

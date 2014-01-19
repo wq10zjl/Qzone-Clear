@@ -47,11 +47,11 @@ function clearOut() {
                     } // 移除转发
                     var isComment = $j(ele[j]).parents("[data-type='replyroot']")[0];
                     if (isComment !== undefined) {
-                        $j(isComment).fadeOut(500, function() {
+                        $j(isComment).hide(500, function() {
                             $j(this).remove(); // 移除说说评论
                         });
                     } else {
-                        $j(ele[j]).parents("[data-type='commentroot']").fadeOut(500, function() {
+                        $j(ele[j]).parents("[data-type='commentroot']").hide(500, function() {
                             $j(this).remove(); // 移除说说评论回复
                         });
                     }
@@ -85,7 +85,7 @@ function clearOut() {
             $j(ctItems).each(function() {
                 var text = $j(this).text();
                 if (text.indexOf(content[k]) > -1) {
-                    $j(this).fadeOut(500, function() {
+                    $j(this).hide(500, function() {
                         $j(this).remove();
                     }); // 为评论内容时移除评论内容
                 }
@@ -93,7 +93,6 @@ function clearOut() {
         }
     // 多关键字匹配
     if (multi.length !== 0) {
-        var ck, ctCheck, rpCheck;
         var allSame = 0;
         $j(multi).each(function(i) {
             var arr = multi[i].split("+");
@@ -129,7 +128,7 @@ function clearOut() {
                         if (content[n] === arr[0]) a++;
                     }
                     if (a >= arr.length) {
-                        $j(this).fadeOut(500, function() {
+                        $j(this).hide(500, function() {
                             $j(this).remove();
                         });
                     }
@@ -139,14 +138,12 @@ function clearOut() {
                 $j(items).each(function() {
                     var matchText = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text();
                     for (var i = 0; i < arr.length; i++) {
-                        if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[i]) === -1) {
-                            ck = 0;
-                        } else if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[i]) !== -1) {
-                            ck = $j(this);
+                        if (matchText.indexOf(arr[i]) === -1) {
+                            matchText = "";
                         }
                     };
-                    if (ck !== undefined && ck !== 0) {
-                        $j(ck).hide(500, function() {
+                    if (matchText !== "") {
+                        $j(this).hide(500, function() {
                             $j(this).remove();
                         });
                     }
@@ -154,25 +151,21 @@ function clearOut() {
                 $j(rpItems).each(function() {
                     var matchText = $j(this).text();
                     for (var i = 0; i < arr.length; i++) {
-                        if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[i]) === -1) {
-                            rpCheck = 0;
-                        } else if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[i]) !== -1) {
-                            rpCheck = $j(this);
+                        if (matchText.indexOf(arr[i]) === -1) {
+                            matchText = "";
                         }
                     };
-                    if (rpCheck !== undefined && rpCheck !== 0) $j(rpCheck).remove();
+                    if (matchText !== "") $j(this).remove();
                 }); // 为评论回复时，移除回复
                 $j(ctItems).each(function() {
                     var matchText = $j(this).text();
                     for (var i = 0; i < arr.length; i++) {
-                        if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[i]) === -1) {
-                            ctCheck = 0;
-                        } else if (matchText.indexOf(arr[0]) !== -1 && matchText.indexOf(arr[i]) !== -1) {
-                            ctCheck = $j(this);
+                        if (matchText.indexOf(arr[i]) === -1) {
+                            matchText = "";
                         }
                     };
-                    if (ctCheck !== undefined && ctCheck !== 0) {
-                        $j(ctCheck).fadeOut(500, function() {
+                    if (matchText !== "") {
+                        $j(this).hide(500, function() {
                             $j(this).remove();
                         });
                     }

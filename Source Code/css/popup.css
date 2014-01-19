@@ -315,6 +315,7 @@ h4 span {
   border-radius: 10px;
   box-shadow: 0 0 3px #000;
   z-index: 1;
+  cursor: default;
 }
 .ok {
   float: left;
