@@ -93,17 +93,17 @@ function clearOut() {
     }
     // 多关键字匹配
     if (multi.length !== 0) {
-        var allSame = 0;
+        var allSame;
         $j(multi).each(function(i) {
             var arr = multi[i].split("+");
             $j(arr).each(function(i) {
-                if (arr[0] === arr[i]) allSame = 1;
+                if (arr[0] === arr[i]) allSame = true;
                 else {
-                    allSame = 0;
+                    allSame = false;
                     return false;
                 }
             })
-            if (allSame === 1) {
+            if (allSame === true) {
                 var regex = new RegExp(arr[0], "g");
                 $j(items).each(function() {
                     var content = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text().match(regex);
