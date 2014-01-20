@@ -23,7 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function addEle(e) {
         var a = $("input").val();
-        var b = $("input").val().split(" ").join("");
+        var b = a.split(" ").join("");
+        var c = b.split("+").join("");
         for (var i = 0; i < e.length; i++) {
             if (a === "" || b === "") {
                 alert("请输入内容！");
@@ -37,6 +38,10 @@ document.addEventListener('DOMContentLoaded', function() {
             alert("输入内容太长了！");
             return false;
         }
+        if (b.indexOf("+") === 0 || c.length === 0) {
+            alert("输入非法！");
+            return false;
+        };
         var addon = "<i style='display:none'>" + b + "<span class='close'>×</span><b class='highlight'></b></i>";
         var checkNum = b.match(/[^\d]/g);
         if (checkNum !== null) {
