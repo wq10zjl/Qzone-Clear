@@ -150,8 +150,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     "backup": data,
                     "time": Date()
                 })
-                var info = "<div class='title'>数据备份成功！</div><table><tr><td>备份时间：</td><td>" + localStorage.getItem("time") + "</td></tr><tr><td>备份数据：</td><td>" + localStorage.getItem("backup") + "</td></tr></table><p>当 Chrome 登录有账户时，数据会进行同步</p>";
+                var info = "<table><tr><td>备份时间：</td><td>" + localStorage.getItem("time") + "</td></tr><tr><td>备份数据：</td><td>" + localStorage.getItem("backup") + "</td></tr></table>";
+                $(".backinfo p").show();
                 $(".text").html(info);
+                $(".title").text("数据备份成功！");
                 $(".backinfo").fadeIn(1000).delay(1500).fadeOut(1000);
             }
         } else {
@@ -167,8 +169,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     "backup": data,
                     "time": Date()
                 })
-                var info = "<div class='title'>数据备份成功！</div><table><tr><td>备份时间：</td><td>" + localStorage.getItem("time") + "</td></tr><tr><td>备份数据：</td><td>" + localStorage.getItem("backup") + "</td></tr></table><p>当 Chrome 登录有账户时，数据会进行同步</p>";
+                var info = "<table><tr><td>备份时间：</td><td>" + localStorage.getItem("time") + "</td></tr><tr><td>备份数据：</td><td>" + localStorage.getItem("backup") + "</td></tr></table>";
+                $(".backinfo p").show();
                 $(".text").html(info);
+                $(".title").text("数据备份成功！");
                 $(".backinfo").fadeIn(1000).delay(1500).fadeOut(1000);
             }
         }
@@ -186,8 +190,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem("hidePart", a);
                 $(".list i").remove();
                 winOn();
-                var info = "<div class='title'>本地恢复成功！</div>";
-                $(".text").html(info);
+                $(".backinfo p").hide();
+                $(".text").html("");
+                $(".title").text("本地恢复成功！");
                 $(".backinfo").fadeIn(1000).delay(1000).fadeOut(1000);
             }
         } else if ((a === null && b !== "undefined") || (a !== null && b !== "undefined")) {
@@ -196,8 +201,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem("hidePart", b);
                 $(".list i").remove();
                 winOn();
-                var info = "<div class='title'>云端恢复成功！</div>";
-                $(".text").html(info);
+                $(".backinfo p").hide();
+                $(".text").html("");
+                $(".title").text("云端恢复成功！");
                 $(".backinfo").fadeIn(1000).delay(1000).fadeOut(1000);
             };
         }
