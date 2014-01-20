@@ -1,11 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
     function refresh() {
-        $(".close").click(function() {
-            $(this).parents("i").fadeOut(500, function() {
-                $(this).remove();
-                refresh(); // 回调函数，刷新hidePart
-            });
-        });
         if ($(".list i").length !== 0) {
             $(".clearout, h4").show();
         } else {
@@ -87,6 +81,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     winOn(); // 获取hidePart，并在extension中显示
 
+    $(".list").on("click", ".close", function() {
+        $(this).parents("i").fadeOut(500, function() {
+            $(this).remove();
+            refresh();
+        });
+    });
     $("input").keydown(function(e) {
         if (e.keyCode == 13) {
             var b = $(".list i").text().split("×");

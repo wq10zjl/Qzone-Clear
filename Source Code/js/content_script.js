@@ -66,8 +66,7 @@ function clearOut() {
     // 文本匹配移除
     if (content.length !== 0 || multi.length !== 0) {
         var items = $j(".f-single");
-        var ctItems = $j("[data-type='commentroot']");
-        var rpItems = $j("[data-type='replyroot']");
+        var comments = $j(".comments-content");
     }
     for (var k = 0; k < content.length; k++) {
         $j(items).each(function() {
@@ -78,16 +77,19 @@ function clearOut() {
                 });
             }
         }) // 不为评论内容时移除整体
-        $j(rpItems).each(function() {
-            var text = $j(this).text();
-            if (text.indexOf(content[k]) > -1) $j(this).remove(); // 为评论回复时移除评论回复
-        })
-        $j(ctItems).each(function() {
+        $j(comments).each(function() {
             var text = $j(this).text();
             if (text.indexOf(content[k]) > -1) {
-                $j(this).hide(500, function() {
-                    $j(this).remove();
-                }); // 为评论内容时移除评论内容
+                var isComment = $j(this).parents("[data-type='replyroot']")[0];
+                if (isComment !== undefined) {
+                    $j(isComment).hide(500, function() {
+                        $j(this).remove(); // 移除说说评论
+                    });
+                } else {
+                    $j(this).parents("[data-type='commentroot']").hide(500, function() {
+                        $j(this).remove(); // 移除说说评论回复
+                    });
+                }
             }
         })
     }
@@ -113,16 +115,19 @@ function clearOut() {
                         });
                     }
                 }); // 移除说说主体
-                $j(rpItems).each(function() {
-                    var content = $j(this).text().match(regex);
-                    if (content !== null && content.length >= arr.length) $j(this).remove();
-                }); // 移除评论回复
-                $j(ctItems).each(function() {
+                $j(comments).each(function() {
                     var content = $j(this).text().match(regex);
                     if (content !== null && content.length >= arr.length) {
-                        $j(this).hide(500, function() {
-                            $j(this).remove();
-                        });
+                        var isComment = $j(this).parents("[data-type='replyroot']")[0];
+                        if (isComment !== undefined) {
+                            $j(isComment).hide(500, function() {
+                                $j(this).remove(); // 移除说说评论
+                            });
+                        } else {
+                            $j(this).parents("[data-type='commentroot']").hide(500, function() {
+                                $j(this).remove(); // 移除说说评论回复
+                            });
+                        }
                     }
                 }); // 移除评论
             } // 多关键字都相同时
@@ -141,17 +146,7 @@ function clearOut() {
                         });
                     }
                 }); // 不为评论内容时，移除说说主体
-                $j(rpItems).each(function() {
-                    var matchText = $j(this).text();
-                    for (var i = 0; i < arr.length; i++) {
-                        if (matchText.indexOf(arr[i]) === -1) {
-                            matchText = false;
-                            break;
-                        }
-                    };
-                    if (matchText !== false) $j(this).remove();
-                }); // 为评论回复时，移除回复
-                $j(ctItems).each(function() {
+                $j(comments).each(function() {
                     var matchText = $j(this).text();
                     for (var i = 0; i < arr.length; i++) {
                         if (matchText.indexOf(arr[i]) === -1) {
@@ -160,11 +155,18 @@ function clearOut() {
                         }
                     };
                     if (matchText !== false) {
-                        $j(this).hide(500, function() {
-                            $j(this).remove();
-                        });
+                        var isComment = $j(this).parents("[data-type='replyroot']")[0];
+                        if (isComment !== undefined) {
+                            $j(isComment).hide(500, function() {
+                                $j(this).remove(); // 移除说说评论
+                            });
+                        } else {
+                            $j(this).parents("[data-type='commentroot']").hide(500, function() {
+                                $j(this).remove(); // 移除说说评论回复
+                            });
+                        }
                     }
-                }); // 为评论内容时，移除评论
+                }); // 为评论回复时，移除回复
             }
         })
     };
@@ -172,6 +174,7 @@ function clearOut() {
 clearOut();
 
 var page = -1;
+
 function check() {
     var tempPage = $j("ul[data-page]:last").data("page"); // 获取瀑布流加载的页码
     if (tempPage > page) {
