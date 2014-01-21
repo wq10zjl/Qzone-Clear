@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function addEle(e) {
-        var a = $("input").val();
+        var a = $("#input").val();
         var b = a.split(" ").join("");
         var c = b.split("+").join("");
         for (var i = 0; i < e.length; i++) {
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 $(this).remove();
             });
         }
-        $("input").val("");
+        $("#input").val("");
         refresh();
     } // 显示新元素
 
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
             refresh();
         });
     });
-    $("input").keydown(function(e) {
+    $("#input").keydown(function(e) {
         if (e.keyCode == 13) {
             var b = $(".list i").text().split("×");
             addEle(b);
@@ -113,14 +113,14 @@ document.addEventListener('DOMContentLoaded', function() {
             chrome.storage.local.remove("hidePart")
         }
     });
-    $("input").focus(function() {
+    $("#input").focus(function() {
         $("#tips").show();
         $("#tips").animate({
             top: 40,
             opacity: 1
         })
     });
-    $("input").blur(function() {
+    $("#input").blur(function() {
         $("#tips").fadeOut(500, function() {
             $(this).css({
                 top: 60,
@@ -208,4 +208,58 @@ document.addEventListener('DOMContentLoaded', function() {
             };
         }
     }); // 恢复数据
+    
+    // 设置选项
+    var userSet;
+    var setting;
+    userSet = localStorage.setting;
+    if (userSet) setting = JSON.parse(userSet);
+    else {
+        setting = {
+            moveMood: true,
+            moveLike: true,
+            moveComment: true,
+            moveReply: true
+        };
+    }
+
+    function init() {
+        $("#moveMood")[0].checked = setting.moveMood;
+        $("#moveLike")[0].checked = setting.moveLike;
+        $("#moveComment")[0].checked = setting.moveComment;
+        $("#moveReply")[0].checked = setting.moveReply;
+    }
+
+    function save() {
+        setting.moveMood = $("#moveMood")[0].checked;
+        setting.moveLike = $("#moveLike")[0].checked;
+        setting.moveComment = $("#moveComment")[0].checked;
+        setting.moveReply = $("#moveReply")[0].checked;
+        var saveData = JSON.stringify(setting);
+        localStorage.setting = saveData;
+        chrome.storage.local.set({
+            "setting": saveData
+        })
+    }
+
+    $("#submit").click(function() {
+        save();
+        $(".setting").fadeOut(500,function() {
+            $("body").css("min-height",0)
+        });
+    });
+    $("#cancel,#closex").click(function() {
+        $(".setting").fadeOut(500,function() {
+            $("body").css("min-height",0)
+        });
+    })
+    $("#openSet").click(function(event) {
+        event.preventDefault();
+        init();
+        $(".setting").fadeIn();
+        $("body").css("min-height",220)
+    })
+    $("#donate").click(function() {
+         window.open($(this).attr("href"));
+    })
 });

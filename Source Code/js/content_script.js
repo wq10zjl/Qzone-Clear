@@ -1,19 +1,38 @@
 ﻿(function() {
     chrome.storage.onChanged.addListener(function(changes, areaName) {
-        var hidePart = changes.hidePart.newValue;
-        localStorage.setItem("hidePart", hidePart);
-        clearOut();
+        if (changes.hidePart) {
+            var hidePart = changes.hidePart.newValue;
+            localStorage.setItem("hidePart", hidePart);
+            clearOut();
+        }
+        if (changes.setting) {
+            var setting = changes.setting.newValue;
+            localStorage.setItem("setting", setting);
+            clearOut();
+        };
     })
 })(); // 获取extension储存的uid，转存入localStorage
 
 var $j = jQuery.noConflict();
 
 function clearOut() {
+    var setting;
+    var userSet = localStorage.setting;
+    if (userSet) setting = JSON.parse(userSet);
+    else {
+        setting = {
+            moveMood: true,
+            moveLike: true,
+            moveComment: true,
+            moveReply: true
+        };
+    }
+    if (!setting.moveMood && !setting.moveLike && !setting.moveComment && !setting.moveReply) return false;
     var content = [];
     var multi = [];
     var ele = $j(".q_namecard,.f-like .item");
-    if (localStorage.getItem("hidePart") === "undefined") return false;
-    if (localStorage.getItem("hidePart") !== null) {
+    if (!localStorage.getItem("hidePart") || localStorage.getItem("hidePart") === "undefined") return false;
+    if (localStorage.getItem("hidePart")) {
         var target = localStorage.getItem("hidePart").split(",");
     }
     if (target === "") return false;
@@ -23,41 +42,48 @@ function clearOut() {
         } else {
             var num = target[i].split(/[^\d]/g).join(""); // 获取数字部分
             var temp = target[i].match(/[^\d]/g);
-            if (temp !== null) {
+            if (temp) {
                 content.push(temp.join(""))
             } // 获得单关键字部分
         }
 
         // uid 匹配移除
         for (var j = 0; j < ele.length; j++) {
-            if ($j(ele[j]).attr("href") !== undefined) {
+            if ($j(ele[j]).attr("href")) {
                 var url = $j(ele[j]).attr("href"); // 获得好友空间url
                 var uid = url.split(/[^\d]/g).join(""); // 获得url中的数字部分（QQ号码）
                 if (uid === num) {
-                    var check = $j(ele[j]).parents(".f-single").attr("id");
-                    if (check !== undefined && check.indexOf(num) > -1) {
-                        $j(ele[j]).parents(".f-single").hide(500, function() {
-                            $j(this).remove();
-                        });
-                    } // 移除说说整体
-                    if ($j(ele[j]).parents(".txt-box")[0] !== undefined) {
-                        $j(ele[j]).parents(".f-single").hide(500, function() {
-                            $j(this).remove();
-                        });
-                    } // 移除转发
-                    var isComment = $j(ele[j]).parents("[data-type='replyroot']")[0];
-                    if (isComment !== undefined) {
-                        $j(isComment).hide(500, function() {
-                            $j(this).remove(); // 移除说说评论
-                        });
-                    } else {
-                        $j(ele[j]).parents("[data-type='commentroot']").hide(500, function() {
+                    var check = $j(ele[j]).closest(".f-single").attr("id");
+                    if (setting.moveMood) {
+                        if (check && check.indexOf(num) > -1) {
+                            $j(ele[j]).closest(".f-single").hide(500, function() {
+                                $j(this).remove();
+                            });
+                        } // 移除说说整体
+                        if ($j(ele[j]).closest(".txt-box")[0]) {
+                            $j(ele[j]).closest(".f-single").hide(500, function() {
+                                $j(this).remove();
+                            });
+                        }
+                    }; // 移除转发
+                    var isReply = $j(ele[j]).closest("[data-type='replyroot']")[0];
+                    var isComment = $j(ele[j]).parent().parent().parent("[data-type='commentroot']")[0];
+                    var isLike = $j(ele[j]).closest(".f-like")[0];
+                    if (setting.moveReply && isReply) {
+                        $j(isReply).hide(500, function() {
                             $j(this).remove(); // 移除说说评论回复
                         });
                     }
-                    $j(ele[j]).fadeOut(500, function() {
-                        $j(this).remove();
-                    }); // 移除赞
+                    if (setting.moveComment && isComment) {
+                        $j(isComment).hide(500, function() {
+                            $j(this).remove(); // 移除说说评论
+                        });
+                    }
+                    if (setting.moveLike && isLike) {
+                        $j(ele[j]).fadeOut(500, function() {
+                            $j(this).remove();
+                        }); // 移除赞
+                    };
                 }
             }
         }
@@ -65,8 +91,8 @@ function clearOut() {
 
     // 文本匹配移除
     if (content.length !== 0 || multi.length !== 0) {
-        var items = $j(".f-single");
-        var comments = $j(".comments-content");
+        if (setting.moveMood) var items = $j(".f-single");
+        if (setting.moveComment || setting.moveReply) var comments = $j(".comments-content");
     }
     for (var k = 0; k < content.length; k++) {
         $j(items).each(function() {
@@ -80,14 +106,15 @@ function clearOut() {
         $j(comments).each(function() {
             var text = $j(this).text();
             if (text.indexOf(content[k]) > -1) {
-                var isComment = $j(this).parents("[data-type='replyroot']")[0];
-                if (isComment !== undefined) {
+                var isReply = $j(this).closest("[data-type='replyroot']")[0];
+                var isComment = $j(this).parent().parent("[data-type='commentroot']")[0];
+                if (setting.moveReply && isReply) {
+                    $j(isReply).hide(500, function() {
+                        $j(this).remove(); // 移除说说评论回复
+                    });
+                } else if (setting.moveComment && isComment) {
                     $j(isComment).hide(500, function() {
                         $j(this).remove(); // 移除说说评论
-                    });
-                } else {
-                    $j(this).parents("[data-type='commentroot']").hide(500, function() {
-                        $j(this).remove(); // 移除说说评论回复
                     });
                 }
             }
@@ -105,11 +132,11 @@ function clearOut() {
                     return false;
                 }
             })
-            if (allSame === true) {
+            if (allSame) {
                 var regex = new RegExp(arr[0], "g");
                 $j(items).each(function() {
                     var content = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text().match(regex);
-                    if (content !== null && content.length >= arr.length) {
+                    if (content && content.length >= arr.length) {
                         $j(this).hide(500, function() {
                             $j(this).remove();
                         });
@@ -117,15 +144,16 @@ function clearOut() {
                 }); // 移除说说主体
                 $j(comments).each(function() {
                     var content = $j(this).text().match(regex);
-                    if (content !== null && content.length >= arr.length) {
-                        var isComment = $j(this).parents("[data-type='replyroot']")[0];
-                        if (isComment !== undefined) {
+                    if (content && content.length >= arr.length) {
+                        var isReply = $j(this).closest("[data-type='replyroot']")[0];
+                        var isComment = $j(this).parent().parent("[data-type='commentroot']")[0];
+                        if (setting.moveReply && isReply) {
+                            $j(isReply).hide(500, function() {
+                                $j(this).remove(); // 移除说说评论回复
+                            });
+                        } else if (setting.moveComment && isComment) {
                             $j(isComment).hide(500, function() {
                                 $j(this).remove(); // 移除说说评论
-                            });
-                        } else {
-                            $j(this).parents("[data-type='commentroot']").hide(500, function() {
-                                $j(this).remove(); // 移除说说评论回复
                             });
                         }
                     }
@@ -140,7 +168,7 @@ function clearOut() {
                             break;
                         }
                     };
-                    if (matchText !== false) {
+                    if (matchText) {
                         $j(this).hide(500, function() {
                             $j(this).remove();
                         });
@@ -154,19 +182,20 @@ function clearOut() {
                             break;
                         }
                     };
-                    if (matchText !== false) {
-                        var isComment = $j(this).parents("[data-type='replyroot']")[0];
-                        if (isComment !== undefined) {
+                    if (matchText) {
+                        var isReply = $j(this).closest("[data-type='replyroot']")[0];
+                        var isComment = $j(this).parent().parent("[data-type='commentroot']")[0];
+                        if (setting.moveReply && isReply) {
+                            $j(isReply).hide(500, function() {
+                                $j(this).remove(); // 移除说说评论回复
+                            });
+                        } else if (setting.moveComment && isComment) {
                             $j(isComment).hide(500, function() {
                                 $j(this).remove(); // 移除说说评论
                             });
-                        } else {
-                            $j(this).parents("[data-type='commentroot']").hide(500, function() {
-                                $j(this).remove(); // 移除说说评论回复
-                            });
                         }
                     }
-                }); // 为评论回复时，移除回复
+                });
             }
         })
     };

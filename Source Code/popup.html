@@ -19,31 +19,71 @@
             <span>备份 / 还原</span>
         </div>
     </div>
-    <div class="wrapper">
-        <input type="text" placeholder="输入好友QQ号码、备注名称或关键词">
+    <div class="input">
+        <input type="text" placeholder="输入好友QQ号码、备注名称或关键词" id="input">
         <button class="submit">添加</button>
         <div id="tips">
-            <p>多关键字请用<span> + </span>隔开</p>
-            <p>如<span> “家里+冷”</span></p>
-            <p>当说说 / 评论内容<span> 同时含有“家里”和“冷”时</span>，说说 / 评论将被移除。</p>
+            <p>多关键字请用
+                <span>+</span>隔开</p>
+            <p>如
+                <span>“家里+冷”</span>
+            </p>
+            <p>当说说 / 评论内容
+                <span>同时含有“家里”和“冷”时</span>，说说 / 评论将被移除。</p>
         </div>
     </div>
     <div class="list">
         <section id="uid">
-            <h4><span style="top: 2px;">QQ<b>号码：</b></span></h4>
+            <h4>
+                <span style="top: 2px;">QQ<b>号码：</b>
+                </span>
+            </h4>
         </section>
         <section id="content">
-            <h4><span>备注名和关键字：</span></h4>
+            <h4>
+                <span>备注名和关键字：</span>
+            </h4>
         </section>
     </div>
-    <button class="clearout">清空所有</button>
     <div class="backinfo">
-        <div class="ok">✔<span class="title"></span></div>
+        <div class="ok">✔
+            <span class="title"></span>
+        </div>
         <div class="text">
-            
+
         </div>
         <p>当 Chrome 登录有账户时，数据会进行同步</p>
     </div>
+    <div class="setting">
+        <div id="closex">×</div>
+        <h3>设置选项</h3>
+        <img src="/icon/icon_128.png">
+        <div id="setting">
+            <div class="check">
+                <input type="checkbox" id="moveMood">
+                <label for="moveMood">移除说说</label>
+            </div>
+            <div class="check">
+                <input type="checkbox" id="moveLike">
+                <label for="moveLike">移除赞</label>
+            </div>
+            <div class="check">
+                <input type="checkbox" id="moveComment">
+                <label for="moveComment">移除评论</label>
+            </div>
+            <div class="check">
+                <input type="checkbox" id="moveReply">
+                <label for="moveReply">移除评论回复</label>
+            </div>
+        </div>
+        <button id="cancel">取消</button>
+        <button id="submit">保存</button>
+    </div>
+    <button class="clearout">清空所有</button>
+    <footer>
+        <a href="https://me.alipay.com/dolphinwood" id="donate">捐助我</a>
+        <a href="#" id="openSet">打开设置选项</a>
+    </footer>
 </body>
 
 </html>
