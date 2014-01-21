@@ -112,7 +112,8 @@ function clearOut() {
                     $j(isReply).hide(500, function() {
                         $j(this).remove(); // 移除说说评论回复
                     });
-                } else if (setting.moveComment && isComment) {
+                }
+                if (setting.moveComment && isComment) {
                     $j(isComment).hide(500, function() {
                         $j(this).remove(); // 移除说说评论
                     });
@@ -151,7 +152,8 @@ function clearOut() {
                             $j(isReply).hide(500, function() {
                                 $j(this).remove(); // 移除说说评论回复
                             });
-                        } else if (setting.moveComment && isComment) {
+                        }
+                        if (setting.moveComment && isComment) {
                             $j(isComment).hide(500, function() {
                                 $j(this).remove(); // 移除说说评论
                             });
@@ -189,7 +191,8 @@ function clearOut() {
                             $j(isReply).hide(500, function() {
                                 $j(this).remove(); // 移除说说评论回复
                             });
-                        } else if (setting.moveComment && isComment) {
+                        }
+                        if (setting.moveComment && isComment) {
                             $j(isComment).hide(500, function() {
                                 $j(this).remove(); // 移除说说评论
                             });
