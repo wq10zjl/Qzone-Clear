@@ -165,6 +165,7 @@ i:hover .close {
 .clearout {
   width: 370px;
   margin: 0;
+  margin-bottom: -15px;
   font-size: 18px;
   letter-spacing: 1em;
   text-align: center;

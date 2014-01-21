@@ -13,7 +13,7 @@
 
 **在QQ空间上屏蔽不想看到的好友动态。**  
 
-![](http://i.imgur.com/JcdBiDy.jpg)
+![](http://i.imgur.com/93TjeWa.jpg)
 
 <a name="features"></a>
 ## 二、主要功能 ##
@@ -35,15 +35,15 @@
 
 <a name="use"></a>
 ## 四、使用方法 ##
-在 QQ 空间点击地址栏的![](http://i.imgur.com/7MjLc9I.png)图标，输入想要屏蔽的用户/关键字即可。
+在 QQ 空间点击地址栏的!![](http://i.imgur.com/b38s0DU.jpg)图标，输入想要屏蔽的用户/关键字即可。
 
 **使用插件时有可能会出现「网络出了点小问题，立即修复」，慎点！，点击后 DOM 结构将被改变，插件将失效。只有清除浏览数据后才能恢复！**
-[](http://i.imgur.com/KKa8fxL.jpg)
+
 
 <a name="update"></a>
 ## 五、近期更新 ##
-#### v0.1.5 ####
-- 修复多关键匹配的 Bug。
+#### v0.1.6 ####
+- 更换 icon。
 
 #### v0.1.4 ####
 - 细化移除项目到说说评论回复。
