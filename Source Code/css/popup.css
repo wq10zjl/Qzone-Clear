@@ -58,7 +58,7 @@ body {
   -webkit-user-select: none;
 }
 body.on {
-  min-height: 200px;
+  min-height: 250px;
 }
 .input {
   position: relative;
@@ -419,6 +419,7 @@ td {
   border: 1px solid #ccc;
   text-align: left;
   vertical-align: middle;
+  overflow: hidden;
 }
 .setting h3 {
   margin: 0;
@@ -428,10 +429,12 @@ td {
 }
 .setting img {
   float: left;
+  width: 120px;
 }
 #setting {
   float: left;
   margin-left: 10px;
+  margin-top: 5px;
   padding: 10px;
   width: 157px;
   border: 1px solid #ccc;
@@ -447,6 +450,7 @@ td {
   bottom: 3px;
   left: 10px;
   font-size: 16px;
+  color: #3d3d3d;
   letter-spacing: .1em;
   cursor: pointer;
 }
@@ -460,16 +464,21 @@ td {
   border-radius: 0;
   padding: 5px 20px;
   letter-spacing: .1em;
-}
-#cancel {
   color: #333;
   background-color: #fff;
   border-color: #ccc;
+  letter-spacing: .3em;
 }
-#cancel:hover {
+#submit {
+  border-color: #428bca;
+}
+#cancel {
+  float: left;
+}
+#submit:hover, #cancel:hover {
   color: #333;
   background-color: #ebebeb;
-  border-color: #adadad;
+  border-color: #357ebd;
 }
 #closex {
   position: absolute;
@@ -500,4 +509,24 @@ footer a {
 }
 #donate {
   margin-right: 5px;
+}
+input#moveTooMuchLikes {
+  display: block;
+  position: relative;
+  width: 320px;
+  cursor: ew-resize;
+}
+.range {
+  display: block;
+  padding-top: 10px;
+  font-size: 14px;
+  color: #f60;
+  text-align: center;
+  letter-spacing: .2em;
+  clear: both;
+}
+.range b {
+  font-weight: 800;
+  color: #005cff;
+  letter-spacing: 0;
 }

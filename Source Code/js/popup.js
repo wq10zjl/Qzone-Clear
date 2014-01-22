@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 $(".backinfo p").show();
                 $(".text").html(info);
                 $(".title").text("数据备份成功！");
-                $(".backinfo").css("opacity",0)
+                $(".backinfo").css("opacity", 0)
                     .slideDown("slow")
                     .animate({
                         "opacity": 1
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 $(".backinfo p").show();
                 $(".text").html(info);
                 $(".title").text("数据备份成功！");
-                $(".backinfo").css("opacity",0)
+                $(".backinfo").css("opacity", 0)
                     .slideDown("slow")
                     .animate({
                         "opacity": 1
@@ -233,7 +233,8 @@ document.addEventListener('DOMContentLoaded', function() {
             moveMood: true,
             moveLike: true,
             moveComment: true,
-            moveReply: true
+            moveReply: true,
+            moveTooMuchLikes: false
         };
     }
 
@@ -242,6 +243,14 @@ document.addEventListener('DOMContentLoaded', function() {
         $("#moveLike")[0].checked = setting.moveLike;
         $("#moveComment")[0].checked = setting.moveComment;
         $("#moveReply")[0].checked = setting.moveReply;
+        if (setting.moveTooMuchLikes) {
+            $("#moveTooMuchLikes").val(setting.moveTooMuchLikes);
+            $(".range").html("移除赞多于 <b>" + setting.moveTooMuchLikes + "</b> 的说说");
+        }
+        else {
+            $("#moveTooMuchLikes").val(0);
+            $(".range").text("不根据赞的数量移除说说")
+        }
     }
 
     function save() {
@@ -249,13 +258,25 @@ document.addEventListener('DOMContentLoaded', function() {
         setting.moveLike = $("#moveLike")[0].checked;
         setting.moveComment = $("#moveComment")[0].checked;
         setting.moveReply = $("#moveReply")[0].checked;
+        var tooMuch = $("#moveTooMuchLikes").val();
+        if (tooMuch != 0) {
+            setting.moveTooMuchLikes = tooMuch;
+        } else {
+            setting.moveTooMuchLikes = false
+        }
         var saveData = JSON.stringify(setting);
         localStorage.setting = saveData;
         chrome.storage.local.set({
             "setting": saveData
         })
     }
-
+    $("#moveTooMuchLikes").change(function() {
+        var a = $(this).val();
+        if (a > 3000) $(this).attr("step","1000");
+        else $(this).attr("step","100");
+        if (a > 0) $(".range").html("移除赞多于 <b>" + a + "</b> 的说说");
+        else $(".range").text("不根据赞的数量移除说说")
+    })
     $("#submit").click(function() {
         save();
         $("body").removeClass("on");

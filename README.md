@@ -42,6 +42,10 @@
 
 <a name="update"></a>
 ## 五、近期更新 ##
+#### v0.1.8 ####
+- 增加「根据赞的数量移除说说」。  
+![](http://i.imgur.com/pbOPs0R.png)
+
 #### v0.1.7 ####
 - 增加屏蔽选项设置。  
 ![](http://i.imgur.com/QckSa9S.jpg)

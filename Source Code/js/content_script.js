@@ -24,10 +24,22 @@ function clearOut() {
             moveMood: true,
             moveLike: true,
             moveComment: true,
-            moveReply: true
+            moveReply: true,
+            moveTooMuchLikes: false
         };
     }
-    if (!setting.moveMood && !setting.moveLike && !setting.moveComment && !setting.moveReply) return false;
+    if (!setting.moveMood && !setting.moveLike && !setting.moveComment && !setting.moveReply && !setting.moveTooMuchLikes) return false;
+    if (setting.moveTooMuchLikes) {
+        $j("[data-likecnt]").each(function() {
+            var a = $j(this).data("likecnt");
+            if (a >= setting.moveTooMuchLikes) {
+                $j(this).closest(".f-single").hide(500, function() {
+                    $j(this).remove();
+                });
+            };
+        })
+    }; // 根据赞的数量移除
+
     var content = [];
     var multi = [];
     var ele = $j(".q_namecard,.f-like .item");
@@ -202,6 +214,7 @@ function clearOut() {
             }
         })
     };
+
 }
 clearOut();
 

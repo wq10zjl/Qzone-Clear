@@ -1,5 +1,66 @@
 ﻿<!doctype html>
 <html>
+<!-- 
+                                       `             `               ``            `                
+                                          `...`                             ````                    
+                                       `.odmmdds-`                      `:shdddho-`                 
+                                       :hNdo:/yNmo.                   `:hNNhs+ohNd+`                
+                                      -yNh:`  `+mMs`                 .omms-`   .sNd:                
+                                     `omm/`    `+MN:                :yNh:`      -dNo                
+                                     -hMy.      -dMy`             `/dNy-`       .hMy`               
+                                    `+mm+`   `  `sMm-             /dNs-    ``   .yNy.               
+                                    `oMd:        :mN+            :hNy-`         .yNy`               
+                                    `sMh-        .hMy`          .yNh-           -hNs                
+                                    `sMh-        `yMh`         `+mN+`           :mm+                
+                                    `sMh-         oMd.         -hMy.           `oMd-                
+                                    `oNd:     `   oMm-        `+mm/`           :dNy`                
+                                    `+mm:         oMm-        `sMh-           `+Mm/                 
+                                     :dN+`        oMm-        -hNs.           -dNy.                 
+                                     -hMs.    `   +Mm-        :mm+`          `+Nm/`                 
+                                     .omd:`  ``   oMm:......``+mm:           -dNs.                  
+                                     `:dNo.       oMNdddddddhhdMd:    `     .sNd:                   
+                                 ``-/oymMm/`  `   oNd///////++yNd:         `+mNo`                   
+                              `-/shdmhyooo-`      -+/`       `:yy-         :mNh-                    
+                          ``-oydmhs/-.````         `          `..`        `sNNmy/.`                 
+                         `/ymmho:.`                                        -//yhmds:`               
+                       `/hNms:``     `                                        `.+hNms/.             
+                     `/hNms:`                                                   `./ymms:`           
+                   `:yNNs-`                                                        ./hNmo.          
+                  .omNy:`            `..                ``                           .+mNy-`        
+                 -yNm+.`  ` ```` `` `-yh/`            ./o-`                  ```      `:hNh:`       
+                -yNd/`  :oyssssssssssymNy.           `:ymhsssyyssssssssssssssys+`       -yNd/`      
+              `-yNh:`  `+yysssyyssssssys+`            `-oysssyyssssssssssssyyys+.  `     -hNh-      
+              -yNd:`    ``  `-oo/.                               ./o+:`             `    `+mN+`     
+             `omm/`   ` `   -mMMNs`        `                    `sNMMm:`          `  `    -yMh.     
+             :dNs.      `   -ymmh+`                             `/hmmy-                   `oNm-     
+            `+mm/`      `    `.-.                                 ...`                     +NN-     
+            `sNh-       `                                                                  +NN-     
+            .yMy-                                                                         `oNm-     
+            .yMy-                                                                    `    -yNy.     
+            `sNd:                                                                        `/mN/`   ` 
+             /mNo`                                                                       -hNy.      
+        `    .yNd/`                                                                    `:hNh-`      
+              :hNd/`    `                   Just Do Whatever                          `/dNy-        
+              `-yNmo.`  `                  The Fuck You Want！                      `-smmo.`        
+        ```     .+dNd+-`` `  `                                                    `-odmh/`          
+   `      `..`   `:sdNdo/.`                                                    `.:sdmh+.            
+         ``+ho.`   `-+hdmdy/-.``                       `                    `./ohmds/.`             
+`      `  .smmy:`     `-omMNNdyo/-.```                                ``.-/oydmds/.`                
+` `   ``./shssdds/`  ` `sNNyhNMNmmdhys+//:-`                 ```..-:/+syddmhs+:.`                   
+  `   -oymmyoyhs+:`   `:mNo`.yNd::/oymMNNNh:`               .+hddmmmddhso/-.``                      
+  `   `..:ymmh:``  `-oyhNMh.:mm+`  .omdo//:`                `-/+ymmo.``                             
+ `        :dd/`   `/mNhsoyo-+Md-  -ymy:`                        .omh-`                              
+ ` `     `:ys.    .yNh.  `-yhNm/ -yNy:.`                         -hNy.`                             
+          ```     .yNs`   -mddNy-smy+yh/``                        :dNo`                             
+                  .sNd+::+sNsomNdNy:sNd:`                   `:+-  `oNd:                             
+                  `.sdmdmNMm:.omNh::dNo.                    -hMs`  :dNo`   `                        
+                    ``...sNm:  .-``/md/`                    -hMs`  .hMy.                            
+                         .hMh-    .sNy.                     -yNs.  `oNd-                            
+                          :dNh-/-:smNo`                     .yNy.  `oNm:                            
+                          `-sdmmmddmNo`                     .sNy.  `+md-                            
+                       ``    .-::..-:.                      `./-    ./-`                            
+                                                                              
+ -->
 
 <head>
     <meta charset="UTF-8">
@@ -51,13 +112,13 @@
                 <span class="title"></span>
             </div>
             <div class="text">
-        
+
             </div>
             <p>当 Chrome 登录有账户时，数据会进行同步</p>
         </div>
     </div>
     <div class="stwrap">
-    <div class="closeLayer" title="空白处点击关闭"></div>
+        <div class="closeLayer" title="空白处点击关闭"></div>
         <div class="setting">
             <div id="closex">×</div>
             <h3>设置选项 - Qzone Clear</h3>
@@ -80,6 +141,8 @@
                     <label for="moveReply">移除评论回复</label>
                 </div>
             </div>
+            <b class="range"></b>
+            <input type="range" id="moveTooMuchLikes" min="0" max="10000" step="100">
             <button id="cancel">取消</button>
             <button id="submit">保存</button>
         </div>
