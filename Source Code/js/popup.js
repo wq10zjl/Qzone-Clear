@@ -247,6 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $("body").removeClass("on");
         $(".stwrap").fadeOut(500, function() {
             $(".backinfo p").hide();
+            $(".text").html("");
             $(".title").text("设置已保存！");
             $(".bkwrap").fadeIn(500).delay(1000).fadeOut(1000);
             $(".stwrap").css({
