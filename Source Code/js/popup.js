@@ -244,19 +244,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     $("#submit").click(function() {
         save();
-        $(".setting").fadeOut(500,function() {
+        $(".stwrap").fadeOut(500,function() {
             $("body").css("min-height",0)
         });
     });
     $("#cancel,#closex").click(function() {
-        $(".setting").fadeOut(500,function() {
+        $(".stwrap").fadeOut(500,function() {
             $("body").css("min-height",0)
         });
     })
     $("#openSet").click(function(event) {
         event.preventDefault();
         init();
-        $(".setting").fadeIn();
+        $(".stwrap").fadeIn();
         $("body").css("min-height",220)
     })
     $("#donate").click(function() {
