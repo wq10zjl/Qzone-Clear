@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $("#submit").removeClass("focus");
     })
     var left, top, posX, posY, flag;
-    $(".setting h3").mousedown(function(e) {
+    $(".setting h4").mousedown(function(e) {
         flag = true;
         posX = e.pageX;
         posY = e.pageY;
