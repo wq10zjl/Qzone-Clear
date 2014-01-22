@@ -290,6 +290,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     $("#cancel,#closex,.closeLayer").click(function() {
         $("body").removeClass("on");
+        
         $(".stwrap").animate({
             "bottom": -550,
             "opacity": 0
@@ -301,6 +302,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 "opacity": 1
             })
         });
+    })
+    $("#submit,#cancel").mousedown(function() {
+        $("#submit,#cancel").toggleClass("focus");
     })
     var left, top, posX, posY, flag;
     $(".setting h3").mousedown(function(e) {
@@ -326,6 +330,8 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
         init();
         $("body").addClass("on");
+        $("#submit").addClass("focus");
+        $("#cancel").removeClass("focus")
         $(".stwrap").fadeIn();
         $(".setting").slideDown();
     })

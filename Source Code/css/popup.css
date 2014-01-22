@@ -469,8 +469,8 @@ td {
   border-color: #ccc;
   letter-spacing: .3em;
 }
-#submit {
-  border-color: #428bca;
+button.focus {
+  border-color: #428bca !important;
 }
 #cancel {
   float: left;
