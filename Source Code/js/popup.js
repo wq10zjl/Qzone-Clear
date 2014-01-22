@@ -234,6 +234,7 @@ document.addEventListener('DOMContentLoaded', function() {
             moveLike: true,
             moveComment: true,
             moveReply: true,
+            moveStamp: true,
             moveTooMuchLikes: false
         };
     }
@@ -243,6 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $("#moveLike")[0].checked = setting.moveLike;
         $("#moveComment")[0].checked = setting.moveComment;
         $("#moveReply")[0].checked = setting.moveReply;
+        $("#moveStamp")[0].checked = setting.moveStamp;
         if (setting.moveTooMuchLikes) {
             $("#moveTooMuchLikes").val(setting.moveTooMuchLikes);
             $(".range").html("移除赞多于 <b>" + setting.moveTooMuchLikes + "</b> 的说说");
@@ -258,6 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setting.moveLike = $("#moveLike")[0].checked;
         setting.moveComment = $("#moveComment")[0].checked;
         setting.moveReply = $("#moveReply")[0].checked;
+        setting.moveStamp = $("#moveStamp")[0].checked;
         var tooMuch = $("#moveTooMuchLikes").val();
         if (tooMuch != 0) {
             setting.moveTooMuchLikes = tooMuch;

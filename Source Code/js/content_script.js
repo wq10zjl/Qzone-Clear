@@ -25,10 +25,11 @@ function clearOut() {
             moveLike: true,
             moveComment: true,
             moveReply: true,
+            moveStamp: true,
             moveTooMuchLikes: false
         };
     }
-    if (!setting.moveMood && !setting.moveLike && !setting.moveComment && !setting.moveReply && !setting.moveTooMuchLikes) return false;
+    if (userSet.indexOf(true) === -1) return false;
     if (setting.moveTooMuchLikes) {
         $j("[data-likecnt]").each(function() {
             var a = $j(this).data("likecnt");
@@ -39,6 +40,11 @@ function clearOut() {
             };
         })
     }; // 根据赞的数量移除
+    if (setting.moveStamp) {
+        $j(".img-box img[src*='stamp']").closest(".f-single").hide(500, function() {
+            $j(this).remove();
+        });
+    }; // 移除签到
 
     var content = [];
     var multi = [];
