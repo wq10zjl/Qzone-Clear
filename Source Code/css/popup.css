@@ -381,6 +381,7 @@ td {
   max-height: 300px;
   overflow: hidden;
   overflow-y: scroll;
+  pointer-events: auto;
 }
 .stwrap {
   position: absolute;
