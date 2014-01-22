@@ -303,8 +303,13 @@ document.addEventListener('DOMContentLoaded', function() {
             })
         });
     })
-    $("#submit,#cancel").mousedown(function() {
-        $("#submit,#cancel").toggleClass("focus");
+    $("#submit").mousedown(function() {
+        $(this).addClass("focus")
+        $("#cancel").removeClass("focus");
+    })
+    $("#cancel").mousedown(function() {
+        $(this).addClass("focus")
+        $("#submit").removeClass("focus");
     })
     var left, top, posX, posY, flag;
     $(".setting h3").mousedown(function(e) {
