@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 $(".backinfo p").show();
                 $(".text").html(info);
                 $(".title").text("数据备份成功！");
-                $(".backinfo").fadeIn(1000).delay(1500).fadeOut(1000);
+                $(".bkwrap").fadeIn(1000).delay(1500).fadeOut(1000);
             }
         } else {
             var cover = confirm("已存在备份数据：\n\n备份时间：" + localStorage.getItem("time") + "\n\n备份的数据：" + localStorage.getItem("backup") + "\n\n是否覆盖？此操作不可撤销！");
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 $(".backinfo p").show();
                 $(".text").html(info);
                 $(".title").text("数据备份成功！");
-                $(".backinfo").fadeIn(1000).delay(1500).fadeOut(1000);
+                $(".bkwrap").fadeIn(1000).delay(1500).fadeOut(1000);
             }
         }
     }); // 备份数据
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 $(".backinfo p").hide();
                 $(".text").html("");
                 $(".title").text("本地恢复成功！");
-                $(".backinfo").fadeIn(1000).delay(1000).fadeOut(1000);
+                $(".bkwrap").fadeIn(1000).delay(1000).fadeOut(1000);
             }
         } else if ((a === null && b !== "undefined") || (a !== null && b !== "undefined")) {
             var restoreCloud = confirm("当前备份数据：\n\n备份位置：云 端\n\n备份时间：" + localStorage.getItem("timeCloud") + "\n\n备份的数据：" + b + "\n\n是否恢复？此操作不可撤销！");
@@ -204,11 +204,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 $(".backinfo p").hide();
                 $(".text").html("");
                 $(".title").text("云端恢复成功！");
-                $(".backinfo").fadeIn(1000).delay(1000).fadeOut(1000);
+                $(".bkwrap").fadeIn(1000).delay(1000).fadeOut(1000);
             };
         }
     }); // 恢复数据
-    
+
     // 设置选项
     var userSet;
     var setting;
@@ -244,22 +244,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
     $("#submit").click(function() {
         save();
-        $(".stwrap").fadeOut(500,function() {
-            $("body").css("min-height",0)
+        $("body").removeClass("on");
+        $(".stwrap").fadeOut(500, function() {
+            $(".backinfo p").hide();
+            $(".title").text("设置已保存！");
+            $(".bkwrap").fadeIn(500).delay(1000).fadeOut(1000);
+            $(".stwrap").css({
+                "display": "block",
+                "bottom": -550,
+                "opacity": 0
+            });
         });
     });
     $("#cancel,#closex").click(function() {
-        $(".stwrap").fadeOut(500,function() {
-            $("body").css("min-height",0)
+        $("body").removeClass("on");
+        $(".stwrap").animate({
+            "bottom": -550,
+            "opacity": 0
         });
     })
     $("#openSet").click(function(event) {
         event.preventDefault();
         init();
-        $(".stwrap").fadeIn();
-        $("body").css("min-height",220)
+        $("body").addClass("on");
+        $(".stwrap").animate({
+            "bottom": 0,
+            "opacity": 1
+        });
+        
     })
     $("#donate").click(function() {
-         window.open($(this).attr("href"));
+        window.open($(this).attr("href"));
     })
 });
