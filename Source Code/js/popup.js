@@ -257,12 +257,32 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
-    $("#cancel,#closex").click(function() {
+    $("#cancel,#closex,.closeLayer").click(function() {
         $("body").removeClass("on");
         $(".stwrap").animate({
             "bottom": -550,
             "opacity": 0
         });
+    })
+    var left, top, posX, posY, flag;
+    $(".setting h3").mousedown(function(e) {
+        flag = true;
+        posX = e.pageX;
+        posY = e.pageY;
+        left = parseInt($(".setting").css("left"));
+        top = parseInt($(".setting").css("top"));
+    })
+    $(document).mousemove(function(f) {
+        var offsetX = f.pageX - posX + left;
+        var offsetY = f.pageY -posY + top;
+        if (flag) {
+            $(".setting").css({
+                "left": offsetX,
+                "top": offsetY
+            })
+        }
+    }).mouseup(function() {
+        flag = false;
     })
     $("#openSet").click(function(event) {
         event.preventDefault();
@@ -272,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
             "bottom": 0,
             "opacity": 1
         });
-        
+
     })
     $("#donate").click(function() {
         window.open($(this).attr("href"));

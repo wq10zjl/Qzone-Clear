@@ -50,10 +50,12 @@ body {
   padding-right: 0;
   margin-right: 0;
   width: 400px;
+  overflow: hidden;
   background: #F9F9F9;
   font-family:arial, sans-serif;
   -webkit-font-smoothing:antialiased;
   -webkit-transition: all .3s;
+  -webkit-user-select: none;
 }
 body.on {
   min-height: 200px;
@@ -392,6 +394,14 @@ td {
   text-align: center;
   background: rgba(0, 0, 0, 0.54);
   opacity: 0;
+  z-index: 2;
+}
+.closeLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 .stwrap:before, .bkwrap:before {
   content: "";
@@ -401,6 +411,8 @@ td {
 }
 .setting {
   position: relative;
+  left: 0;
+  top: 0;
   display: inline-block;
   width: 325px;
   padding: 10px;
@@ -413,6 +425,7 @@ td {
   margin: 0;
   margin-bottom: 10px;
   color: #707070;
+  cursor: move;
 }
 .setting img {
   float: left;
