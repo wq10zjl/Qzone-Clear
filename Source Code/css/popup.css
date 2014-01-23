@@ -58,7 +58,7 @@ body {
   -webkit-user-select: none;
 }
 body.on {
-  min-height: 250px;
+  min-height: 300px;
 }
 .input {
   position: relative;
