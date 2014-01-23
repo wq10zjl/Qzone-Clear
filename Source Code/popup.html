@@ -122,27 +122,41 @@
         <div class="setting">
             <div id="closex">×</div>
             <h4>设置选项 - Qzone Clear</h4>
-            <img src="/icon/icon_128.png">
             <div id="setting">
                 <div class="check">
-                    <input type="checkbox" id="moveMood">
-                    <label for="moveMood">移除说说</label>
+                    <label for="moveMood">移除说说（含被转发的说说）</label>
+                    <div class="checkbox">
+                        <input type="checkbox" id="moveMood">
+                        <span class="slide"></span>
+                    </div>
                 </div>
                 <div class="check">
-                    <input type="checkbox" id="moveStamp">
-                    <label for="moveStamp">移除签到</label>
+                    <label for="moveStamp">移除内容为签到图的说说</label>
+                    <div class="checkbox">
+                        <input type="checkbox" id="moveStamp">
+                        <span class="slide"></span>
+                    </div>
                 </div>
                 <div class="check">
-                    <input type="checkbox" id="moveLike">
-                    <label for="moveLike">移除赞</label>
+                    <label for="moveLike">移除点赞下的头像</label>
+                    <div class="checkbox">
+                        <input type="checkbox" id="moveLike">
+                        <span class="slide"></span>
+                    </div>
                 </div>
                 <div class="check">
-                    <input type="checkbox" id="moveComment">
-                    <label for="moveComment">移除评论</label>
+                    <label for="moveComment">移除评论内容</label>
+                    <div class="checkbox">
+                        <input type="checkbox" id="moveComment">
+                        <span class="slide"></span>
+                    </div>
                 </div>
                 <div class="check">
-                    <input type="checkbox" id="moveReply">
                     <label for="moveReply">移除评论回复</label>
+                    <div class="checkbox">
+                        <input type="checkbox" id="moveReply">
+                        <span class="slide"></span>
+                    </div>
                 </div>
             </div>
             <b class="range"></b>

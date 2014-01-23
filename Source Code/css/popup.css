@@ -415,75 +415,120 @@ td {
   top: 0;
   width: 325px;
   padding: 10px;
-  background: #FBFBFB;
+  background: #555;
   border: 1px solid #ccc;
   text-align: left;
   vertical-align: middle;
   overflow: hidden;
+  border-radius: 2px;
 }
 .setting h4 {
-  margin: 0;
-  margin-bottom: 10px;
+  margin: -10px 0 10px -10px;
+  padding: 5px 5px 0;
+  height: 25px;
+  width: 350px;
   color: #707070;
   cursor: move;
-}
-.setting img {
-  float: left;
-  width: 120px;
-}
-#setting {
-  float: left;
-  margin-left: 10px;
-  margin-top: 5px;
-  padding: 10px;
-  width: 157px;
-  border: 1px solid #ccc;
-  background: #fff;
-}
-#setting input {
-  width: 15px;
-  height: 15px;
-  cursor: pointer;
-}
-#setting label {
-  position: relative;
-  bottom: 3px;
-  left: 10px;
-  font-size: 15px;
-  color: #3d3d3d;
-  letter-spacing: .1em;
-  cursor: pointer;
-}
-#setting label:hover {
-  color: blue;
+  background: -webkit-linear-gradient(top, #fff, #e6e6e6);
 }
 .check {
+  position: relative;
+  height: 26px;
   margin: 0;
   padding: 0;
-  margin-top: -2px;
+}
+.checkbox {
+  position: absolute;
+  right: 0;
+}
+input[type="checkbox"] {
+  position: relative;
+  -webkit-appearance:none;
+  width: 60px;
+  height: 20px;
+  background: #333;
+  border-radius: 10px;
+  outline: none;
+  cursor: pointer;
+  -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+}
+input[type="checkbox"]:after {
+  content: 'OFF';
+  font: 12px/26px Arial, sans-serif;
+  color: #000;
+  position: absolute;
+  right: 5px;
+  top: -2px;
+  font-weight: bold;
+  text-shadow: 1px 1px 0px rgba(255,255,255,.15);
+}
+
+input[type="checkbox"]:before {
+  content: 'ON';
+  font: 12px/26px Arial, sans-serif;
+  color: #dfa100;
+  position: absolute;
+  left: 5px;
+  top: -2px;
+  z-index: 0;
+  font-weight: bold;
+}
+.slide {
+  display: inline-block;
+  position: absolute;
+  left: 6px;
+  top: 4px;
+  width: 25px;
+  height: 15px;
+  background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+  transition: all .3s;
+  pointer-events: none;
+}
+input[type="checkbox"]:checked + .slide {
+  left: 35px;
+}
+#setting label {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  margin-top: 5px;
+  font-size: 16px;
+  color: #ccc;
+  letter-spacing: .1em;
+  cursor: pointer;
+  text-shadow: 1px 0px 1px #3F2F2F;
+}
+#setting label:hover {
+  color: #e99e00;
 }
 #submit, #cancel {
   display: block;
   float: right;
-  margin-top: 10px;
+  margin-top: 15px;
+  margin-right: 0;
   border-radius: 0;
   padding: 5px 20px;
   letter-spacing: .1em;
   color: #333;
-  background-color: #fff;
-  border-color: #ccc;
+  background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+  border-radius: 5px;
+  border: 1px solid #ccc;
   letter-spacing: .3em;
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+}
+#submit {
+  margin-right: 10px;
 }
 button.focus {
-  border-color: #428bca !important;
+  border: 1px inset #428bca !important;
 }
-#cancel {
-  float: left;
-}
-#submit:hover, #cancel:hover {
+#submit:active, #cancel:active {
   color: #333;
-  background-color: #ebebeb;
-  border-color: #357ebd;
+  background: #ebebeb;
+  -webkit-box-shadow: none;
 }
 #closex {
   position: absolute;
@@ -517,22 +562,38 @@ footer a {
   color: rgb(255, 145, 110);
 }
 input#moveTooMuchLikes {
+  margin-top: 10px;
   display: block;
   position: relative;
   width: 320px;
-  cursor: ew-resize;
+  -webkit-appearance: none;
+  background: #333;
+  height: 6px;
+  border-radius: 10px;
+  outline: none;
+  -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
 }
 .range {
   display: block;
-  padding-top: 10px;
-  font-size: 15px;
-  color: #f60;
-  text-align: center;
+  padding-top: 4px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #ccc;
   letter-spacing: .2em;
   clear: both;
+  text-shadow: 1px 0px 1px #3F2F2F;
 }
 .range b {
   font-weight: 800;
-  color: #005cff;
+  color: #e99e00;
   letter-spacing: 0;
+}
+#moveTooMuchLikes::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  cursor: ew-resize;
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+  background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
 }
