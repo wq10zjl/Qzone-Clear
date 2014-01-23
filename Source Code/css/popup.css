@@ -208,42 +208,6 @@ i:hover .close {
 #content, #uid h4 b, h2, input, button,.backinfo {
   font-family: "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 }
-#tips {
-  display: none;
-  position: absolute;
-  width: 330px;
-  top: 60px;
-  opacity: 0;
-  padding: 0 20px;
-  background: rgba(17, 17, 17, 0.86);
-  color: #f3f3f3;
-  font-size: 14px;
-  line-height: 1.7;
-  z-index: 9999999;
-  border-radius: 4px;
-  box-shadow: 0 0 3px #000;
-}
-#tips:before {
-  content:"";
-  display: block;
-  position: absolute;
-  top: -6px;
-  left: 19px;
-  margin-top: -6px;
-  width: 0;
-  height: 0;
-  border: 6px dashed transparent;
-  border-bottom: 6px solid rgba(17, 17, 17, 0.86);
-}
-#tips p {
-  margin: 10px 0;
-  padding: 0;
-  cursor: default;
-}
-#tips span {
-  font-weight: bold;
-  color: #ff0;
-}
 .highlight {
   position: absolute;
   top: 0;
@@ -433,13 +397,15 @@ td {
 }
 .check {
   position: relative;
-  height: 26px;
-  margin: 0;
-  padding: 0;
+}
+.check:after {
+  content: "";
+  display: block;
+  clear: both;
 }
 .checkbox {
-  position: absolute;
-  right: 0;
+  position: relative;
+  float: right;
 }
 input[type="checkbox"] {
   position: relative;
@@ -491,9 +457,8 @@ input[type="checkbox"]:checked + .slide {
   left: 35px;
 }
 #setting label {
-  position: absolute;
-  width: 100%;
-  left: 0;
+  float: left;
+  width: 250px;
   margin-top: 5px;
   font-size: 16px;
   color: #ccc;
@@ -582,6 +547,7 @@ input#moveTooMuchLikes {
   letter-spacing: .2em;
   clear: both;
   text-shadow: 1px 0px 1px #3F2F2F;
+  cursor: default;
 }
 .range b {
   font-weight: 800;
@@ -596,4 +562,63 @@ input#moveTooMuchLikes {
   cursor: ew-resize;
   -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
   background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+}
+#tips, .tooltips {
+  display: none;
+  position: absolute;
+  max-width: 330px;
+  top: 60px;
+  opacity: 0;
+  padding: 0 20px;
+  background: rgba(17, 17, 17, 0.86);
+  color: #f3f3f3;
+  font-size: 14px;
+  line-height: 1.7;
+  z-index: 9999999;
+  border-radius: 4px;
+  box-shadow: 0 0 3px #000;
+}
+#tips:before, .tooltips:before {
+  content:"";
+  display: block;
+  position: absolute;
+  top: -6px;
+  left: 19px;
+  margin-top: -6px;
+  width: 0;
+  height: 0;
+  border: 6px dashed transparent;
+  border-bottom: 6px solid rgba(17, 17, 17, 0.86);
+}
+#tips p {
+  margin: 10px 0;
+  padding: 0;
+  cursor: default;
+}
+#tips span {
+  font-weight: bold;
+  color: #ff0;
+}
+.tooltips {
+  display: block;
+  visibility: hidden;
+  padding: 10px;
+  top: 30px;
+}
+.tooltips img {
+  vertical-align: top;
+  opacity: .8;
+}
+#setting label:hover + .tooltips {
+  visibility: visible;
+  opacity: 1;
+  transition: all .3s
+}
+.range + .tooltips {
+  top: 46px;
+}
+.range:hover + .tooltips {
+  visibility: visible;
+  opacity: 1;
+  transition: all .3s
 }

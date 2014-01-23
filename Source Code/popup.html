@@ -125,6 +125,9 @@
             <div id="setting">
                 <div class="check">
                     <label for="moveMood">移除说说（含被转发的说说）</label>
+                    <div class="tooltips">
+                        <img src="images/mood.jpg">
+                    </div>
                     <div class="checkbox">
                         <input type="checkbox" id="moveMood">
                         <span class="slide"></span>
@@ -132,6 +135,9 @@
                 </div>
                 <div class="check">
                     <label for="moveStamp">移除内容为签到图的说说</label>
+                    <div class="tooltips">
+                        <img src="images/stamp.jpg">
+                    </div>
                     <div class="checkbox">
                         <input type="checkbox" id="moveStamp">
                         <span class="slide"></span>
@@ -139,6 +145,9 @@
                 </div>
                 <div class="check">
                     <label for="moveLike">移除点赞下的头像</label>
+                    <div class="tooltips">
+                        <img src="images/like.jpg">
+                    </div>
                     <div class="checkbox">
                         <input type="checkbox" id="moveLike">
                         <span class="slide"></span>
@@ -146,6 +155,9 @@
                 </div>
                 <div class="check">
                     <label for="moveComment">移除评论内容</label>
+                    <div class="tooltips">
+                        <img src="images/comment.jpg">
+                    </div>
                     <div class="checkbox">
                         <input type="checkbox" id="moveComment">
                         <span class="slide"></span>
@@ -153,14 +165,20 @@
                 </div>
                 <div class="check">
                     <label for="moveReply">移除评论回复</label>
+                    <div class="tooltips">
+                        <img src="images/reply.jpg">
+                    </div>
                     <div class="checkbox">
                         <input type="checkbox" id="moveReply">
                         <span class="slide"></span>
                     </div>
                 </div>
+                <div class="check">
+                    <b class="range"></b>
+                    <div class="tooltips">拖动以改变</div>
+                    <input type="range" id="moveTooMuchLikes" min="0" max="10000" step="100">
+                </div>
             </div>
-            <b class="range"></b>
-            <input type="range" id="moveTooMuchLikes" min="0" max="10000" step="100">
             <button id="cancel" class="focus">取消</button>
             <button id="submit">保存</button>
         </div>
