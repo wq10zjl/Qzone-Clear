@@ -15,8 +15,8 @@
 
 var $j = jQuery.noConflict();
 
+var setting;
 function clearOut() {
-    var setting;
     var userSet = localStorage.setting;
     if (userSet) setting = JSON.parse(userSet);
     else {
@@ -26,6 +26,7 @@ function clearOut() {
             moveComment: true,
             moveReply: true,
             moveStamp: true,
+            isOld: false,
             moveTooMuchLikes: false
         };
     }
@@ -39,7 +40,7 @@ function clearOut() {
             };
         })
     }; // 根据赞的数量移除
-    if (userSet.indexOf(true) === -1) return false;
+    if (userSet && userSet.indexOf(true) === -1) return false;
     if (setting.moveStamp) {
         $j(".img-box img[src*='stamp']").closest(".f-single").hide(500, function() {
             $j(this).remove();
@@ -225,17 +226,31 @@ function clearOut() {
 clearOut();
 
 var page = -1;
+var blocks = 0;
 
 function check() {
-    var tempPage = $j("ul[data-page]:last").data("page"); // 获取瀑布流加载的页码
-    if (tempPage > page) {
+    var curPage = $j("ul[data-page]:last").data("page"); // 获取瀑布流加载的页码
+    if (curPage > page) {
         clearOut();
-        page = $j("ul[data-page]:last").data("page");
+        page = curPage;
     }
 }
-setInterval(check, 1000); // 监听瀑布流新内容载入
+
+function checkOld() {
+    var curBlocks = $j(".f-single").length;
+    if (curBlocks > blocks) {
+        clearOut();
+        blocks = curBlocks;
+    };
+}
+
+if (setting.isOld) setInterval(checkOld, 1000);
+else setInterval(check, 1000);
+// 监听瀑布流新内容载入
+
 $j(".icon-refresh, #tab_menu_list a").click(function() {
     page = -1;
+    blocks = 0;
     var a = 0;
     var b = setInterval(function() {
         a = $j(".f-single").length

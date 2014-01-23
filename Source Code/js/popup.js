@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     function refresh() {
         if ($(".list i").length !== 0) {
-            $(".clearout, h4").show();
+            $(".clearout, .list h4").show();
         } else {
-            $(".clearout, h4").hide();
+            $(".clearout, .list h4").hide();
         }
         var b = [];
         $(".list i").each(function(i) {
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (msg === true) {
             $(".list i").remove();
             $(this).hide();
-            $("h4").hide();
+            $(".list h4").hide();
             localStorage.removeItem("hidePart");
             chrome.storage.local.remove("hidePart")
         }
@@ -235,14 +235,15 @@ document.addEventListener('DOMContentLoaded', function() {
             moveComment: true,
             moveReply: true,
             moveStamp: true,
+            isOld: false,
             moveTooMuchLikes: false
         };
-    }
+    } // 初始化设置
 
     function init() {
         $("input[type='checkbox']").each(function() {
             var a = $(this).attr("id");
-           $(this)[0].checked = setting[a];
+            $(this)[0].checked = setting[a];
         })
         var ifTooMuch = setting.moveTooMuchLikes;
         if (ifTooMuch) {
@@ -273,8 +274,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     $("#moveTooMuchLikes").change(function() {
         var a = $(this).val();
-        if (a > 3000) $(this).attr("step", "1000");
-        else $(this).attr("step", "100");
         if (a > 0) $(".range").html("移除赞多于 <b>" + a + "</b> 的说说");
         else $(".range").text("不根据赞的数量移除说说")
     })
@@ -291,7 +290,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     $("#cancel,#closex,.closeLayer").click(function() {
         $("body").removeClass("on");
-
         $(".stwrap").animate({
             "bottom": -550,
             "opacity": 0
@@ -312,6 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $(this).addClass("focus")
         $("#submit").removeClass("focus");
     })
+
     var left, top, posX, posY, flag;
     $(".setting h4").mousedown(function(e) {
         flag = true;
@@ -331,7 +330,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }).mouseup(function() {
         flag = false;
-    })
+    }) // 可移动框
+
     $("#openSet").click(function(event) {
         event.preventDefault();
         init();

@@ -118,6 +118,8 @@ button:active {
   font-size: 16px;
   letter-spacing: .4em;
 }
+/* 移除对象
+-----------------------------------------------------------------*/
 .list {
   max-height: 400px;
   overflow-y: scroll;
@@ -185,6 +187,8 @@ i:hover .close {
   background-color: #d58512;
   border-color: #d58512;
 }
+/* 移除对象列表
+-----------------------------------------------------------------*/
 .list h4 {
   display: none;
   position: relative;
@@ -372,6 +376,8 @@ td {
   height: 100%;
   vertical-align: middle;
 }
+/* 设置选项
+-----------------------------------------------------------------*/
 .setting {
   display: inline-block;
   position: relative;
@@ -407,6 +413,7 @@ td {
   position: relative;
   float: right;
 }
+/* checkbox 样式 */
 input[type="checkbox"] {
   position: relative;
   -webkit-appearance:none;
@@ -428,7 +435,6 @@ input[type="checkbox"]:after {
   font-weight: bold;
   text-shadow: 1px 1px 0px rgba(255,255,255,.15);
 }
-
 input[type="checkbox"]:before {
   content: 'ON';
   font: 12px/26px Arial, sans-serif;
@@ -438,6 +444,7 @@ input[type="checkbox"]:before {
   top: -2px;
   z-index: 0;
   font-weight: bold;
+  text-shadow: -1px 1px 2px #000;
 }
 .slide {
   display: inline-block;
@@ -456,15 +463,51 @@ input[type="checkbox"]:before {
 input[type="checkbox"]:checked + .slide {
   left: 35px;
 }
+input#moveTooMuchLikes {
+  margin-top: 10px;
+  display: block;
+  position: relative;
+  width: 320px;
+  -webkit-appearance: none;
+  background: #333;
+  height: 6px;
+  border-radius: 10px;
+  outline: none;
+  -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+}
+.range {
+  display: block;
+  padding-top: 4px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #ccc;
+  letter-spacing: .2em;
+  clear: both;
+  text-shadow: -1px 1px 2px #000;
+  cursor: default;
+}
+.range b {
+  font-weight: 800;
+  color: #e99e00;
+  letter-spacing: 0;
+}
+#moveTooMuchLikes::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  cursor: ew-resize;
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+  background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+}
 #setting label {
   float: left;
-  width: 250px;
   margin-top: 5px;
   font-size: 16px;
   color: #ccc;
   letter-spacing: .1em;
   cursor: pointer;
-  text-shadow: 1px 0px 1px #3F2F2F;
+  text-shadow: -1px 1px 2px #000;
 }
 #setting label:hover {
   color: #e99e00;
@@ -526,43 +569,8 @@ footer a {
   margin-right: 5px;
   color: rgb(255, 145, 110);
 }
-input#moveTooMuchLikes {
-  margin-top: 10px;
-  display: block;
-  position: relative;
-  width: 320px;
-  -webkit-appearance: none;
-  background: #333;
-  height: 6px;
-  border-radius: 10px;
-  outline: none;
-  -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
-}
-.range {
-  display: block;
-  padding-top: 4px;
-  font-size: 16px;
-  font-weight: normal;
-  color: #ccc;
-  letter-spacing: .2em;
-  clear: both;
-  text-shadow: 1px 0px 1px #3F2F2F;
-  cursor: default;
-}
-.range b {
-  font-weight: 800;
-  color: #e99e00;
-  letter-spacing: 0;
-}
-#moveTooMuchLikes::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  cursor: ew-resize;
-  -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
-  background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-}
+/* 提示框
+-----------------------------------------------------------------*/
 #tips, .tooltips {
   display: none;
   position: absolute;
@@ -607,18 +615,18 @@ input#moveTooMuchLikes {
 }
 .tooltips img {
   vertical-align: top;
-  opacity: .8;
+  opacity: .9;
 }
 #setting label:hover + .tooltips {
   visibility: visible;
   opacity: 1;
-  transition: all .3s
+  transition: all 1s .8s 
 }
 .range + .tooltips {
-  top: 46px;
+  top: 50px;
+  transition: all 1s
 }
 .range:hover + .tooltips {
   visibility: visible;
   opacity: 1;
-  transition: all .3s
 }
