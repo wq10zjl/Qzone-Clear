@@ -514,7 +514,7 @@ footer a {
 }
 #donate {
   margin-right: 5px;
-  color: #7e7e7e;
+  color: rgb(255, 145, 110);
 }
 input#moveTooMuchLikes {
   display: block;

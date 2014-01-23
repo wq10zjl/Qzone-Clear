@@ -29,7 +29,6 @@ function clearOut() {
             moveTooMuchLikes: false
         };
     }
-    if (userSet.indexOf(true) === -1) return false;
     if (setting.moveTooMuchLikes) {
         $j("[data-likecnt]").each(function() {
             var a = $j(this).data("likecnt");
@@ -40,6 +39,7 @@ function clearOut() {
             };
         })
     }; // 根据赞的数量移除
+    if (userSet.indexOf(true) === -1) return false;
     if (setting.moveStamp) {
         $j(".img-box img[src*='stamp']").closest(".f-single").hide(500, function() {
             $j(this).remove();

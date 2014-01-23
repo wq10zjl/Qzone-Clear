@@ -240,27 +240,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function init() {
-        $("#moveMood")[0].checked = setting.moveMood;
-        $("#moveLike")[0].checked = setting.moveLike;
-        $("#moveComment")[0].checked = setting.moveComment;
-        $("#moveReply")[0].checked = setting.moveReply;
-        $("#moveStamp")[0].checked = setting.moveStamp;
-        if (setting.moveTooMuchLikes) {
-            $("#moveTooMuchLikes").val(setting.moveTooMuchLikes);
-            $(".range").html("移除赞多于 <b>" + setting.moveTooMuchLikes + "</b> 的说说");
-        }
-        else {
+        $("input[type='checkbox']").each(function() {
+            var a = $(this).attr("id");
+           $(this)[0].checked = setting[a];
+        })
+        var ifTooMuch = setting.moveTooMuchLikes;
+        if (ifTooMuch) {
+            $("#moveTooMuchLikes").val(ifTooMuch);
+            $(".range").html("移除赞多于 <b>" + ifTooMuch + "</b> 的说说");
+        } else {
             $("#moveTooMuchLikes").val(0);
             $(".range").text("不根据赞的数量移除说说")
         }
     }
 
     function save() {
-        setting.moveMood = $("#moveMood")[0].checked;
-        setting.moveLike = $("#moveLike")[0].checked;
-        setting.moveComment = $("#moveComment")[0].checked;
-        setting.moveReply = $("#moveReply")[0].checked;
-        setting.moveStamp = $("#moveStamp")[0].checked;
+        $("input[type='checkbox']").each(function() {
+            var a = $(this).attr("id");
+            setting[a] = $(this)[0].checked;
+        })
         var tooMuch = $("#moveTooMuchLikes").val();
         if (tooMuch != 0) {
             setting.moveTooMuchLikes = tooMuch;
@@ -275,8 +273,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     $("#moveTooMuchLikes").change(function() {
         var a = $(this).val();
-        if (a > 3000) $(this).attr("step","1000");
-        else $(this).attr("step","100");
+        if (a > 3000) $(this).attr("step", "1000");
+        else $(this).attr("step", "100");
         if (a > 0) $(".range").html("移除赞多于 <b>" + a + "</b> 的说说");
         else $(".range").text("不根据赞的数量移除说说")
     })
@@ -293,7 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     $("#cancel,#closex,.closeLayer").click(function() {
         $("body").removeClass("on");
-        
+
         $(".stwrap").animate({
             "bottom": -550,
             "opacity": 0
