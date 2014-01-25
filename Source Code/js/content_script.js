@@ -244,7 +244,15 @@ function checkOld() {
     };
 }
 
-if (setting.isOld) setInterval(checkOld, 1000);
+if (setting.isOld) {
+    var t = setInterval(function() {
+        checkOld();
+        if ($j("[data-page]")[0]) {
+            clearInterval(t);
+            alert("检测到空间版本为新版，请在插件中关闭兼容模式！")
+        }
+    }, 1000);
+}
 else setInterval(check, 1000);
 // 监听瀑布流新内容载入
 
