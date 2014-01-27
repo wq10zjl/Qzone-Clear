@@ -16,6 +16,7 @@
 var $j = jQuery.noConflict();
 
 var setting;
+
 function clearOut() {
     var userSet = localStorage.setting;
     if (userSet) setting = JSON.parse(userSet);
@@ -42,7 +43,7 @@ function clearOut() {
     }; // 根据赞的数量移除
     if (userSet && userSet.indexOf(true) === -1) return false;
     if (setting.moveStamp) {
-        $j(".img-box img[src*='stamp']").closest(".f-single").hide(500, function() {
+        $j(".img-box img[src*='qzonestyle']").closest(".f-single").hide(500, function() {
             $j(this).remove();
         });
     }; // 移除签到
@@ -221,7 +222,6 @@ function clearOut() {
             }
         })
     };
-
 }
 clearOut();
 
@@ -252,8 +252,7 @@ if (setting.isOld) {
             alert("检测到空间版本为新版，请在插件中关闭兼容模式！")
         }
     }, 1000);
-}
-else setInterval(check, 1000);
+} else setInterval(check, 1000);
 // 监听瀑布流新内容载入
 
 $j(".icon-refresh, #tab_menu_list a").click(function() {
