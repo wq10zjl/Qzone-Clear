@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+$(document).ready(function() {
     function refresh() {
         if ($(".list i").length !== 0) {
             $(".clearout, .list h4").show();
@@ -7,12 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         var b = [];
         $(".list i").each(function(i) {
-            var text = $(this).text().split("×")[0]; // 过滤空格，获取输入值
+            var text = $(this).text().split("×")[0]; // 获取项目值
             b.push(text);
         });
         if (b[0] === undefined) {
             localStorage.removeItem("hidePart");
-            chrome.storage.local.remove("hidePart")
+            chrome.storage.local.remove("hidePart");
         } else {
             chrome.storage.local.set({
                 "hidePart": b
@@ -21,15 +21,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function addEle(e) {
+    function addEle() {
         var a = $("#input").val();
         var b = a.split(" ").join("");
-        var c = b.split("+").join("");
-        for (var i = 0; i < e.length; i++) {
+        var c = $(".list i").text().split("×");
+        for (var i = 0; i < c.length; i++) {
             if (a === "" || b === "") {
                 alert("请输入内容！");
                 return false;
-            } else if (a == e[i] || b === e[i]) {
+            } else if (a == c[i] || b === c[i]) {
                 alert("已存在的对象！");
                 return false;
             }
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
             alert("输入内容太长了！");
             return false;
         }
-        if (b.indexOf("+") === 0 || c.length === 0) {
+        if (b.indexOf("+") === 0) {
             alert("输入非法！");
             return false;
         };
@@ -93,16 +93,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     $("#input").keydown(function(e) {
-        if (e.keyCode == 13) {
-            var b = $(".list i").text().split("×");
-            addEle(b);
-        }
+        if (e.keyCode == 13) addEle();
         $("#tips").hide(500);
     });
-    $(".submit").click(function() {
-        var c = $(".list i").text().split("×");
-        addEle(c);
-    });
+    $(".submit").click(addEle);
     $(".clearout").click(function() {
         var msg = confirm("真的要删除吗？\n\n此操作不可撤销！");
         if (msg === true) {
@@ -315,6 +309,10 @@ document.addEventListener('DOMContentLoaded', function() {
     var sHeight, left, top, posX, posY, minTop, maxTop, minLeft, maxLeft, flag, hasValue;
     $(".setting h4").mousedown(function(e) {
         flag = true;
+        posX = e.pageX;
+        posY = e.pageY; // 获取鼠标当前位置
+        left = parseInt($(".setting").css("left"));
+        top = parseInt($(".setting").css("top")); // 获取目标框当前位置
         if (!hasValue) {
             sHeight = $(".setting").height();
             maxTop = $(".setting").offset().top;
@@ -323,16 +321,17 @@ document.addEventListener('DOMContentLoaded', function() {
             minLeft = -maxLeft;
             hasValue = true;
         }
-        var moveLayer = "<div id='moveLayer'><div class='tempMove' style='height:" + sHeight + "px'></div></div>";
-        $(moveLayer).appendTo(".stwrap"); // 添加移动叠加层
-        posX = e.pageX;
-        posY = e.pageY; // 获取鼠标当前位置
-        left = parseInt($(".setting").css("left"));
-        top = parseInt($(".setting").css("top")); // 获取目标框当前位置
+        var moveLayer = "<div id='moveLayer'><div class='tempMove'><span class='moveTip'>拖动改变位置</span></div></div>";
+        $(moveLayer).appendTo(".stwrap").fadeIn(200);
+        $(".tempMove").css({
+            "height": sHeight,
+            "left": left,
+            "top": top
+        }) // 添加移动叠加层
+        
     })
     $(".stwrap").mousemove(function(e) {
         if (flag) {
-            $("#moveLayer").fadeIn(200);
             offsetX = e.pageX - posX + left;
             offsetY = e.pageY - posY + top; // 获取鼠标移动偏移量
             $(".tempMove").css({

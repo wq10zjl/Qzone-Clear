@@ -387,6 +387,16 @@ td {
   text-align: left;
   vertical-align: middle;
   cursor: move;
+  border: 2px solid rgba(207, 207, 207, 0.5);
+  border-radius: 2px;
+}
+.moveTip {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 50px;
+  font-size: 32px;
+  color: #fff;
+  letter-spacing: .3em;
 }
 .closeLayer {
   position: absolute;
@@ -395,7 +405,7 @@ td {
   width: 100%;
   height: 100%;
 }
-.stwrap:before, .bkwrap:before, #moveLayer:before {
+.stwrap:before, .bkwrap:before, #moveLayer:before, .tempMove:before {
   content: "";
   display: inline-block;
   height: 100%;
@@ -421,7 +431,7 @@ td {
   margin: -10px 0 10px -10px;
   padding: 5px 5px 0;
   height: 25px;
-  width: 350px;
+  width: 103%;
   color: #707070;
   cursor: move;
   font-size: 16px;
