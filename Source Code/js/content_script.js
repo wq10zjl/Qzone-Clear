@@ -40,13 +40,13 @@ function clearOut() {
                 });
             };
         })
-    }; // 根据赞的数量移除
+    } // 根据赞的数量移除
     if (userSet && userSet.indexOf(true) === -1) return false;
     if (setting.moveStamp) {
         $j(".img-box img[src*='qzonestyle']").closest(".f-single").hide(500, function() {
             $j(this).remove();
         });
-    }; // 移除签到
+    } // 移除签到
 
     var content = [];
     var multi = [];
@@ -85,7 +85,7 @@ function clearOut() {
                                 $j(this).remove();
                             });
                         }
-                    }; // 移除转发
+                    } // 移除转发
                     var isReply = $j(ele[j]).closest("[data-type='replyroot']")[0];
                     var isComment = $j(ele[j]).parent().parent().parent("[data-type='commentroot']")[0];
                     var isLike = $j(ele[j]).closest(".f-like")[0];
@@ -103,7 +103,7 @@ function clearOut() {
                         $j(ele[j]).fadeOut(500, function() {
                             $j(this).remove();
                         }); // 移除赞
-                    };
+                    }
                 }
             }
         }
@@ -189,7 +189,7 @@ function clearOut() {
                             matchText = false;
                             break;
                         }
-                    };
+                    }
                     if (matchText) {
                         $j(this).hide(500, function() {
                             $j(this).remove();
@@ -203,7 +203,7 @@ function clearOut() {
                             matchText = false;
                             break;
                         }
-                    };
+                    }
                     if (matchText) {
                         var isReply = $j(this).closest("[data-type='replyroot']")[0];
                         var isComment = $j(this).parent().parent("[data-type='commentroot']")[0];
@@ -241,7 +241,7 @@ function checkOld() {
     if (curBlocks > blocks) {
         clearOut();
         blocks = curBlocks;
-    };
+    }
 }
 
 if (setting.isOld) {

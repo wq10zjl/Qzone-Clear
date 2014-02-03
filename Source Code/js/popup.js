@@ -303,34 +303,61 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     })
     $("#submit").mousedown(function() {
-        $(this).addClass("focus")
+        $(this).addClass("focus");
         $("#cancel").removeClass("focus");
     })
     $("#cancel").mousedown(function() {
-        $(this).addClass("focus")
+        $(this).addClass("focus");
         $("#submit").removeClass("focus");
     })
 
-    var left, top, posX, posY, flag;
+    // 可移动框
+    var sHeight, left, top, posX, posY, minTop, maxTop, minLeft, maxLeft, flag, hasValue;
     $(".setting h4").mousedown(function(e) {
         flag = true;
+        if (!hasValue) {
+            sHeight = $(".setting").height();
+            maxTop = $(".setting").offset().top;
+            maxLeft = $(".setting").offset().left;
+            minTop = -maxTop;
+            minLeft = -maxLeft;
+            hasValue = true;
+        }
+        var moveLayer = "<div id='moveLayer'><div class='tempMove' style='height:" + sHeight + "px'></div></div>";
+        $(moveLayer).appendTo(".stwrap"); // 添加移动叠加层
         posX = e.pageX;
-        posY = e.pageY;
+        posY = e.pageY; // 获取鼠标当前位置
         left = parseInt($(".setting").css("left"));
-        top = parseInt($(".setting").css("top"));
+        top = parseInt($(".setting").css("top")); // 获取目标框当前位置
     })
-    $(document).mousemove(function(f) {
-        var offsetX = f.pageX - posX + left;
-        var offsetY = f.pageY - posY + top;
+    $(".stwrap").mousemove(function(e) {
         if (flag) {
-            $(".setting").css({
+            $("#moveLayer").fadeIn(200);
+            offsetX = e.pageX - posX + left;
+            offsetY = e.pageY - posY + top; // 获取鼠标移动偏移量
+            $(".tempMove").css({
                 "left": offsetX,
                 "top": offsetY
             })
+            if (offsetX < minLeft) $(".tempMove").css("left", minLeft);
+            if (offsetX > maxLeft) $(".tempMove").css("left", maxLeft);
+            if (offsetY < minTop) $(".tempMove").css("top", minTop);
+            if (offsetY > maxTop) $(".tempMove").css("top", maxTop); // 移动叠加层模拟框
         }
     }).mouseup(function() {
-        flag = false;
-    }) // 可移动框
+        if (flag) {
+            $("#moveLayer").fadeOut(500, function() {
+                $(this).remove();
+            });
+            var curLeft = parseInt($(".tempMove").css("left"));
+            var curTop = parseInt($(".tempMove").css("top")); // 获取模拟框位置
+            $(".setting").animate({
+                "left": curLeft,
+                "top": curTop
+            }) // 移动目标框
+            flag = false;
+        }
+    })
 
     $("#openSet").click(function(event) {
         event.preventDefault();
@@ -344,5 +371,5 @@ document.addEventListener('DOMContentLoaded', function() {
     $("#donate").click(function() {
         window.open($(this).attr("href"));
     })
-    $(".setting, .backinfo").hide()
+    $(".setting, .backinfo").hide();
 });
