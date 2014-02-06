@@ -1,4 +1,4 @@
-﻿::-webkit-scrollbar {
+::-webkit-scrollbar {
     height:8px;
     width:8px
 }
@@ -431,7 +431,7 @@ td {
   margin: -10px 0 10px -10px;
   padding: 5px 5px 0;
   height: 25px;
-  width: 103%;
+  width: 335px;
   color: #707070;
   cursor: move;
   font-size: 16px;

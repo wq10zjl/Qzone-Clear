@@ -1,4 +1,4 @@
-﻿function getDomainFromUrl(url) {
+function getDomainFromUrl(url) {
     var host = "null";
     if (typeof url == "undefined" || null == url)
         url = window.location.href;

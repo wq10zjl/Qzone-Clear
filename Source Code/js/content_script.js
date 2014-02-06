@@ -1,4 +1,4 @@
-﻿(function() {
+(function() {
     chrome.storage.onChanged.addListener(function(changes, areaName) {
         if (changes.hidePart) {
             var hidePart = changes.hidePart.newValue;
