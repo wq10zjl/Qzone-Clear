@@ -53,7 +53,9 @@ $(document).ready(function() {
             return false;
         };
         $("#input").val("");
-        $("#friInfo").html("");
+        $("#friInfo").hide(300,function() {
+            $(this).html("");
+        });
         if (remark) {
             var addon = "<i style='display:none' data-uin='" + a + "'>" + remark + "<b class='tooltips'>(" + a + ")</b>" + "<span class='close'>×</span><b class='highlight'></b></i>";
         } else {
@@ -84,7 +86,9 @@ $(document).ready(function() {
     function getFri(inputValue) {
         if (!localStorage.userInfo) return false;
         if (inputValue === "" || inputValue.split(" ").join("") === "") {
-            $("#friInfo").html("");
+            $("#friInfo").hide(function() {
+                $(this).html("");
+            });
             return false;
         }
         var t = [];
@@ -113,7 +117,7 @@ $(document).ready(function() {
                 inset += "<li><img src=" + avatarShow + ">" + nameShow + " (" + uinShow + ") " + "</li>"
             }
         }
-        $("#friInfo").html(inset);
+        $("#friInfo").html(inset).show(300);
         $("#friInfo li:first").addClass("active");
     } // 获取好友信息
 
@@ -174,9 +178,10 @@ $(document).ready(function() {
         getFri(value);
     }).focus(function() {
         $(this).attr("placeholder", "多关键字请用 + 隔开");
+        $("#friInfo").show(300);
     }).blur(function() {
         $(this).attr("placeholder", "输入好友QQ号码、备注名称或关键词");
-        $("#friInfo").html("");
+        $("#friInfo").hide(300);
     });
 
     $("#friInfo").on("mouseover", "li", function() {
