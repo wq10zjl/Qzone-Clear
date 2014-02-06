@@ -18,6 +18,8 @@ var $j = jQuery.noConflict();
 var setting;
 
 function clearOut() {
+    $j(".hideme").remove();
+    $j(".f-detail").append("<a class='item hideme' href='javascript:;'>屏蔽此用户</a>"); // 页面添加移除按钮
     var userSet = localStorage.setting;
     if (userSet) setting = JSON.parse(userSet);
     else {
@@ -60,11 +62,12 @@ function clearOut() {
         if (target[i].indexOf("+") > -1) {
             multi.push(target[i]); // 获取hidePart中多关键字部分
         } else {
-            var num = target[i].split(/[^\d]/g).join(""); // 获取数字部分
             var temp = target[i].match(/[^\d]/g);
             if (temp) {
-                content.push(temp.join(""))
-            } // 获得单关键字部分
+                content.push(target[i]); // 获得单关键字部分
+            } else {
+                var num = target[i].split(/[^\d]/g).join(""); // 获取数字部分
+            }
         }
 
         // uid 匹配移除
@@ -221,10 +224,21 @@ function clearOut() {
                 });
             }
         })
-    };
+    }
 }
 clearOut();
 
+$j(".f-detail").on("click", ".hideme", function() {
+    var url = $j(this).closest(".f-single").find("a.q_namecard").attr("href");
+    var uin = url.split(/[^\d]/g).join("");
+    if (localStorage.hidePart === "undefined" || !localStorage.hidePart) localStorage.hidePart = uin;
+    else localStorage.hidePart += "," + uin;
+    chrome.extension.sendRequest({
+        hideAdd: localStorage.hidePart
+    });
+    clearOut();
+})
+$j("body").append("<style>.hideme{float: right;opacity: 0;transition: all .3s;} .f-single:hover .hideme{opacity: 1;}</style>")
 var page = -1;
 var blocks = 0;
 
@@ -246,7 +260,7 @@ function checkOld() {
 
 if (setting.isOld) {
     var t = setInterval(function() {
-        checkOld();
+        clearOut();
         if ($j("[data-page]")[0]) {
             clearInterval(t);
             alert("检测到空间版本为新版，请在插件中关闭兼容模式！")
