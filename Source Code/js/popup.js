@@ -87,7 +87,6 @@ $(document).ready(function() {
             $("#friInfo").html("");
             return false;
         }
-        console.log(1)
         var t = [];
         var inset = "";
         var isTxt = inputValue.match(/[^\d]/g);
