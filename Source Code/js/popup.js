@@ -53,7 +53,9 @@ $(document).ready(function() {
             return false;
         };
         $("#input").val("");
-        $("#friInfo").html("");
+        $("#friInfo").fadeOut(function(){
+            $(this).html("")
+        });
         if (remark) {
             var addon = "<i style='display:none' data-uin='" + a + "'>" + remark + "<b class='tooltips'>(" + a + ")</b>" + "<span class='close'>×</span><b class='highlight'></b></i>";
         } else {
@@ -125,6 +127,7 @@ $(document).ready(function() {
             localStorage.setItem("timeCloud", data.time)
         })
         if (localStorage.getItem("hidePart") === null) return false;
+        if (localStorage.lastInput) $("#input").val(localStorage.lastInput);
         var items = localStorage.getItem("hidePart").split(",");
         for (i = 0; i < items.length; i++) {
             var isTxt = items[i].match(/[^\d]/g);
@@ -164,7 +167,7 @@ $(document).ready(function() {
             "top": top + 45
         }).fadeIn();
     }).on("mouseleave", "#uin i", function() {
-        $("#tooltip").remove()
+        $("#tooltip").remove();
     })
 
     $("#input").keydown(function(e) {
@@ -174,10 +177,13 @@ $(document).ready(function() {
         getFri(value);
     }).focus(function() {
         $(this).attr("placeholder", "多关键字请用 + 隔开");
-        $("#friInfo").fadeIn()
+        var value = $(this).val();
+        getFri(value);
+        $("#friInfo").fadeIn();
     }).blur(function() {
         $(this).attr("placeholder", "输入好友QQ号码、备注名称或关键词");
-        $("#friInfo").fadeOut()
+        $("#friInfo").fadeOut();
+        localStorage.lastInput = $(this).val();
     });
 
     $("#friInfo").on("mouseover", "li", function() {
