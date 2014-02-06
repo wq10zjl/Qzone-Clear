@@ -119,7 +119,6 @@ button:active {
   letter-spacing: .4em;
 }
 #friInfo {
-  display: none;
   position: absolute;
   margin: 0;
   padding: 0;
