@@ -30,6 +30,7 @@ $(document).ready(function() {
     }
 
     function addEle(value, remark) {
+        localStorage.removeItem("lastInput");
         var a = value.split(" ").join("");
         var b = [];
         $(".list i").each(function() {
