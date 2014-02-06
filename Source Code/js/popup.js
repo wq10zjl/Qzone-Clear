@@ -111,7 +111,7 @@ $(document).ready(function() {
         }
         $("#friInfo").html(inset);
         $("#friInfo li:first").addClass("active");
-        if (inputValue === "" || inputValue === " ") $("#friInfo").html("");
+        if (inputValue === "") $("#friInfo").html("");
     } // 获取好友信息
 
     function winOn() {
@@ -169,13 +169,7 @@ $(document).ready(function() {
     }).keyup(function() {
         var value = $(this).val();
         getFri(value);
-    }).focus(function() {
-        $(this).attr("placeholder", "多关键字请用 + 隔开");
-    }).blur(function() {
-        $(this).attr("placeholder", "输入好友QQ号码、备注名称或关键词");
-        $("#friInfo").html("");
-    });
-
+    })
     $("#friInfo").on("mouseover", "li", function() {
         $(this).addClass("active").siblings().removeClass("active");
     }).on("click", "li", function() {
@@ -196,6 +190,12 @@ $(document).ready(function() {
             localStorage.removeItem("hidePart");
             chrome.storage.local.remove("hidePart");
         }
+    });
+    $("#input").focus(function() {
+        $(this).attr("placeholder", "多关键字请用 + 隔开");
+    });
+    $("#input").blur(function() {
+        $(this).attr("placeholder", "输入好友QQ号码、备注名称或关键词");
     });
     $(".toggle span").click(function() {
         var text = $(this).text();
