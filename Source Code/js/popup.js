@@ -1,4 +1,12 @@
 $(document).ready(function() {
+    if (localStorage.userInfo) {
+        var userInfo = JSON.parse(localStorage.userInfo);
+        var avatar = userInfo.avatar,
+            uin = userInfo.uin,
+            name = userInfo.name,
+            remark = userInfo.remark;
+    }
+
     function refresh() {
         if ($(".list i").length !== 0) {
             $(".clearout, .list h4").show();
@@ -7,7 +15,7 @@ $(document).ready(function() {
         }
         var b = [];
         $(".list i").each(function(i) {
-            var text = $(this).text().split("×")[0]; // 获取项目值
+            var text = $(this).data("uin").toString(); // 获取项目值
             b.push(text);
         });
         if (b[0] === undefined) {
@@ -21,41 +29,49 @@ $(document).ready(function() {
         }
     }
 
-    function addEle() {
-        var a = $("#input").val();
-        var b = a.split(" ").join("");
-        var c = $(".list i").text().split("×");
-        for (var i = 0; i < c.length; i++) {
-            if (a === "" || b === "") {
+    function addEle(value, remark) {
+        var a = value.split(" ").join("");
+        var b = [];
+        $(".list i").each(function() {
+            b.push($(this).data("uin").toString())
+        })
+        for (var i = 0; i < b.length; i++) {
+            if (value === "" || a === "") {
                 alert("请输入内容！");
                 return false;
-            } else if (a == c[i] || b === c[i]) {
+            } else if (value === b[i] || a === b[i]) {
                 alert("已存在的对象！");
                 return false;
             }
         } // 有效性检测
-        if (b.length > 20) {
+        if (a.length > 20) {
             alert("输入内容太长了！");
             return false;
         }
-        if (b.indexOf("+") === 0) {
+        if (a.indexOf("+") === 0) {
             alert("输入非法！");
             return false;
         };
-        var addon = "<i style='display:none'>" + b + "<span class='close'>×</span><b class='highlight'></b></i>";
-        var checkNum = b.match(/[^\d]/g);
+        $("#input").val("");
+        $("#friInfo").html("");
+        if (remark) {
+            var addon = "<i style='display:none' data-uin='" + a + "'>" + remark + "<b class='tooltips'>(" + a + ")</b>" + "<span class='close'>×</span><b class='highlight'></b></i>";
+        } else {
+            var addon = "<i style='display:none' data-uin='" + a + "'>" + a + "<span class='close'>×</span><b class='highlight'></b></i>";
+        }
+        var checkNum = a.match(/[^\d]/g);
         if (checkNum !== null) {
             $(addon).appendTo(".list #content").fadeIn(500);
             $(".list").animate({
-                scrollTop: $("#uid").height() + $("#content").height() - 110
+                scrollTop: $("#uin").height() + $("#content").height() - 110
             }, "slow"); // 滚动到当前高度
             $(".highlight").delay(500).fadeOut(2000, function() {
                 $(this).remove();
             }); // 高亮叠加
         } else {
-            $(addon).appendTo(".list #uid").fadeIn(500);
+            $(addon).appendTo(".list #uin").fadeIn(500);
             $(".list").animate({
-                scrollTop: $("#uid").height() - 110
+                scrollTop: $("#uin").height() - 110
             }, "slow");
             $(".highlight").delay(500).fadeOut(2000, function() {
                 $(this).remove();
@@ -64,6 +80,39 @@ $(document).ready(function() {
         $("#input").val("");
         refresh();
     } // 显示新元素
+
+    function getFri(inputValue) {
+        if (!localStorage.userInfo) return false;
+        var t = [];
+        var inset = "";
+        var isTxt = inputValue.match(/[^\d]/g);
+        if (isTxt) {
+            for (var i = 0; i < remark.length; i++) {
+                if (name[i].toString().indexOf(inputValue) > -1 || remark[i].toString().indexOf(inputValue) > -1) t.push(i);
+                if (t.length >= 8) break;
+            }
+        } else {
+            for (var i = 0; i < uin.length; i++) {
+                if (uin[i].toString().indexOf(inputValue) === 0) t.push(i);
+                if (t.length >= 8) break;
+            }
+        }
+        for (var j = 0; j < t.length; j++) {
+            var count = t[j];
+            var avatarShow = avatar[count],
+                uinShow = uin[count],
+                nameShow = name[count],
+                remarkShow = remark[count];
+            if (remarkShow) {
+                inset += "<li><img src=" + avatarShow + ">" + remarkShow + " [" + nameShow + "] " + " (" + uinShow + ") " + "</li>"
+            } else {
+                inset += "<li><img src=" + avatarShow + ">" + nameShow + " (" + uinShow + ") " + "</li>"
+            }
+        }
+        $("#friInfo").html(inset);
+        $("#friInfo li:first").addClass("active");
+        if (inputValue === "") $("#friInfo").html("");
+    } // 获取好友信息
 
     function winOn() {
         chrome.storage.sync.get("backup", function(data) {
@@ -75,11 +124,21 @@ $(document).ready(function() {
         if (localStorage.getItem("hidePart") === null) return false;
         var items = localStorage.getItem("hidePart").split(",");
         for (i = 0; i < items.length; i++) {
-            var checkNum = items[i].match(/[^\d]/g);
-            if (checkNum !== null) {
-                $(".list #content").append("<i>" + items[i] + "<span class='close'>×</span></i>");
+            var isTxt = items[i].match(/[^\d]/g);
+            if (isTxt) {
+                $(".list #content").append("<i data-uin='" + items[i] + "'>" + items[i] + "<span class='close'>×</span></i>");
             } else {
-                $(".list #uid").append("<i>" + items[i] + "<span class='close'>×</span></i>");
+                var innerText = items[i];
+                if (uin) {
+                    for (var j = 0; j < uin.length; j++) {
+                        if (items[i] == uin[j]) {
+                            if (remark[j] !== "") innerText = remark[j];
+                            else innerText = name[j];
+                            break;
+                        }
+                    }
+                }
+                $(".list #uin").append("<i data-uin='" + items[i] + "'>" + innerText + "<span class='close'>×</span></i>");
             }
         }
         refresh();
@@ -91,12 +150,37 @@ $(document).ready(function() {
             $(this).remove();
             refresh();
         });
-    });
+    }).on("mouseenter", "#uin i", function() {
+        var text = $(this).data("uin");
+        if ($(this).text().indexOf(text) === 0) return false;
+        var left = $(this).offset().left;
+        var top = $(this).offset().top;
+        $("body").append('<div id="tooltip">' + text + "</div>"); // 创建提示框,添加到页面中
+        $("#tooltip").css({
+            "left": left,
+            "top": top + 45
+        }).fadeIn();
+    }).on("mouseleave", "#uin i", function() {
+        $("#tooltip").remove()
+    })
+
     $("#input").keydown(function(e) {
-        if (e.keyCode == 13) addEle();
-        $("#tips").hide(500);
+        if (e.keyCode == 13) addEle($("#input").val());
+    }).keyup(function() {
+        var value = $(this).val();
+        getFri(value);
+    })
+    $("#friInfo").on("mouseover", "li", function() {
+        $(this).addClass("active").siblings().removeClass("active");
+    }).on("click", "li", function() {
+        var uin = $(this).text().split("(")[1].split(")")[0];
+        var remark = $(this).text().split(" ")[0];
+        addEle(uin, remark);
+    }) // 通过好友信息添加
+
+    $(".submit").click(function() {
+        addEle($("#input").val());
     });
-    $(".submit").click(addEle);
     $(".clearout").click(function() {
         var msg = confirm("真的要删除吗？\n\n此操作不可撤销！");
         if (msg === true) {
@@ -104,23 +188,14 @@ $(document).ready(function() {
             $(this).hide();
             $(".list h4").hide();
             localStorage.removeItem("hidePart");
-            chrome.storage.local.remove("hidePart")
+            chrome.storage.local.remove("hidePart");
         }
     });
     $("#input").focus(function() {
-        $("#tips").show();
-        $("#tips").animate({
-            top: 40,
-            opacity: 1
-        })
+        $(this).attr("placeholder", "多关键字请用 + 隔开");
     });
     $("#input").blur(function() {
-        $("#tips").fadeOut(500, function() {
-            $(this).css({
-                top: 60,
-                opacity: 0
-            })
-        })
+        $(this).attr("placeholder", "输入好友QQ号码、备注名称或关键词");
     });
     $(".toggle span").click(function() {
         var text = $(this).text();
@@ -328,7 +403,7 @@ $(document).ready(function() {
             "left": left,
             "top": top
         }) // 添加移动叠加层
-        
+
     })
     $(".stwrap").mousemove(function(e) {
         if (flag) {
@@ -367,8 +442,13 @@ $(document).ready(function() {
         $(".stwrap").fadeIn();
         $(".setting").slideDown();
     })
-    $("#donate").click(function() {
-        window.open($(this).attr("href"));
+    $("#getFri").click(function() {
+        if (localStorage.dataUrl) {
+            var a = confirm("是否允许获取好友信息？\nPS: 该信息只保留在本地，不会外泄！");
+            if (a === true) window.open(localStorage.dataUrl)
+        } else {
+            alert("尚未获取到好友信息位置，请稍后重试！")
+        }
     })
     $(".setting, .backinfo").hide();
 });

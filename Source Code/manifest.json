@@ -3,7 +3,7 @@
 	"minimum_chrome_version": "20",
 	"name": "Qzone Clear",
 	"homepage_url": "https://github.com/idiotWu/Qzone-Clear",
-	"version": "0.2.1",
+	"version": "0.3.0",
 	"description": "Qzone 屏蔽好友动态加强版：可以根据QQ号或（多）关键词屏蔽说说、评论、评论回复甚至赞。眼不见则心不烦。",
 	"icons": {
 		"128": "icon/icon_128.png"
@@ -17,9 +17,9 @@
 		"default_title": "Qzone Clear",
 		"default_popup": "popup.html"
 	},
-	"permissions" : ["storage","tabs","http://user.qzone.qq.com/*"],
+	"permissions" : ["storage","tabs","http://user.qzone.qq.com/*","http://r.qzone.qq.com/*"],
 	"content_scripts":[{
-		"matches":["http://user.qzone.qq.com/*"],
+		"matches":["http://user.qzone.qq.com/*","http://r.qzone.qq.com/*"],
 		"js":["js/jquery-2.0.0.min.js", "js/content_script.js"]
 	}]
 }

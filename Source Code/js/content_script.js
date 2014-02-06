@@ -267,3 +267,49 @@ $j(".icon-refresh, #tab_menu_list a").click(function() {
         };
     }, 1000);
 }) // 刷新
+
+var urlCheck = window.location.href.match(/.*\:\/\/([^\/]*).*/);
+if (urlCheck[1] === "user.qzone.qq.com") {
+    var hrefUid = window.location.href.split("/")[3];
+    var targetSuf = $j("script[charset='GB2312']").attr("src");
+    if (!targetSuf) {
+        var a = setInterval(function() {
+            targetSuf = $j("script[charset='GB2312']").attr("src");
+            if (targetSuf) {
+                suf = targetSuf.split("tk=")[1];
+                var target = "http://r.qzone.qq.com/cgi-bin/tfriend/friend_show_qqfriends.cgi?uin=" + hrefUid + "&follow_flag=1&groupface_flag=0&fupdate=1&g_tk=" + suf;
+                chrome.extension.sendRequest({
+                    dataUrl: target
+                }); // 获取好友信息网址
+                clearInterval(a);
+            }
+        }, 100)
+    };
+}
+if (urlCheck[1] === "r.qzone.qq.com") {
+    var a = eval($j("pre").text().split("_Callback"));
+    if (!eval(a[1])) {
+        var noData = confirm("未能成功获得好友信息，请联系作者");
+        if (noData === true) window.close();
+    };
+    var b = eval(a[1]).data.items;
+    var data = {
+        "avatar": [],
+        "uin": [],
+        "name": [],
+        "remark": []
+    }
+    for (var i = 0; i < b.length; i++) {
+        data.avatar.push(b[i].img);
+        data.uin.push(b[i].uin);
+        data.name.push(b[i].name);
+        data.remark.push(b[i].remark);
+    }
+    chrome.extension.sendRequest({
+        dataLog: JSON.stringify(data)
+    });
+    setTimeout(function() {
+        var getData = confirm("已刷新好友信息，点击确定返回QQ空间");
+        if (getData === true) window.close();
+    }, 500)
+} // 获取好友信息
