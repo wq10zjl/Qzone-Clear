@@ -228,7 +228,7 @@ function clearOut() {
 }
 clearOut();
 
-$j(".f-detail").on("click", ".hideme", function() {
+$j(document).on("click", ".hideme", function() {
     var url = $j(this).closest(".f-single").find("a.q_namecard").attr("href");
     var uin = url.split(/[^\d]/g).join("");
     if (localStorage.hidePart === "undefined" || !localStorage.hidePart) localStorage.hidePart = uin;
@@ -238,7 +238,8 @@ $j(".f-detail").on("click", ".hideme", function() {
     });
     clearOut();
 })
-$j("body").append("<style>.hideme{float: right;opacity: 0;transition: all .3s;} .f-single:hover .hideme{opacity: 1;}</style>")
+$j("body").append("<style>.hideme{float: right;opacity: 0;transition: all .3s;} .f-single:hover .hideme{opacity: 1;}</style>");
+
 var page = -1;
 var blocks = 0;
 
