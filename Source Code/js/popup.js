@@ -8,7 +8,14 @@ $(document).ready(function() {
     }
     if (localStorage.userRemark) var userRemark = JSON.parse(localStorage.userRemark);
     else {
-        userRemark = {
+        var userRemark = {
+            uin: [],
+            remark: []
+        }
+    }
+    if (localStorage.edited) var edited = JSON.parse(localStorage.edited);
+    else {
+        var edited = {
             uin: [],
             remark: []
         }
@@ -22,6 +29,7 @@ $(document).ready(function() {
         }
         var b = [];
         $(".list i").each(function(i) {
+            if (!$(this).data("uin")) return false;
             var text = $(this).data("uin").toString(); // 获取项目值
             b.push(text);
         });
@@ -32,8 +40,17 @@ $(document).ready(function() {
             chrome.storage.local.set({
                 "hidePart": b
             }); // 获取hidePart，存入chrome.storage
-            localStorage.setItem("hidePart", b); // localStorage建立副本
+            localStorage.hidePart = b; // localStorage建立副本
         }
+        var userRemarkSave = {
+            uin: [],
+            remark: []
+        }
+        $("#uin i").each(function() {
+            userRemarkSave.uin.push($(this).data("uin"));
+            userRemarkSave.remark.push($(this).children(".content").text())
+        })
+        localStorage.userRemark = JSON.stringify(userRemarkSave);
     }
 
     function addEle(value, showName) {
@@ -152,17 +169,21 @@ $(document).ready(function() {
                 $(".list #content").append("<i data-uin='" + items[i] + "'><span class='content'>" + items[i] + "</span><span class='close'>×</span></i>");
             } else {
                 var innerText = items[i];
-                if (uin) {
+                if (uin && localStorage.updated === "true") {
                     for (var j = 0; j < uin.length; j++) {
                         if (items[i] == uin[j]) {
                             if (remark[j] !== "") innerText = remark[j];
                             else innerText = name[j];
                             break;
                         }
-                    }
-                }
-                if (userRemark.uin.length > 0) {
-                    console.log(userRemark.uin[0] == innerText)
+                    } // 获取好友数据后刷新本地数据
+                    for (var j = 0; j < edited.uin.length; j++) {
+                        if (items[i] == edited.uin[j]) {
+                            innerText = edited.remark[j];
+                            break
+                        }
+                    } // 叠加用户修改过的部分以免被覆盖
+                } else if (userRemark.uin.length > 0) {
                     for (var k = 0; k < userRemark.uin.length; k++) {
                         if (items[i] == userRemark.uin[k]) {
                             innerText = userRemark.remark[k];
@@ -173,12 +194,23 @@ $(document).ready(function() {
                 $(".list #uin").append("<i data-uin='" + items[i] + "'><span class='content'>" + innerText + "</span><span class='close'>×</span></i>");
             }
         }
+        localStorage.updated = false;
         refresh();
     }
     winOn(); // 获取hidePart，并在extension中显示
 
     $(".list").on("click", ".close", function() {
-        $(this).parents("i").fadeOut(500, function() {
+        var item = $(this).parent();
+        var compare = $(item).data("uin");
+        for (var i = 0; i < edited.uin.length; i++) {
+            if (compare == edited.uin[i]) {
+                edited.uin.splice(i,1);
+                edited.remark.splice(i,1);
+                break;
+            }
+        } // 刷新被修改的部分
+        localStorage.edited = JSON.stringify(edited)
+        $(item).fadeOut(500, function() {
             $(this).remove();
             refresh();
         });
@@ -209,12 +241,13 @@ $(document).ready(function() {
         }
         if (e.ctrlKey && e.keyCode === 13 || e.keyCode === 10) {
             addEle($(this).val());
+            $(this).blur().focus()
             return false;
-        }
+        } // CTRL + Enter to Submit
         if (e.keyCode === 13 || e.keyCode === 10) {
             $("#friInfo .active").click();
             $(this).blur().focus()
-        }
+        } // Enter to Select & Submit
     }).keyup(function(e) {
         if (e.keyCode === 38 || e.keyCode === 40) return false;
         var value = $(this).val();
@@ -242,12 +275,12 @@ $(document).ready(function() {
         addEle($("#input").val());
     });
     $(".clearout").click(function() {
-        var msg = confirm("真的要删除吗？\n\n此操作不可撤销！");
+        var msg = confirm("真的要删除吗？\n\n此操作将销毁所有本地数据！");
         if (msg === true) {
             $(".list i").remove();
             $(this).hide();
             $(".list h4").hide();
-            localStorage.removeItem("hidePart");
+            localStorage.clear();
             chrome.storage.local.remove("hidePart");
         }
     });
@@ -507,29 +540,38 @@ $(document).ready(function() {
     $(".setting, .backinfo").hide();
 
     var clickCount = 0;
+    var original;
     $("#uin").on("click", ".content", function() {
         $("[contenteditable=true]").removeAttr("contenteditable");
         $(this).attr("contenteditable", "true")
             .focus(function() {
                 $(this).parent().addClass("editable");
                 $("#tooltip").fadeOut();
+                original = $(this).text();
             })
     }).on("blur", ".content", function() {
+        $(this).removeAttr("contenteditable").parent().removeClass("editable");
+        var curRemark = $(this).text();
+        if (curRemark === original) return false;
         var curUin = $(this).parent().data("uin");
-        for (var i = 0; i < userRemark.uin.length; i++) {
-            if (curUin == userRemark.uin[i]) {
-                userRemark.remark[i] = $(this).text();
-                break;
-            } else {
-                userRemark.uin.push(curUin);
-                userRemark.remark.push($(this).text())
+        if (edited.uin.length === 0) {
+            edited.uin.push(curUin);
+            edited.remark.push(curRemark)
+        } else {
+            var hasItem = false;
+            for (var i = 0; i < edited.uin.length; i++) {
+                if (curUin == edited.uin[i]) {
+                    edited.remark[i] = curRemark;
+                    hasItem = true;
+                    break;
+                }
+            }
+            if (!hasItem) {
+                edited.uin.push(curUin);
+                edited.remark.push(curRemark)
             }
         }
-        if (userRemark.uin.length === 0) {
-            userRemark.uin.push(curUin);
-            userRemark.remark.push($(this).text())
-        }
-        localStorage.userRemark = JSON.stringify(userRemark);
-        $(this).removeAttr("contenteditable").parent().removeClass("editable");
+        localStorage.edited = JSON.stringify(edited)
+        refresh();
     }) // 自定义备注
 });

@@ -20,7 +20,10 @@ chrome.tabs.onUpdated.addListener(checkForValidUrl);
 
 chrome.extension.onRequest.addListener(
     function(request) {
-        if (request.dataLog) localStorage.userInfo = request.dataLog;
+        if (request.dataLog) {
+            localStorage.updated = true;
+            localStorage.userInfo = request.dataLog;
+        }
         if (request.dataUrl) localStorage.dataUrl = request.dataUrl;
         if (request.hideAdd) localStorage.hidePart = request.hideAdd;
     }
