@@ -44,7 +44,7 @@
 ![](http://i.imgur.com/PheRJ7O.jpg)  
 ![](http://i.imgur.com/0e25lRf.jpg)
 
-4. 备份功能：使用 chrome.storage.sync 来进行备份，当且仅当**chrome 登录有账户且在联网状态下**可以进行账户内云同步。
+4. 备份功能：使用 chrome.storage.sync 来进行备份，当且仅当** chrome 登录有账户且在联网状态下**可以进行账户内云同步。  
 ![](http://i.imgur.com/E6gAMck.jpg)
 
 
