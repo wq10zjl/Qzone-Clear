@@ -237,7 +237,7 @@ $j(document)
             var checkValid = localStorage.hidePart.split(",");
             for (var i = 0; i < checkValid.length; i++) {
                 if (uin == checkValid[i]) {
-                    $j(this).text("已存在的对象").css("color", "#f00");
+                    $j(this).children().text("已存在的对象").fadeOut().fadeIn().css("cursor","no-drop");
                     return false;
                 }
             }
