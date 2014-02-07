@@ -223,7 +223,7 @@ $(document).ready(function() {
         $("#friInfo").fadeIn();
     }).blur(function() {
         $(this).attr("placeholder", "输入好友QQ号码、备注名称或关键词");
-        // $("#friInfo").fadeOut();
+        $("#friInfo").fadeOut();
         localStorage.lastInput = $(this).val();
     });
 
