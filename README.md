@@ -41,7 +41,8 @@
 ![](http://i.imgur.com/IzPrbwB.jpg)
 
 3. 拓展选项：通过设置选项可以达到部分屏蔽的目的；通过授权获取好友信息可以获得**输入联想功能**！（类似于@用户时出现的候选列表）。
-![](http://i.imgur.com/PheRJ7O.jpg) ![](http://i.imgur.com/0e25lRf.jpg)
+![](http://i.imgur.com/PheRJ7O.jpg)  
+![](http://i.imgur.com/0e25lRf.jpg)
 
 4. 备份功能：使用 chrome.storage.sync 来进行备份，当且仅当**chrome 登录有账户且在联网状态下**可以进行账户内云同步。
 ![](http://i.imgur.com/E6gAMck.jpg)
