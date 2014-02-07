@@ -278,12 +278,12 @@ $(document).ready(function() {
         addEle($("#input").val());
     });
     $(".clearout").click(function() {
-        var msg = confirm("真的要删除吗？\n\n此操作将销毁所有本地数据！");
+        var msg = confirm("真的要删除吗？\n\n此操作不可撤销！");
         if (msg === true) {
             $(".list i").remove();
             $(this).hide();
             $(".list h4").hide();
-            localStorage.clear();
+            localStorage.removeItem("hidePart");
             chrome.storage.local.remove("hidePart");
         }
     });

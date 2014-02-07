@@ -18,8 +18,6 @@ var $j = jQuery.noConflict();
 var setting;
 
 function clearOut() {
-    $j(".hideme").remove();
-    $j(".f-detail").append("<a class='item hideme' href='javascript:;'>屏蔽此用户</a>"); // 页面添加移除按钮
     var userSet = localStorage.setting;
     if (userSet) setting = JSON.parse(userSet);
     else {
@@ -228,31 +226,43 @@ function clearOut() {
 }
 clearOut();
 
-$j(document).on("click", ".hideme", function(e) {
-    var url = $j(this).closest(".f-single").find("a.q_namecard").attr("href");
-    var uin = url.split(/[^\d]/g).join("");
-    var checkValid = localStorage.hidePart.split(",");
-    for (var i = 0; i < checkValid.length; i++) {
-        if (uin == checkValid[i]) {
-            $j(this).text("已存在的对象").css("color","#f00");
-            return false;
-        }
-    };
-    if (localStorage.hidePart === "undefined" || !localStorage.hidePart) localStorage.hidePart = uin;
-    else localStorage.hidePart += "," + uin;
-    $j("body").append("<div class='feed gjw'><i class='gj ui-icon icon-praise'></i></div>");
-    setTimeout(function() {
-        $j(".gj").addClass("get")
-    },50);
-    setTimeout(function(){
-        $j(".gjw").remove()
-    },1000); // Good Job!
-    chrome.extension.sendRequest({
-        hideAdd: localStorage.hidePart
-    });
-    clearOut();
-})
-$j("body").append("<style>.hideme{float: right;opacity: 0;transition: all .3s;} .f-single:hover .hideme{opacity: 1;} .gj {position: fixed;top: 50%;left: 50%;-webkit-transform: scale(0);z-index: 999;} .gj.get {-webkit-transform: scale(50);opacity: 0;transition: all 1s;}</style>");
+$j(document)
+    .on("click", "#hideNameCard", function() {
+        var target = $j("#hideNC").closest("#_qzone_cards").find("#nc_userNickname");
+        var remarkAdd = $j(target).text();
+        var url = $j(target).attr("href");
+        var uin = url.split(/[^\d]/g).join("");
+        var checkValid = localStorage.hidePart.split(",");
+        for (var i = 0; i < checkValid.length; i++) {
+            if (uin == checkValid[i]) {
+                $j(this).text("已存在的对象").css("color", "#f00");
+                return false;
+            }
+        };
+        if (localStorage.hidePart === "undefined" || !localStorage.hidePart) localStorage.hidePart = uin;
+        else localStorage.hidePart += "," + uin;
+        $j("#qzNameCardDiv").fadeOut();
+        $j("body").append("<div class='feed gjw'><i class='gj ui-icon icon-praise'></i></div>");
+        setTimeout(function() {
+            $j(".gj").addClass("get")
+        }, 50);
+        setTimeout(function() {
+            $j(".gjw").remove()
+        }, 1000); // Good Job!
+        chrome.extension.sendRequest({
+            hideAdd: localStorage.hidePart,
+            remarkAdd: remarkAdd
+        });
+        clearOut();
+    })
+    .on("mouseenter", ".qzone-cards", function() {
+        $j("#hideNC").remove();
+        $j("#_namecard_feed .op-list").append("<div class='op-item' id='hideNC'><div class='right-inner'><a href='javascript:;' id='hideNameCard'><span>屏蔽此用户</span></a></div></div>");
+    })
+    .on("mouseleave", ".qzone-cards", function() {
+        $j("#hideNC").remove();
+    })
+$j("body").append("<style> #hideNameCard {color:#f00} .gj {position: fixed;top: 50%;left: 50%;-webkit-transform: scale(0);z-index: 999;} .gj.get {-webkit-transform: scale(50);opacity: 0;transition: all 1s;} .qzone-cards-app {display: none;}</style>");
 
 var page = -1;
 var blocks = 0;

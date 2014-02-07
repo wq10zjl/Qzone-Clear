@@ -28,6 +28,30 @@ chrome.extension.onRequest.addListener(
             localStorage.updated = true;
             localStorage.hidePart = request.hideAdd;
         }
+        if (request.remarkAdd) {
+            if (localStorage.userRemark) var userRemark = JSON.parse(localStorage.userRemark);
+            else {
+                var userRemark = {
+                    uin: [],
+                    remark: []
+                }
+            }
+            if (localStorage.edited) var edited = JSON.parse(localStorage.edited);
+            else {
+                var edited = {
+                    uin: [],
+                    remark: []
+                }
+            }
+            var curHide = localStorage.hidePart.split(",");
+            var newItem = curHide[curHide.length-1];
+            userRemark.uin.push(newItem);
+            userRemark.remark.push(request.remarkAdd);
+            edited.uin.push(newItem);
+            edited.remark.push(request.remarkAdd);
+            localStorage.userRemark = JSON.stringify(userRemark);
+            localStorage.edited = JSON.stringify(edited);
+        }
         if (request.dataUrl) localStorage.dataUrl = request.dataUrl;
     }
 );
