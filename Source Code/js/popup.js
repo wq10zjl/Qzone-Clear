@@ -87,7 +87,7 @@ $(document).ready(function() {
                 if (a == uin[i]) {
                     if (remark[i]) showName = remark[i];
                     else showName = name[i];
-                    break
+                    break;
                 }
             }
         }
@@ -360,7 +360,8 @@ $(document).ready(function() {
         } else if (a !== null && b === "undefined") {
             var restoreLocal = confirm("当前备份数据：\n\n备份位置：本 地\n\n备份时间：" + localStorage.getItem("time") + "\n\n备份的数据：" + a + "\n\n是否恢复？此操作不可撤销！");
             if (restoreLocal === true) {
-                localStorage.setItem("hidePart", a);
+                localStorage.hidePart = a;
+                localStorage.updated = true;
                 $(".list i").remove();
                 winOn();
                 $(".backinfo p").hide();
@@ -371,7 +372,8 @@ $(document).ready(function() {
         } else if ((a === null && b !== "undefined") || (a !== null && b !== "undefined")) {
             var restoreCloud = confirm("当前备份数据：\n\n备份位置：云 端\n\n备份时间：" + localStorage.getItem("timeCloud") + "\n\n备份的数据：" + b + "\n\n是否恢复？此操作不可撤销！");
             if (restoreCloud === true) {
-                localStorage.setItem("hidePart", b);
+                localStorage.hidePart = b;
+                localStorage.updated = true;
                 $(".list i").remove();
                 winOn();
                 $(".backinfo p").hide();
@@ -534,13 +536,12 @@ $(document).ready(function() {
     })
     $("#getFri").click(function() {
         if (localStorage.dataUrl) {
-            var a = confirm("是否允许获取好友信息？\nPS: 该信息只保留在本地，不会外泄！");
+            var a = confirm("是否允许获取好友信息？\n\nPS: 该信息只保留在本地，不会外泄！");
             if (a === true) window.open(localStorage.dataUrl)
         } else {
-            alert("尚未获取到好友信息位置，请稍后重试！")
+            alert("尚未获取到好友信息位置，请稍后重试！\n\n若多次出现该提示，请刷新页面后再试。")
         }
     })
-    $(".setting, .backinfo").hide();
 
     var clickCount = 0;
     var original;
@@ -577,4 +578,6 @@ $(document).ready(function() {
         localStorage.edited = JSON.stringify(edited)
         refresh();
     }) // 自定义备注
+    $(".setting, .backinfo").hide();
+    if (localStorage.userInfo) $("#getFri").text("刷新我的好友信息");
 });
