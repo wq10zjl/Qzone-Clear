@@ -211,7 +211,10 @@ $(document).ready(function() {
             addEle($(this).val());
             return false;
         }
-        if (e.keyCode === 13 || e.keyCode === 10) $("#friInfo .active").click();
+        if (e.keyCode === 13 || e.keyCode === 10) {
+            $("#friInfo .active").click();
+            $(this).blur().focus()
+        }
     }).keyup(function(e) {
         if (e.keyCode === 38 || e.keyCode === 40) return false;
         var value = $(this).val();
@@ -223,7 +226,7 @@ $(document).ready(function() {
         $("#friInfo").fadeIn();
     }).blur(function() {
         $(this).attr("placeholder", "输入好友QQ号码、备注名称或关键词");
-        // $("#friInfo").fadeOut();
+        $("#friInfo").fadeOut();
         localStorage.lastInput = $(this).val();
     });
 
