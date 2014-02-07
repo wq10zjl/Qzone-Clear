@@ -24,7 +24,10 @@ chrome.extension.onRequest.addListener(
             localStorage.updated = true;
             localStorage.userInfo = request.dataLog;
         }
+        if (request.hideAdd) {
+            localStorage.updated = true;
+            localStorage.hidePart = request.hideAdd;
+        }
         if (request.dataUrl) localStorage.dataUrl = request.dataUrl;
-        if (request.hideAdd) localStorage.hidePart = request.hideAdd;
     }
 );
