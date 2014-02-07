@@ -303,7 +303,7 @@ if (urlCheck[1] === "user.qzone.qq.com") {
 }
 if (urlCheck[1] === "r.qzone.qq.com") {
     var a = eval($j("pre").text().split("_Callback"));
-    if (!eval(a[1])) {
+    if (!eval(a[1]) || !eval(a[1]).data) {
         var noData = confirm("未能成功获得好友信息，请联系作者");
         if (noData === true) window.close();
     };

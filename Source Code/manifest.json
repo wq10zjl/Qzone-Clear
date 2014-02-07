@@ -3,7 +3,7 @@
 	"minimum_chrome_version": "20",
 	"name": "Qzone Clear",
 	"homepage_url": "https://github.com/idiotWu/Qzone-Clear",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"description": "Qzone 屏蔽好友动态加强版：可以根据QQ号或（多）关键词屏蔽说说、评论、评论回复甚至赞。眼不见则心不烦。",
 	"icons": {
 		"128": "icon/icon_128.png"

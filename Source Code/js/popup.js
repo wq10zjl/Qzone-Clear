@@ -6,6 +6,13 @@ $(document).ready(function() {
             name = userInfo.name,
             remark = userInfo.remark;
     }
+    if (localStorage.userRemark) var userRemark = JSON.parse(localStorage.userRemark);
+    else {
+        userRemark = {
+            uin: [],
+            remark: []
+        }
+    }
 
     function refresh() {
         if ($(".list i").length !== 0) {
@@ -29,7 +36,7 @@ $(document).ready(function() {
         }
     }
 
-    function addEle(value, remark) {
+    function addEle(value, showName) {
         localStorage.removeItem("lastInput");
         var a = value.split(" ").join("");
         var b = [];
@@ -54,16 +61,25 @@ $(document).ready(function() {
             return false;
         };
         $("#input").val("");
-        $("#friInfo").fadeOut(function(){
+        $("#friInfo").fadeOut(function() {
             $(this).html("")
         });
-        if (remark) {
-            var addon = "<i style='display:none' data-uin='" + a + "'>" + remark + "<b class='tooltips'>(" + a + ")</b>" + "<span class='close'>×</span><b class='highlight'></b></i>";
-        } else {
-            var addon = "<i style='display:none' data-uin='" + a + "'>" + a + "<span class='close'>×</span><b class='highlight'></b></i>";
+        var checkTxt = a.match(/[^\d]/g);
+        if (!checkTxt && !showName && uin) {
+            for (var i = 0; i < uin.length; i++) {
+                if (a == uin[i]) {
+                    if (remark[i]) showName = remark[i];
+                    else showName = name[i];
+                    break
+                }
+            }
         }
-        var checkNum = a.match(/[^\d]/g);
-        if (checkNum !== null) {
+        if (showName) {
+            var addon = "<i style='display:none' data-uin='" + a + "'><span class='content'>" + showName + "</span><span class='close'>×</span><b class='highlight'></b></i>";
+        } else {
+            var addon = "<i style='display:none' data-uin='" + a + "'><span class='content'>" + a + "</span><span class='close'>×</span><b class='highlight'></b></i>";
+        }
+        if (checkTxt) {
             $(addon).appendTo(".list #content").fadeIn(500);
             $(".list").animate({
                 scrollTop: $("#uin").height() + $("#content").height() - 110
@@ -133,7 +149,7 @@ $(document).ready(function() {
         for (i = 0; i < items.length; i++) {
             var isTxt = items[i].match(/[^\d]/g);
             if (isTxt) {
-                $(".list #content").append("<i data-uin='" + items[i] + "'>" + items[i] + "<span class='close'>×</span></i>");
+                $(".list #content").append("<i data-uin='" + items[i] + "'><span class='content'>" + items[i] + "</span><span class='close'>×</span></i>");
             } else {
                 var innerText = items[i];
                 if (uin) {
@@ -145,7 +161,16 @@ $(document).ready(function() {
                         }
                     }
                 }
-                $(".list #uin").append("<i data-uin='" + items[i] + "'>" + innerText + "<span class='close'>×</span></i>");
+                if (userRemark.uin.length > 0) {
+                    console.log(userRemark.uin[0] == innerText)
+                    for (var k = 0; k < userRemark.uin.length; k++) {
+                        if (items[i] == userRemark.uin[k]) {
+                            innerText = userRemark.remark[k];
+                            break
+                        }
+                    }
+                }
+                $(".list #uin").append("<i data-uin='" + items[i] + "'><span class='content'>" + innerText + "</span><span class='close'>×</span></i>");
             }
         }
         refresh();
@@ -159,7 +184,9 @@ $(document).ready(function() {
         });
     }).on("mouseenter", "#uin i", function() {
         var text = $(this).data("uin");
-        if ($(this).text().indexOf(text) === 0) return false;
+        if ($(this).children(".content").text() == text) {
+            text = "双击以修改备注"
+        }
         var left = $(this).offset().left;
         var top = $(this).offset().top;
         $("body").append('<div id="tooltip">' + text + "</div>"); // 创建提示框,添加到页面中
@@ -172,8 +199,21 @@ $(document).ready(function() {
     })
 
     $("#input").keydown(function(e) {
-        if (e.keyCode == 13) addEle($(this).val());
-    }).keyup(function() {
+        if (e.keyCode === 38 && $("#friInfo .active").prev()[0]) {
+            $("#friInfo .active").removeClass("active").prev().addClass("active");
+            return false;
+        }
+        if (e.keyCode === 40 && $("#friInfo .active").next()[0]) {
+            $("#friInfo .active").removeClass("active").next().addClass("active");
+            return false;
+        }
+        if (e.ctrlKey && e.keyCode === 13 || e.keyCode === 10) {
+            addEle($(this).val());
+            return false;
+        }
+        if (e.keyCode === 13 || e.keyCode === 10) $("#friInfo .active").click();
+    }).keyup(function(e) {
+        if (e.keyCode === 38 || e.keyCode === 40) return false;
         var value = $(this).val();
         getFri(value);
     }).focus(function() {
@@ -183,7 +223,7 @@ $(document).ready(function() {
         $("#friInfo").fadeIn();
     }).blur(function() {
         $(this).attr("placeholder", "输入好友QQ号码、备注名称或关键词");
-        $("#friInfo").fadeOut();
+        // $("#friInfo").fadeOut();
         localStorage.lastInput = $(this).val();
     });
 
@@ -462,4 +502,31 @@ $(document).ready(function() {
         }
     })
     $(".setting, .backinfo").hide();
+
+    var clickCount = 0;
+    $("#uin").on("click", ".content", function() {
+        $("[contenteditable=true]").removeAttr("contenteditable");
+        $(this).attr("contenteditable", "true")
+            .focus(function() {
+                $(this).parent().addClass("editable");
+                $("#tooltip").fadeOut();
+            })
+    }).on("blur", ".content", function() {
+        var curUin = $(this).parent().data("uin");
+        for (var i = 0; i < userRemark.uin.length; i++) {
+            if (curUin == userRemark.uin[i]) {
+                userRemark.remark[i] = $(this).text();
+                break;
+            } else {
+                userRemark.uin.push(curUin);
+                userRemark.remark.push($(this).text())
+            }
+        }
+        if (userRemark.uin.length === 0) {
+            userRemark.uin.push(curUin);
+            userRemark.remark.push($(this).text())
+        }
+        localStorage.userRemark = JSON.stringify(userRemark);
+        $(this).removeAttr("contenteditable").parent().removeClass("editable");
+    }) // 自定义备注
 });
