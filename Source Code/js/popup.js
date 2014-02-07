@@ -209,7 +209,10 @@ $(document).ready(function() {
                 break;
             }
         } // 刷新被修改的部分
-        localStorage.edited = JSON.stringify(edited)
+        localStorage.edited = JSON.stringify(edited);
+        $("#tooltip").fadeOut(500,function() {
+            $(this).remove()
+        });
         $(item).fadeOut(500, function() {
             $(this).remove();
             refresh();
