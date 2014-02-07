@@ -50,7 +50,7 @@ chrome.extension.onRequest.addListener(
             edited.uin.push(newItem);
             edited.remark.push(request.remarkAdd);
             localStorage.userRemark = JSON.stringify(userRemark);
-            localStorage.edited = JSON.stringify(edited);
+            localStorage.edited = JSON.stringify(edited); // 自动获取并更新备注
         }
         if (request.dataUrl) localStorage.dataUrl = request.dataUrl;
     }

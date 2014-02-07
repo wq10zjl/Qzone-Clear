@@ -232,15 +232,17 @@ $j(document)
         var remarkAdd = $j(target).text();
         var url = $j(target).attr("href");
         var uin = url.split(/[^\d]/g).join("");
-        var checkValid = localStorage.hidePart.split(",");
-        for (var i = 0; i < checkValid.length; i++) {
-            if (uin == checkValid[i]) {
-                $j(this).text("已存在的对象").css("color", "#f00");
-                return false;
-            }
-        };
         if (localStorage.hidePart === "undefined" || !localStorage.hidePart) localStorage.hidePart = uin;
-        else localStorage.hidePart += "," + uin;
+        else {
+            var checkValid = localStorage.hidePart.split(",");
+            for (var i = 0; i < checkValid.length; i++) {
+                if (uin == checkValid[i]) {
+                    $j(this).text("已存在的对象").css("color", "#f00");
+                    return false;
+                }
+            }
+            localStorage.hidePart += "," + uin;
+        }
         $j("#qzNameCardDiv").fadeOut();
         $j("body").append("<div class='feed gjw'><i class='gj ui-icon icon-praise'></i></div>");
         setTimeout(function() {
@@ -258,10 +260,10 @@ $j(document)
     .on("mouseenter", ".qzone-cards", function() {
         $j("#hideNC").remove();
         $j("#_namecard_feed .op-list").append("<div class='op-item' id='hideNC'><div class='right-inner'><a href='javascript:;' id='hideNameCard'><span>屏蔽此用户</span></a></div></div>");
-    })
-    .on("mouseleave", ".qzone-cards", function() {
-        $j("#hideNC").remove();
-    })
+    }) // 资料卡片上添加屏蔽入口
+.on("mouseleave", ".qzone-cards", function() {
+    $j("#hideNC").remove();
+})
 $j("body").append("<style> #hideNameCard {color:#f00} .gj {position: fixed;top: 50%;left: 50%;-webkit-transform: scale(0);z-index: 999;} .gj.get {-webkit-transform: scale(50);opacity: 0;transition: all 1s;} .qzone-cards-app {display: none;}</style>");
 
 var page = -1;
