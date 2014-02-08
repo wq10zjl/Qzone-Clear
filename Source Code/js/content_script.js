@@ -3,12 +3,13 @@
         if (changes.hidePart) {
             var hidePart = changes.hidePart.newValue;
             localStorage.hidePart = hidePart;
+            clearOut(".col-main-feed");
         }
         if (changes.setting) {
             var setting = changes.setting.newValue;
             localStorage.setting = setting;
+            clearOut(".col-main-feed");
         }
-        clearOut(".col-main-feed");
     })
 })(); // 获取extension储存的uid，转存入localStorage
 
@@ -288,17 +289,16 @@ $j(document).on("mouseenter",".q_namecard",function() {
     });
     clearOut(moveArea);
 }).on("click", ".showhide", function() {
-    $j(this).prev().show(500).find(".showhide").click()
-        .end()
-        .end()
-        .remove();
+    $j(this).hide(600,function() {
+        $j(this).remove()
+    }).prev().show(500).find(".showhide").click();
 }).on("mouseenter", ".qzone-cards", function() {
     $j("#hideNC").remove();
     $j("#_namecard_feed .op-list").append("<div class='op-item' id='hideNC'><div class='right-inner'><a href='javascript:;' id='hideNameCard'><span>屏蔽此用户</span></a></div></div>"); // 资料卡片上添加屏蔽入口
 }).on("mouseleave", ".qzone-cards", function() {
     $j("#hideNC").remove();
 })
-$j("body").append("<style> #hideNameCard {color:#f00}.gj {position: fixed;top: 50%;left: 50%;-webkit-transform: scale(0);z-index: 999;} .gj.get {-webkit-transform: scale(50);opacity: 0;transition: all 1s;} .qzone-cards-app {display: none;}.showhide {margin: 10px 0;padding: 15px;border-radius: 2px;background-color: #fcf8e3;border: 1px solid #faebcc;color: #8a6d3b;font-weight: bold;text-align: center;cursor: pointer;transition: all .3s;}.showhide.comment {padding: 5px;}.showhide span {color: #b94a48;margin: 0 5px;border-bottom: 1px dotted #b94a48;}.showhide.mood:hover {background: #faebcc !important;}</style>");
+$j("body").append("<style> #hideNameCard {color:#f00}.gj {position: fixed;top: 50%;left: 50%;-webkit-transform: scale(0);z-index: 999;} .gj.get {-webkit-transform: scale(50);opacity: 0;transition: all 1s;} .qzone-cards-app {display: none;}.showhide {margin: 10px 0;padding: 15px;border-radius: 2px;background-color: #fcf8e3;border: 1px solid #faebcc;color: #8a6d3b;font-weight: bold;text-align: center;cursor: pointer;transition: background-color .3s;}.showhide.comment {padding: 5px;}.showhide span {color: #b94a48;margin: 0 5px;border-bottom: 1px dotted #b94a48;}.showhide.mood:hover {background: #faebcc !important;}</style>");
 
 var page = -4;
 var blocks = 0;
