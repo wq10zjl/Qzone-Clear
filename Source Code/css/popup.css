@@ -700,3 +700,16 @@ footer a {
   visibility: visible;
   opacity: .8;
 }
+#input::-webkit-input-placeholder {
+  font-size: 10px;
+  position: relative;
+  left: 0;
+  top: 2px;
+  transition: all .3s;
+}
+#input.on::-webkit-input-placeholder {
+  color: #1BC8E9;
+  left: -12px;
+  top: -25px;
+  visibility: visible !important;
+}
