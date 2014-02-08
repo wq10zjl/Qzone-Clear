@@ -53,7 +53,7 @@ $(document).ready(function() {
         var saveRemark = JSON.stringify(userRemarkSave);
         localStorage.userRemark = saveRemark;
         chrome.storage.local.set({
-                "userRemark": saveRemark
+            "userRemark": saveRemark
         }); // 获取hidePart，存入chrome.storage
     }
 
@@ -269,13 +269,18 @@ $(document).ready(function() {
         if (e.keyCode === 38 || e.keyCode === 40) return false;
         var value = $(this).val();
         getFri(value);
+        if ($("#friInfo li")[0]) {
+            $(this).attr("placeholder", "方向键选择条目，回车提交");
+        } else {
+            $(this).addClass("on").attr("placeholder", "CTRL + 回车 提交")
+        }
     }).focus(function() {
-        $(this).attr("placeholder", "多关键字请用 + 隔开");
+        $(this).addClass("on").attr("placeholder", "多关键字请用 + 隔开");
         var value = $(this).val();
         getFri(value);
         $("#friInfo").fadeIn();
     }).blur(function() {
-        $(this).attr("placeholder", "输入好友QQ号码、备注名称或关键词");
+        $(this).removeClass("on").attr("placeholder", "输入好友QQ号码、备注名称或关键词");
         $("#friInfo").fadeOut();
         localStorage.lastInput = $(this).val();
     });
@@ -557,7 +562,6 @@ $(document).ready(function() {
         }
     })
 
-    var clickCount = 0;
     var original;
     $("#uin").on("click", ".content", function() {
         $("[contenteditable=true]").removeAttr("contenteditable");

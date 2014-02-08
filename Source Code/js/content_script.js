@@ -8,7 +8,7 @@
             var setting = changes.setting.newValue;
             localStorage.setting = setting;
         }
-        clearOut();
+        clearOut(".col-main-feed");
     })
 })(); // 获取extension储存的uid，转存入localStorage
 
@@ -48,7 +48,10 @@ function clearOut(area) {
     if (userSet && userSet.indexOf(true) === -1) return false;
     if (setting.moveStamp) {
         $j(area).find(".img-box:visible img[src*='qzonestyle']")
-            .closest(".f-single").hide(500).after("<li class='showhide mood'>此条说说因<span>内容是签到图</span>而被隐藏，点击显示</li>");
+            .closest(".f-single").hide(500)
+            .next(".showhide").remove()
+            .end()
+            .after("<li class='showhide mood'>此条说说因<span>内容是签到图</span>而被隐藏，点击显示</li>");
     } // 移除签到
 
     var content = [];
@@ -104,14 +107,20 @@ function clearOut(area) {
                         var isReply = $j(ele[j]).closest("[data-type='replyroot']")[0];
                         var isComment = $j(ele[j]).parent().parent().parent("[data-type='commentroot']")[0];
                         if (setting.moveReply && isReply) {
-                            $j(isReply).hide(300).after("<li class='showhide comment reply'>此条评论回复因来自或评论对象是<span>" + remarkShow + " [" + uid + "]" + "</span>而被隐藏，点击显示</li>"); // 移除评论回复
+                            $j(isReply).hide(300)
+                                .next(".showhide").remove()
+                                .end()
+                                .after("<li class='showhide comment'>此条评论回复因来自或评论对象是<span>" + remarkShow + " [" + uid + "]" + "</span>而被隐藏，点击显示</li>"); // 移除评论回复
                         } else if (setting.moveComment && isComment) {
-                            $j(isComment).hide(300).after("<li class='showhide comment'>此条评论因来自<span>" + remarkShow + " [" + uid + "]" + "</span>而被隐藏，点击显示</li>"); // 移除评论
+                            $j(isComment).hide(300)
+                                .next(".showhide").remove()
+                                .end()
+                                .after("<li class='showhide comment'>此条评论因来自<span>" + remarkShow + " [" + uid + "]" + "</span>而被隐藏，点击显示</li>"); // 移除评论
                         } else if (setting.moveLike && isLike) {
                             $j(ele[j]).fadeOut(); // 移除赞
                         } else if (setting.moveMood) {
                             $j(ele[j]).closest(".f-single").hide(500)
-                                .next(".showhide").remove() // 去重
+                                .next(".showhide").remove()
                                 .end()
                                 .after("<li class='showhide mood'>此条说说因来自<span>" + remarkShow + " [" + uid + "]" + "</span>而被隐藏，点击显示</li>");
                         } // 移除说说
@@ -131,7 +140,7 @@ function clearOut(area) {
             var text = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text();
             if (text.indexOf(content[k]) > -1) {
                 $j(this).hide(500)
-                    .next(".showhide").remove() // 去重
+                    .next(".showhide").remove()
                     .end()
                     .after("<li class='showhide mood'>此条说说因含有<span>“" + content[k] + "”</span>而被隐藏，点击显示</li>")
             }
@@ -142,10 +151,16 @@ function clearOut(area) {
                 var isReply = $j(this).closest("[data-type='replyroot']")[0];
                 var isComment = $j(this).parent().parent("[data-type='commentroot']")[0];
                 if (setting.moveReply && isReply) {
-                    $j(isReply).hide(300).after("<li class='showhide comment reply'>此条评论回复因含有<span>“" + content[k] + "”</span>而被隐藏，点击显示</li>"); // 移除评论回复
+                    $j(isReply).hide(300)
+                        .next(".showhide").remove()
+                        .end()
+                        .after("<li class='showhide comment'>此条评论回复因含有<span>“" + content[k] + "”</span>而被隐藏，点击显示</li>"); // 移除评论回复
                 }
                 if (setting.moveComment && isComment) {
-                    $j(isComment).hide(300).after("<li class='showhide comment'>此条评论因含有<span>“" + content[k] + "”</span>而被隐藏，点击显示</li>"); // 移除评论
+                    $j(isComment).hide(300)
+                        .next(".showhide").remove()
+                        .end()
+                        .after("<li class='showhide comment'>此条评论因含有<span>“" + content[k] + "”</span>而被隐藏，点击显示</li>"); // 移除评论
                 }
             }
         })
@@ -168,7 +183,7 @@ function clearOut(area) {
                     var content = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text().match(regex);
                     if (content && content.length >= arr.length) {
                         $j(this).hide(500)
-                            .next(".showhide").remove() // 去重
+                            .next(".showhide").remove()
                             .end()
                             .after("<li class='showhide mood'>此条说说因含有<span>“" + arr.length + "个‘" + arr[0] + "’”</span>而被隐藏，点击显示</li>"); // 移除说说主体
                     }
@@ -179,10 +194,16 @@ function clearOut(area) {
                         var isReply = $j(this).closest("[data-type='replyroot']")[0];
                         var isComment = $j(this).parent().parent("[data-type='commentroot']")[0];
                         if (setting.moveReply && isReply) {
-                            $j(isReply).hide(300).after("<li class='showhide comment reply'>此条评论回复因含有<span>“" + arr.length + "个‘" + arr[0] + "’”</span>而被隐藏，点击显示</li>"); // 移除评论回复;
+                            $j(isReply).hide(300)
+                                .next(".showhide").remove()
+                                .end()
+                                .after("<li class='showhide comment'>此条评论回复因含有<span>“" + arr.length + "个‘" + arr[0] + "’”</span>而被隐藏，点击显示</li>"); // 移除评论回复;
                         }
                         if (setting.moveComment && isComment) {
-                            $j(isComment).hide(300).after("<li class='showhide comment'>此条评论因含有<span>“" + arr.length + "个‘" + arr[0] + "’”</span>而被隐藏，点击显示</li>"); // 移除评论
+                            $j(isComment).hide(300)
+                                .next(".showhide").remove()
+                                .end()
+                                .after("<li class='showhide comment'>此条评论因含有<span>“" + arr.length + "个‘" + arr[0] + "’”</span>而被隐藏，点击显示</li>"); // 移除评论
                         }
                     }
                 });
@@ -192,23 +213,21 @@ function clearOut(area) {
                     var matchText = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text();
                     for (var i = 0; i < arr.length; i++) {
                         if (matchText.indexOf(arr[i]) === -1) {
-                            var moveText = arr[i];
                             matchText = false;
                             break;
                         }
                     }
                     if (matchText) {
                         $j(this).hide(500)
-                            .next(".showhide").remove() // 去重
+                            .next(".showhide").remove()
                             .end()
-                            .after("<li class='showhide mood'>此条说说因含有<span>“" + moveText + "”</span>而被隐藏，点击显示</li>"); // 移除说说主体
+                            .after("<li class='showhide mood'>此条说说因同时含有<span>“" + arr + "”</span>而被隐藏，点击显示</li>"); // 移除说说主体
                     }
                 }); // 不为评论内容时，移除说说主体
                 $j(comments).each(function() {
                     var matchText = $j(this).text();
                     for (var i = 0; i < arr.length; i++) {
                         if (matchText.indexOf(arr[i]) === -1) {
-                            var moveText = arr[i];
                             matchText = false;
                             break;
                         }
@@ -217,10 +236,16 @@ function clearOut(area) {
                         var isReply = $j(this).closest("[data-type='replyroot']")[0];
                         var isComment = $j(this).parent().parent("[data-type='commentroot']")[0];
                         if (setting.moveReply && isReply) {
-                            $j(isReply).hide(300).after("<li class='showhide comment reply'>此条评论回复因含有“" + moveText + "”而被隐藏，点击显示</li>"); // 移除评论回复
+                            $j(isReply).hide(300)
+                                .next(".showhide").remove()
+                                .end()
+                                .after("<li class='showhide comment'>此条评论回复因含有<span>“" + arr + "”</span>而被隐藏，点击显示</li>"); // 移除评论回复
                         }
                         if (setting.moveComment && isComment) {
-                            $j(isComment).hide(300).after("<li class='showhide comment'>此条评论因含有“" + moveText + "”而被隐藏，点击显示</li>"); // 移除评论
+                            $j(isComment).hide(300)
+                                .next(".showhide").remove()
+                                .end()
+                                .after("<li class='showhide comment'>此条评论因含有<span>“" + arr + "”</span>而被隐藏，点击显示</li>"); // 移除评论
                         }
                     }
                 });
@@ -273,7 +298,7 @@ $j(document).on("mouseenter",".q_namecard",function() {
 }).on("mouseleave", ".qzone-cards", function() {
     $j("#hideNC").remove();
 })
-$j("body").append("<style> #hideNameCard {color:#f00}.gj {position: fixed;top: 50%;left: 50%;-webkit-transform: scale(0);z-index: 999;} .gj.get {-webkit-transform: scale(50);opacity: 0;transition: all 1s;} .qzone-cards-app {display: none;}.showhide {margin: 10px 0;padding: 15px;border-radius: 2px;background-color: #fcf8e3;border: 1px solid #faebcc;color: #8a6d3b;font-weight: bold;text-align: center;cursor: pointer;}.showhide.comment {padding: 5px;}.showhide.reply{margin-left: 40px}.showhide span {color: #b94a48;margin: 0 5px;border-bottom: 1px dotted #b94a48;}</style>");
+$j("body").append("<style> #hideNameCard {color:#f00}.gj {position: fixed;top: 50%;left: 50%;-webkit-transform: scale(0);z-index: 999;} .gj.get {-webkit-transform: scale(50);opacity: 0;transition: all 1s;} .qzone-cards-app {display: none;}.showhide {margin: 10px 0;padding: 15px;border-radius: 2px;background-color: #fcf8e3;border: 1px solid #faebcc;color: #8a6d3b;font-weight: bold;text-align: center;cursor: pointer;transition: all .3s;}.showhide.comment {padding: 5px;}.showhide span {color: #b94a48;margin: 0 5px;border-bottom: 1px dotted #b94a48;}.showhide.mood:hover {background: #faebcc !important;}</style>");
 
 var page = -4;
 var blocks = 0;
