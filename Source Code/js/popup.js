@@ -49,8 +49,12 @@ $(document).ready(function() {
         $("#uin i").each(function() {
             userRemarkSave.uin.push($(this).data("uin"));
             userRemarkSave.remark.push($(this).children(".content").text())
-        })
-        localStorage.userRemark = JSON.stringify(userRemarkSave);
+        });
+        var saveRemark = JSON.stringify(userRemarkSave);
+        localStorage.userRemark = saveRemark;
+        chrome.storage.local.set({
+                "userRemark": saveRemark
+        }); // 获取hidePart，存入chrome.storage
     }
 
     function addEle(value, showName) {
@@ -204,13 +208,13 @@ $(document).ready(function() {
         var compare = $(item).data("uin");
         for (var i = 0; i < edited.uin.length; i++) {
             if (compare == edited.uin[i]) {
-                edited.uin.splice(i,1);
-                edited.remark.splice(i,1);
+                edited.uin.splice(i, 1);
+                edited.remark.splice(i, 1);
                 break;
             }
         } // 刷新被修改的部分
         localStorage.edited = JSON.stringify(edited);
-        $("#tooltip").fadeOut(500,function() {
+        $("#tooltip").fadeOut(500, function() {
             $(this).remove()
         });
         $(item).fadeOut(500, function() {
@@ -234,12 +238,22 @@ $(document).ready(function() {
     })
 
     $("#input").keydown(function(e) {
-        if (e.keyCode === 38 && $("#friInfo .active").prev()[0]) {
-            $("#friInfo .active").removeClass("active").prev().addClass("active");
+        if (e.keyCode === 38) {
+            if ($("#friInfo .active").prev()[0]) {
+                $("#friInfo .active").removeClass("active").prev().addClass("active");
+            } else {
+                $("#friInfo .active").removeClass("active");
+                $("#friInfo li:last").addClass("active");
+            }
             return false;
         }
-        if (e.keyCode === 40 && $("#friInfo .active").next()[0]) {
-            $("#friInfo .active").removeClass("active").next().addClass("active");
+        if (e.keyCode === 40) {
+            if ($("#friInfo .active").next()[0]) {
+                $("#friInfo .active").removeClass("active").next().addClass("active");
+            } else {
+                $("#friInfo .active").removeClass("active");
+                $("#friInfo li:first").addClass("active");
+            }
             return false;
         }
         if (e.ctrlKey && e.keyCode === 13 || e.keyCode === 10) {

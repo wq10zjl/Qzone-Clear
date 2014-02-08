@@ -18,8 +18,8 @@ function checkForValidUrl(tabId, changeInfo, tab) {
 
 chrome.tabs.onUpdated.addListener(checkForValidUrl);
 
-chrome.extension.onRequest.addListener(
-    function(request) {
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
         if (request.dataLog) {
             localStorage.updated = true;
             localStorage.userInfo = request.dataLog;
@@ -52,6 +52,11 @@ chrome.extension.onRequest.addListener(
             localStorage.userRemark = JSON.stringify(userRemark);
             localStorage.edited = JSON.stringify(edited); // 自动获取并更新备注
         }
+        if (request.getLocalStorage) {
+            sendResponse({
+                data: localStorage.userRemark
+            })
+        } // 传送备注名
         if (request.dataUrl) localStorage.dataUrl = request.dataUrl;
     }
 );
