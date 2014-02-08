@@ -40,7 +40,7 @@ function clearOut(area) {
             if (a >= setting.moveTooMuchLikes) {
                 $j(this).closest(".f-single").hide(500)
                     .next(".showhide").remove() // 偶发重复去除
-                .end()
+                    .end()
                     .after("<li class='showhide mood'>此条说说因<span>赞超过 " + setting.moveTooMuchLikes + "</span>而被隐藏，点击显示</li>");
             };
         })
@@ -110,7 +110,10 @@ function clearOut(area) {
                         } else if (setting.moveLike && isLike) {
                             $j(ele[j]).fadeOut(); // 移除赞
                         } else if (setting.moveMood) {
-                            $j(ele[j]).closest(".f-single.f-s-s").hide(500).after("<li class='showhide mood'>此条说说因来自<span>" + remarkShow + " [" + uid + "]" + "</span>而被隐藏，点击显示</li>");
+                            $j(ele[j]).closest(".f-single").hide(500)
+                                .next(".showhide").remove() // 去重
+                                .end()
+                                .after("<li class='showhide mood'>此条说说因来自<span>" + remarkShow + " [" + uid + "]" + "</span>而被隐藏，点击显示</li>");
                         } // 移除说说
                     }
                 }
@@ -127,7 +130,10 @@ function clearOut(area) {
         $j(items).each(function() {
             var text = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text();
             if (text.indexOf(content[k]) > -1) {
-                $j(this).hide(500).after("<li class='showhide mood'>此条说说因含有<span>“" + content[k] + "”</span>而被隐藏，点击显示</li>")
+                $j(this).hide(500)
+                    .next(".showhide").remove() // 去重
+                    .end()
+                    .after("<li class='showhide mood'>此条说说因含有<span>“" + content[k] + "”</span>而被隐藏，点击显示</li>")
             }
         }) // 不为评论内容时移除整体
         $j(comments).each(function() {
@@ -161,7 +167,10 @@ function clearOut(area) {
                 $j(items).each(function() {
                     var content = $j(this).find(".f-user-info, .f-info, .f-ct-txtimg").text().match(regex);
                     if (content && content.length >= arr.length) {
-                        $j(this).hide(500).after("<li class='showhide mood'>此条说说因含有<span>“" + arr.length + "个‘" + arr[0] + "’”</span>而被隐藏，点击显示</li>"); // 移除说说主体
+                        $j(this).hide(500)
+                            .next(".showhide").remove() // 去重
+                            .end()
+                            .after("<li class='showhide mood'>此条说说因含有<span>“" + arr.length + "个‘" + arr[0] + "’”</span>而被隐藏，点击显示</li>"); // 移除说说主体
                     }
                 });
                 $j(comments).each(function() {
@@ -189,7 +198,10 @@ function clearOut(area) {
                         }
                     }
                     if (matchText) {
-                        $j(this).hide(500).after("<li class='showhide mood'>此条说说因含有<span>“" + moveText + "”</span>而被隐藏，点击显示</li>"); // 移除说说主体
+                        $j(this).hide(500)
+                            .next(".showhide").remove() // 去重
+                            .end()
+                            .after("<li class='showhide mood'>此条说说因含有<span>“" + moveText + "”</span>而被隐藏，点击显示</li>"); // 移除说说主体
                     }
                 }); // 不为评论内容时，移除说说主体
                 $j(comments).each(function() {
