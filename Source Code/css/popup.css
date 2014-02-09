@@ -92,12 +92,7 @@ body.on {
   top: 2px;
   transition: all .3s;
 }
-#input.on::-webkit-input-placeholder {
-  color: #1bc8e9;
-  left: -12px;
-  top: -25px;
-}
-#input::-webkit-input-placeholder[style*=hidden] {
+#input:focus::-webkit-input-placeholder, #input::-webkit-input-placeholder[style*=hidden] {
   color: #1bc8e9;
   left: -12px;
   top: -25px;

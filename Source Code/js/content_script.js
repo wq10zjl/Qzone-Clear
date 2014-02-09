@@ -190,7 +190,7 @@ function clearOut(area) {
                         $j(this).hide(500)
                             .next(".showhide").remove()
                             .end()
-                            .after("<li class='showhide mood'>此条说说因含有<span>“" + arr.length + "个‘" + arr[0] + "’”</span>而被隐藏，点击显示</li>"); // 移除说说主体
+                            .after("<li class='showhide mood'>此条说说因含有超过<span>“" + arr.length + "个‘" + arr[0] + "’”</span>而被隐藏，点击显示</li>"); // 移除说说主体
                     }
                 });
                 $j(comments).each(function() {
@@ -202,13 +202,13 @@ function clearOut(area) {
                             $j(isReply).hide(300)
                                 .next(".showhide").remove()
                                 .end()
-                                .after("<li class='showhide comment'>此条评论回复因含有<span>“" + arr.length + "个‘" + arr[0] + "’”</span>而被隐藏，点击显示</li>"); // 移除评论回复;
+                                .after("<li class='showhide comment'>此条评论回复因含有超过<span>“" + arr.length + "个‘" + arr[0] + "’”</span>而被隐藏，点击显示</li>"); // 移除评论回复;
                         }
                         if (setting.moveComment && isComment) {
                             $j(isComment).hide(300)
                                 .next(".showhide").remove()
                                 .end()
-                                .after("<li class='showhide comment'>此条评论因含有<span>“" + arr.length + "个‘" + arr[0] + "’”</span>而被隐藏，点击显示</li>"); // 移除评论
+                                .after("<li class='showhide comment'>此条评论因含有超过<span>“" + arr.length + "个‘" + arr[0] + "’”</span>而被隐藏，点击显示</li>"); // 移除评论
                         }
                     }
                 });

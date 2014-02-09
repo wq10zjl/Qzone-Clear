@@ -277,12 +277,12 @@ $(document).ready(function() {
             $(this).attr("placeholder", "多关键字请用 + 隔开");
         }
     }).focus(function() {
-        $(this).addClass("on").attr("placeholder", "多关键字请用 + 隔开").keyup();
+        $(this).attr("placeholder", "多关键字请用 + 隔开").keyup();
         var value = $(this).val();
         getFri(value);
         $("#friInfo").fadeIn();
     }).blur(function() {
-        $(this).removeClass("on").attr("placeholder", "输入好友QQ号码、备注名称或关键词");
+        $(this).attr("placeholder", "输入好友QQ号码、备注名称或关键词");
         $("#friInfo").fadeOut();
         localStorage.lastInput = $(this).val();
     });
