@@ -85,6 +85,24 @@ body.on {
   outline: 0;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
+#input::-webkit-input-placeholder {
+  font-size: 10px;
+  position: relative;
+  left: 0;
+  top: 2px;
+  transition: all .3s;
+}
+#input.on::-webkit-input-placeholder {
+  color: #1bc8e9;
+  left: -12px;
+  top: -25px;
+}
+#input::-webkit-input-placeholder[style*=hidden] {
+  color: #1bc8e9;
+  left: -12px;
+  top: -25px;
+  visibility: visible !important;
+}
 button {
   display: inline-block;
   padding: 5px 12px;
@@ -699,17 +717,4 @@ footer a {
   position: fixed;
   visibility: visible;
   opacity: .8;
-}
-#input::-webkit-input-placeholder {
-  font-size: 10px;
-  position: relative;
-  left: 0;
-  top: 2px;
-  transition: all .3s;
-}
-#input.on::-webkit-input-placeholder {
-  color: #1BC8E9;
-  left: -12px;
-  top: -25px;
-  visibility: visible !important;
 }

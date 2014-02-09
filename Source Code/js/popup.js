@@ -271,11 +271,13 @@ $(document).ready(function() {
         getFri(value);
         if ($("#friInfo li")[0]) {
             $(this).attr("placeholder", "方向键选择条目，回车提交");
+        } else if ($(this).val().split(" ").join("") !== "") {
+            $(this).attr("placeholder", "CTRL + 回车 提交");
         } else {
-            $(this).attr("placeholder", "CTRL + 回车 提交")
+            $(this).attr("placeholder", "多关键字请用 + 隔开");
         }
     }).focus(function() {
-        $(this).addClass("on").attr("placeholder", "多关键字请用 + 隔开");
+        $(this).addClass("on").attr("placeholder", "多关键字请用 + 隔开").keyup();
         var value = $(this).val();
         getFri(value);
         $("#friInfo").fadeIn();
