@@ -107,24 +107,27 @@ function clearOut(area) {
                         var isLike = $j(ele[j]).closest(".f-like")[0];
                         var isReply = $j(ele[j]).closest("[data-type='replyroot']")[0];
                         var isComment = $j(ele[j]).parent().parent().parent("[data-type='commentroot']")[0];
-                        if (setting.moveReply && isReply) {
-                            $j(isReply).hide(300)
-                                .next(".showhide").remove()
-                                .end()
-                                .after("<li class='showhide comment'>此条评论回复因来自或评论对象是<span>" + remarkShow + " [" + uid + "]" + "</span>而被隐藏，点击显示</li>"); // 移除评论回复
-                        } else if (setting.moveComment && isComment) {
-                            $j(isComment).hide(300)
-                                .next(".showhide").remove()
-                                .end()
-                                .after("<li class='showhide comment'>此条评论因来自<span>" + remarkShow + " [" + uid + "]" + "</span>而被隐藏，点击显示</li>"); // 移除评论
-                        } else if (setting.moveLike && isLike) {
-                            $j(ele[j]).fadeOut(); // 移除赞
-                        } else if (setting.moveMood) {
+                        if (setting.moveMood && !isReply && !isComment && !isLike) {
                             $j(ele[j]).closest(".f-single").hide(500)
                                 .next(".showhide").remove()
                                 .end()
                                 .after("<li class='showhide mood'>此条说说因来自<span>" + remarkShow + " [" + uid + "]" + "</span>而被隐藏，点击显示</li>");
                         } // 移除说说
+                        if (setting.moveReply && isReply) {
+                            $j(isReply).hide(300)
+                                .next(".showhide").remove()
+                                .end()
+                                .after("<li class='showhide comment'>此条评论回复因来自或评论对象是<span>" + remarkShow + " [" + uid + "]" + "</span>而被隐藏，点击显示</li>");
+                        } // 移除评论回复
+                        if (setting.moveComment && isComment) {
+                            $j(isComment).hide(300)
+                                .next(".showhide").remove()
+                                .end()
+                                .after("<li class='showhide comment'>此条评论因来自<span>" + remarkShow + " [" + uid + "]" + "</span>而被隐藏，点击显示</li>");
+                        } // 移除评论
+                        if (setting.moveLike && isLike) {
+                            $j(ele[j]).fadeOut();
+                        }  // 移除赞
                     }
                 }
             }
