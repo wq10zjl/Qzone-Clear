@@ -42,17 +42,17 @@ function clearOut(area) {
                 $j(this).closest(".f-single").hide(500)
                     .next(".showhide").remove() // 偶发重复去除
                     .end()
-                    .after("<li class='showhide mood'>此条说说因<span>赞超过 " + setting.moveTooMuchLikes + "</span>而被隐藏，点击显示</li>");
+                    .after("<li class='showhide mood'>此条动态因<span>赞超过 " + setting.moveTooMuchLikes + "</span>而被隐藏，点击显示</li>");
             };
         })
     } // 根据赞的数量移除
     if (userSet && userSet.indexOf(true) === -1) return false;
     if (setting.moveStamp) {
-        $j(area).find(".img-box:visible img[src*='qzonestyle']")
+        $j(area).find(".img-box:visible img[src*='/qzone/em/']")
             .closest(".f-single").hide(500)
             .next(".showhide").remove()
             .end()
-            .after("<li class='showhide mood'>此条说说因<span>内容是签到图</span>而被隐藏，点击显示</li>");
+            .after("<li class='showhide mood'>此条动态因<span>内容是签到图</span>而被隐藏，点击显示</li>");
     } // 移除签到
 
     var content = [];
@@ -89,7 +89,6 @@ function clearOut(area) {
     }, function(response) {
         localStorage.userRemark = response.data;
         userRemark = JSON.parse(response.data); // 获取备注
-
         var ele = $j(area).find(".c_tx.q_namecard:visible, .f-name.q_namecard:visible,.f-like .item:visible");
         for (var i = 0; i < num.length; i++) {
             for (var j = 0; j < ele.length; j++) {
@@ -111,8 +110,8 @@ function clearOut(area) {
                             $j(ele[j]).closest(".f-single").hide(500)
                                 .next(".showhide").remove()
                                 .end()
-                                .after("<li class='showhide mood'>此条说说因来自<span>" + remarkShow + " [" + uid + "]" + "</span>而被隐藏，点击显示</li>");
-                        } // 移除说说
+                                .after("<li class='showhide mood'>此条动态因来自<span>" + remarkShow + " [" + uid + "]" + "</span>而被隐藏，点击显示</li>");
+                        } // 移除动态
                         if (setting.moveReply && isReply) {
                             $j(isReply).hide(300)
                                 .next(".showhide").remove()
@@ -146,7 +145,7 @@ function clearOut(area) {
                 $j(this).hide(500)
                     .next(".showhide").remove()
                     .end()
-                    .after("<li class='showhide mood'>此条说说因含有<span>“" + content[k] + "”</span>而被隐藏，点击显示</li>")
+                    .after("<li class='showhide mood'>此条动态因含有<span>“" + content[k] + "”</span>而被隐藏，点击显示</li>")
             }
         }) // 不为评论内容时移除整体
         $j(comments).each(function() {
@@ -190,7 +189,7 @@ function clearOut(area) {
                         $j(this).hide(500)
                             .next(".showhide").remove()
                             .end()
-                            .after("<li class='showhide mood'>此条说说因含有超过<span>“" + arr.length + "个‘" + arr[0] + "’”</span>而被隐藏，点击显示</li>"); // 移除说说主体
+                            .after("<li class='showhide mood'>此条动态因含有超过<span>“" + arr.length + "个‘" + arr[0] + "’”</span>而被隐藏，点击显示</li>"); // 移除动态主体
                     }
                 });
                 $j(comments).each(function() {
@@ -226,9 +225,9 @@ function clearOut(area) {
                         $j(this).hide(500)
                             .next(".showhide").remove()
                             .end()
-                            .after("<li class='showhide mood'>此条说说因同时含有<span>“" + keywords + "”</span>而被隐藏，点击显示</li>"); // 移除说说主体
+                            .after("<li class='showhide mood'>此条动态因同时含有<span>“" + keywords + "”</span>而被隐藏，点击显示</li>"); // 移除动态主体
                     }
-                }); // 不为评论内容时，移除说说主体
+                }); // 不为评论内容时，移除动态主体
                 $j(comments).each(function() {
                     var matchText = $j(this).text();
                     for (var i = 0; i < arr.length; i++) {
@@ -334,7 +333,7 @@ if (setting.isOld) {
 } else setInterval(check, 1000);
 // 监听瀑布流新内容载入
 
-$j(".icon-refresh, #tab_menu_list a").click(function() {
+$j(".icon-refresh, #tab_menu_list a, #aIcenter, #me_feed_control a").click(function() {
     page = -1;
     blocks = 0;
     var a = 0;
